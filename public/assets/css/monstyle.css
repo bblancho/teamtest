@@ -1,0 +1,141 @@
+body {}
+
+.container {
+    max-width: 1140px;
+}
+
+.navbar-brand{
+    margin-right: 13%;
+}
+
+.navbar {
+    text-transform: uppercase;
+}
+
+.navbar-brand img{
+    width: 60%;
+}
+
+.nav-link:focus, .nav-link:hover {
+    color: #24a828;
+}
+
+#search_offre{
+    width: 70%;
+}
+
+input[type=search] {
+    width: 70%;
+}
+
+
+
+#inscription a {
+    margin: 0 5px;
+}
+
+
+/************************ Footer *************************/
+
+footer{
+    padding: 3rem 0px;
+    background-color: #222222;
+    color: #fff;
+}
+
+footer p{
+    font-size: 15px;
+}
+
+footer .footer_1 p>span{
+    text-transform: uppercase;
+    border-bottom: 1px solid;
+    color: #fff;
+}
+
+footer .footer_1 p{
+    color: rgb(189, 189, 189) ;
+}
+
+.footer_contact button {
+    background-color: transparent;
+    border-color: #24a828 ;
+}
+
+.btn-default-transparent{
+    background-color: transparent;
+    border-color: #24a828 ;
+}
+
+.btn-default-transparent:hover{
+    background-color: #24a828 ;
+    border-color: #24a828 ;
+}
+
+.footer_1 li a:hover, .social-links.small li a i:hover {
+    color: #24a828 ;
+}
+
+.social-links {
+    list-style: none;
+    font-size: 0;
+    padding-left: 0;
+}
+
+.clearfix:before{
+    display: table;
+    content: " ";
+}
+
+.social-links li {
+    display: inline-block; 
+    margin: 0 5px 5px 0;
+    color: rgb(189, 189, 189) ;
+}
+
+.social-links.small li a {
+    width: 30px;
+    height: 30px;
+    font-size: 15px;
+    color: rgb(189, 189, 189) ;
+    display: block;
+}
+
+.social-links.small li a i {
+    line-height: 29px ;
+    color: #fff ;
+}
+
+.info_team2i{
+    list-style: none;
+    font-size: 0;
+    padding-left: 0;
+}
+
+.info_team2i li a{
+    font-size: 15px;
+    color: rgb(189, 189, 189) ;
+    text-decoration: none;
+}
+
+#newsletter input[type=email]{
+    margin-bottom: 5px;
+} 
+
+#newsletter button{
+    width: 100%;
+}
+
+/* Smartphones (portrait) */
+@media(max-width: 320px) {
+    #navbarSupportedContent div#inscription {
+        display: block !important;
+    }
+}
+
+/* iPads (portrait and landscape)  */
+@media(min-device-width: 768px) and (max-device-width: 1024px) {
+    #navbarSupportedContent div#inscription {
+        display: block !important;
+    }
+}
