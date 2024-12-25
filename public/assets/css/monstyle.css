@@ -129,7 +129,7 @@ footer .footer_1 p{
 /* Smartphones (portrait) */
 @media(max-width: 320px) {
     #navbarSupportedContent div#inscription {
-        display: block !important;
+        display: block !important ;
     }
 }
 
