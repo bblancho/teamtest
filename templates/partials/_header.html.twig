@@ -10,14 +10,55 @@
 			</button>
 
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				
-				<ul class="navbar-nav me-auto mb-2 mb-lg-0 text-center">
+
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 					<li class="nav-item">
 						<a class="nav-link active" aria-current="page" href="#">Accueil</a>
 					</li>
+
+					{% if is_granted('ROLE_ADMIN') %}
+						<li class="nav-item">
+							<a class="nav-link {{ app.current_route == 'app_index' ? 'active' : '' }}" href="{{ path('app_index') }}">Administration
+								<span class="visually-hidden">(current)</span>
+							</a>
+						</li>
+					{% endif %}
 					<li class="nav-item">
-						<a class="nav-link" href="#">Link</a>
+						<a class="nav-link {{ app.current_route == 'app_inde' ? 'active' : '' }}" href="{{ path('app_index') }}">OFFRES
+						</a>
 					</li>
+
+					{% if app.user %}
+						{% if app.user.typeUser == "societes"  %}
+							<li class="nav-item">
+								<a class="nav-link {{ app.current_route == 'app_index' ? 'active' : '' }}" href="{{ path('offres.mes_offres') }}">Mes OFFRES
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link {{ app.current_route == 'app_index' ? 'active' : '' }}" href="{{ path('offres.create') }}">Créér une offre
+								</a>
+							</li>
+							{# <li class="nav-item">
+								<a class="nav-link {{ app.current_route == 'admin' ? 'active' : '' }}" href="{{ path('offres.en_ligne') }}">OFFRES publiées
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link {{ app.current_route == 'admin' ? 'active' : '' }}" href="{{ path('offres.non_publiee') }}">OFFRES NON publiées
+								</a>
+							</li> #}
+
+						{% elseif app.user.typeUser == "clients"%}
+							<li class="nav-item">
+								<a class="nav-link {{ app.current_route == 'app_index' ? 'active' : '' }}" href="{{ path('app_index') }}">Mes candidatures
+								</a>
+							</li>
+						{% endif %}
+					{% endif %}
+					<li class="nav-item">
+						<a class="nav-link {{ app.current_route == 'contact' ? 'active' : '' }}" href="{{ path('app_index') }}">Contact
+						</a>
+					</li>
+
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 							Dropdown
@@ -36,7 +77,7 @@
 						</ul>
 					</li>
 				</ul>
-				
+
 				<div class="d-flex" id="inscription">
 					<a class="nav-link " href="{{ path('app_index') }}">
 						Connexion
