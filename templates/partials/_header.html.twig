@@ -1,66 +1,50 @@
-<nav class="navbar navbar-expand-lg">
-	<div class="container-fluid">
-		<div class="col-md-3 mb-2 mb-md-0">
-			<a href="{{ path('app_index') }}" class="d-inline-flex link-body-emphasis text-decoration-none">
+<div class="container">
+	<nav class="navbar nav-underline navbar-expand-lg bg-body-white">
+		<div class="container-fluid">
+			<a href="{{ path('app_index') }}" class="navbar-brand">
 				<img src="{{ asset('assets/images/logo.jpg') }}" alt="logo Team2i">
 			</a>
-		</div>
 
-		<div class="container" id="navbarColor01">
-			<ul class="justify-content-center navbar-nav me-auto">
-				{% if is_granted('ROLE_ADMIN') %}
-					<li class="nav-item">
-						<a class="nav-link {{ app.current_route == 'app_index' ? 'active' : '' }}" href="{{ path('app_index') }}">Administration
-							<span class="visually-hidden">(current)</span>
-						</a>
-					</li>
-				{% endif %}
-				<li class="nav-item">
-					<a class="nav-link {{ app.current_route == 'app_index' ? 'active' : '' }}" href="{{ path('app_index') }}">OFFRES
-					</a>
-				</li>
-	
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				
-				<li class="nav-item">
-					<a class="nav-link {{ app.current_route == 'app_index' ? 'active' : '' }}" href="{{ path('app_index') }}">Contact
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0 text-center">
+					<li class="nav-item">
+						<a class="nav-link active" aria-current="page" href="#">Accueil</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Link</a>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+							Dropdown
+						</a>
+						<ul class="dropdown-menu">
+							<li>
+								<a class="dropdown-item" href="#">Action</a>
+							</li>
+							<li>
+								<a class="dropdown-item" href="#">Another action</a>
+							</li>
+							<li><hr class="dropdown-divider"></li>
+							<li>
+								<a class="dropdown-item" href="#">Something else here</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				
+				<div class="d-flex" id="inscription">
+					<a class="nav-link " href="{{ path('app_index') }}">
+						Connexion
 					</a>
-				</li>
-			</ul>
+					<a class="nav-link " href="{{ path('app_index') }}">Inscription
+					</a>
+				</div>
+			</div>
 		</div>
-
-		<div class="d-flex">
-			<ul class="navbar-nav me-auto">
-				{% if app.user %}
-					<li class="nav-item dropdown" style="margin-right: 5rem;">
-						<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{ app.user.nom }}</a>
-						<div class="dropdown-menu">
-							{% if app.user.typeUser == "clients"  %}
-								<a class="dropdown-item" href="{{ path('app_index') }}">Modifier mes informations</a>
-								<a class="dropdown-item" href="{{ path('app_index') }}">Changer mot de passe</a>
-							{% elseif app.user.typeUser == "societes"%} 
-								<a class="dropdown-item" href="{{ path('app_index') }}">Gérer mes informations</a>
-								<a class="dropdown-item" href="{{ path('app_index') }}">Changer mot de passe</a>
-							{% endif %}
-							<div class="dropdown-divider"></div>
-							{% if 'ROLE_ADMIN' in app.user.roles %}
-								<a class="dropdown-item" href="{{ path('app_index') }}">Administration</a>
-								<div class="dropdown-divider"></div>
-							{% endif %}
-							<a class="dropdown-item" href="{{ path('app_index') }}">Déconnexion</a>
-						</div>
-					</li>
-				{% else %}
-					<li class="nav-item">
-						<a class="nav-link {{ app.current_route == 'app_index' ? 'active' : '' }}" href="{{ path('app_index') }}">Connexion
-						</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link {{ app.current_route == 'app_index' ? 'active' : '' }}" href="{{ path('app_index') }}">Inscription
-						</a>
-					</li>
-				{% endif %}
-			</ul>
-		</div>
-	</div>
-</nav>
-
+	</nav>
+</div>
