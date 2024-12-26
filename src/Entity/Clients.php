@@ -16,6 +16,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Clients extends Users
 {
     #[ORM\Column(nullable: true)]
+    #[Assert\Type(
+        type: 'integer',
+        message: "La valeur {{ value }} n'est pas de {{ type }}.",
+    )]
     private ?int $tjm = null;
 
     #[ORM\Column(nullable: true)]

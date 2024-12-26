@@ -2,8 +2,9 @@
 
 namespace App\Form;
 
-use App\Entity\Users;
+use App\Entity\Clients;
 use Symfony\Component\Form\AbstractType;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\IsTrue;
@@ -14,17 +15,20 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
-class RegistrationFormType extends AbstractType
+class RegistrationClientFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('nom', TextType::class, [
+                'required' => true,
                 'attr' => [
                     'class' => 'form-control',
                     'minlenght' => '2',
@@ -39,17 +43,8 @@ class RegistrationFormType extends AbstractType
                     new Assert\Length(['min' => 2, 'max' => 50])
                 ]
             ])
-            ->add('imageFile', FileType::class,[
-                'attr' => [
-                    'class' => 'form-control',
-                ],
-                'required' => false,
-                'label' => 'Logo',
-                'label_attr' => [
-                    'class' => 'form-label  mt-4'
-                ],
-            ])
             ->add('email', EmailType::class, [
+                'required' => true,
                 'attr' => [
                     'class' => 'form-control',
                     'minlenght' => '2',
@@ -66,12 +61,12 @@ class RegistrationFormType extends AbstractType
                 ]
             ])
             ->add('adresse', TextType::class, [
+                'required' => true,
                 'attr' => [
                     'class' => 'form-control',
                     'minlenght' => '2',
                     'maxlenght' => '50',
                 ],
-                'required' => false,
                 'label' => 'Adresse',
                 'label_attr' => [
                     'class' => 'form-label  mt-4'
@@ -81,12 +76,12 @@ class RegistrationFormType extends AbstractType
                 ]
             ])
             ->add('cp', TextType::class, [
+                'required' => true,
                 'attr' => [
                     'class' => 'form-control',
                     'minlenght' => '5',
                     'maxlenght' => '5',
                 ],
-                'required' => false,
                 'label' => 'Code postal',
                 'label_attr' => [
                     'class' => 'form-label  mt-4'
@@ -96,12 +91,12 @@ class RegistrationFormType extends AbstractType
                 ]
             ])
             ->add('ville', TextType::class, [
+                'required' => true,
                 'attr' => [
                     'class' => 'form-control',
                     'minlenght' => '2',
                     'maxlenght' => '50',
                 ],
-                'required' => false,
                 'label' => 'Ville',
                 'label_attr' => [
                     'class' => 'form-label  mt-4'
@@ -111,12 +106,12 @@ class RegistrationFormType extends AbstractType
                 ]
             ])
             ->add('phone', TextType::class, [
+                'required' => true,
                 'attr' => [
                     'class' => 'form-control',
                     'minlenght' => '2',
                     'maxlenght' => '10',
                 ],
-                'required' => false,
                 'label' => 'Télèphone',
                 'label_attr' => [
                     'class' => 'form-label  mt-4'
@@ -125,35 +120,17 @@ class RegistrationFormType extends AbstractType
                     new Assert\Length(['min' => 2, 'max' => 10])
                 ]
             ])
-            ->add('description', TextareaType::class, [
-                'attr' => [
-                    'class' => 'form-control',
-                    'min' => 1,
-                    'max' => 5,
-                    'rows'=> 6
-                ],
-                'label' => 'Description de la société',
-                'label_attr' => [
-                    'class' => 'form-label mt-4'
-                ],
-                'constraints' => [
-                    new Assert\NotBlank()
-                ]
-            ])
             ->add('siret', TextType::class, [
+                'required' => true,
                 'attr' => [
                     'class' => 'form-control',
-                    'minlenght' => '2',
-                    'maxlenght' => '10',
+                    'minlenght' => '9',
+                    'maxlenght' => '14',
                 ],
-                'required' => false,
-                'label' => 'Numéro de siret',
+                'label' => 'Numéro de SIRET/SIREN',
                 'label_attr' => [
                     'class' => 'form-label  mt-4'
                 ],
-                'constraints' => [
-                    new Assert\Length(['min' => 2, 'max' => 10])
-                ]
             ])
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
@@ -162,7 +139,7 @@ class RegistrationFormType extends AbstractType
                     'attr' => [
                         'class' => 'form-control'
                     ],
-                    'label' => ' Nouveau mot de passe',
+                    'label' => ' Mot de passe',
                     'label_attr' => [
                         'class' => 'form-label  mt-4'
                     ],
@@ -174,7 +151,7 @@ class RegistrationFormType extends AbstractType
                     ],
                     'label' => 'Confirmation du mot de passe',
                     'label_attr' => [
-                        'class' => 'form-label  mt-4'
+                        'class' => 'form-label'
                     ],
                     'required' => true,
                     'constraints' => [
@@ -183,31 +160,86 @@ class RegistrationFormType extends AbstractType
                 ],
                 'constraints' => [
                     new Assert\NotBlank(['message' => "Ce champ est obligatoire."]),
-                    new Assert\Length([
-                        'min' => 8,
-                        'max' => 20,
+                    new Length(
+                        [
+                        'min' => 6, 
+                        'max' => 4096,
                         'minMessage' => 'Le mot de passe doit comporter plus de {{ limit }} caractères.',
                         'maxMessage' => 'Le mot de passe doit comporter au maximum de {{ limit }} caractères.',
-                    ]),
-                    new Regex(
-                        "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,}$/",
-                        "Votre mot de passe doit faire au minimum 8 caractères est contenir: \n
-                            Au moins une majuscule \n
-                            Au moins une minuscule \n
-                            Au moins un chiffre \n
+                        ]
+                    ),
+                    new Regex(                                      
+                        "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,20}$/",
+                        "Votre mot de passe doit faire au minimum 8 et au maximum 20 caractères est contenir: 
+                            Au moins une majuscule 
+                            Au moins une minuscule 
+                            Au moins un chiffre
                             Au moins un caractère spécial : #?!@$%^&*-
                         "
                     )
                 ],
                 'invalid_message' => 'Les mots de passe doivent être identique.',
             ])
+            // ->add('cvFile', VichFileType::class,[
+            //     'required'  => false,
+            //     'mapped'    => false,
+            //     'attr' => [
+            //         'class' => 'form-control',
+            //     ],
+            //     'label' => 'Cv',
+            //     'label_attr' => [
+            //         'class' => 'form-label  mt-4'
+            //     ],
+            // ])
+            // ->add('tjm', MoneyType::class, [
+            //     'required' => false,
+            //     'attr' => [
+            //         'class' => 'form-control',
+            //         'max' => 2000,
+            //         'type' => 'number',
+            //         'placeholder' => '0.00'
+            //     ],
+            //     'currency' => 'EUR',
+            //     'required' => true,
+            //     'label' => 'Taux journalier :',
+            //     'label_attr' => [
+            //         'class' => 'form-label mt-4'
+            //     ],
+            //     'constraints' => [
+            //         new Assert\Positive(),
+            //         new Assert\LessThan(2000)
+            //     ]
+            // ])
+            // ->add('dispo', CheckboxType::class, [
+            //     'attr' => [
+            //         'class' => 'form-check-input',
+            //     ],
+            //     'required' => false,
+            //     'label' => "Disponible immédiatement",
+            //     'label_attr' => [
+            //         'class' => 'form-check-label'
+            //     ],
+            //     'constraints' => [
+            //         new Assert\NotNull()
+            //     ]
+            // ])
+            // ->add('dateDispoAt', null, [
+            //        'required' => false,
+            //     'attr' => [
+            //         'class' => 'form-control',
+            //     ],
+            //     'required' => true,
+            //     'label' => 'Date de disponibilité :',
+            //     'widget' => 'single_text',
+            // ])
+            
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Users::class,
+            'data_class' => Clients::class,
         ]);
     }
 }

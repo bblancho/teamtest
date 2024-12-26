@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block body %}
+
+
+<div class="container py-4">
+    <h1> TEAM2i </h1>
+ 
+    <div class="p-5 mb-4 bg-body-tertiary rounded-3">
+      <div class="container-fluid py-5">
+        <h2 class="display-5 fw-bold">Notre histoire</h2>
+        <p> 
+            Une place de marché informatique en chair et en os !
+            Historique : Team2i existe depuis 1998.
+            Notre ancienneté : 19 ans depuis sa création nous confère une solide expérience dans le monde de la sous-traitance informatique.
+
+            Team2i est une société de mise en relation entre demandeurs de compétences (clients finaux ou SSII) et offreurs de compétences (freelances ou SSII).
+
+            Spécificité de Team2i :
+            En cas de crise financière mondiale (pire que celle de 2008) Team2i sera la dernière SSII à rester en vie du fait de l’absence de frais fixes et d’inter-contrats.
+
+            Vous serez notre Client final ! Voici pourquoi !
+            L’avantage de travailler avec des freelances est d’avoir la certitude qu’il soit compétent et motivé :
+
+            Compétent car, sinon, il ne trouve rapidement plus de missions et redevient salarié !
+            Motivé car il ne gagne rien s’il ne travaille pas !
+
+            Les SSII connaissent de toute manière Team2i et font systématiquement appel à nous pour du resourcing. Elles font en effet appel à Team2i pour trouver les compétences informatiques qu’elles ne trouvent pas toutes seules. C’est pourquoi il vous sera plus rapide et moins cher de contacter directement Team2i.
+
+            Rencontrons-nous : Vous n’avez pas encore de projet informatique ? Mieux vaut anticiper les recherches sur des ressources rares voire exceptionnelles.
+            Un projet informatique en vue ? Team2i peut venir vous voir afin de faire connaissance pour que vous sachiez à qui vous allez confier vos projets informatiques d’aujourd’hui et de demain.
+        </p>
+      </div>
+    </div>
+
+    <div class="row align-items-md-stretch">
+      <div class="col-md-6">
+        <div class="h-100 p-5 text-bg-dark rounded-3">
+          <h2>VOTRE INTERLOCUTEUR</h2>
+          <p>Philippe Roche
+Son créateur est Philippe Roche : Diplômé de l’école Polytechnique, il a développé sa première entreprise en 1986. Durant 10 ans, il participe à de grands projets de transformation SI (Système d’Information) pour des groupes internationaux notamment dans le secteur des télécoms (France-Télécom, SFR...).
+Il conçoit et lance en 1994 la place de marché Hitechpros.com
+Il crée Team2i en 1998.</p>
+          <button class="btn btn-outline-light" type="button">Example button</button>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="h-100 p-5 bg-body-tertiary border rounded-3">
+          <h2>MISSION</h2>
+          <p>Team2i permet aux sociétés qui cherchent des compétences informatiques de trouver des freelances ayant le profil et les compétences recherchées</p>
+          <button class="btn btn-outline-secondary" type="button"> <a class="nav-link" href="{{ path('app_mission') }}">Nos missions
+					</a></button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+{% endblock %}

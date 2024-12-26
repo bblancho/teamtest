@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title  "Connexion" %}
+
+{% block body %}
+	<div class="album py-5 connexion">
+		<div class="container col-md-4">
+
+			<h1 class="text-center"> CONNEXION </h1>
+
+			<form action="{{ path('security.login') }}" method="post" name="login">
+				<div class="form-group">
+					<label for="inputEmail" class="form-label">
+						Email
+					</label>
+					<input type="email" class="form-control" value="{{ last_username }}" name="email" id="inputEmail" placeholder="exemple@gmail.fr" autocomplete="email" required autofocus>
+				</div>
+
+				<div class="form-group">
+					<label for="inputPassword" class="form-label mt-4">
+						Mot de passe</label>
+					password : Azerty24@
+					<input type="password" class="form-control mb-2" name="password" id="inputPassword" autocomplete="current-password" placeholder="********" required>
+					
+					<button class="btn btn-lg btn-primary" type="submit">
+						Se connecter
+					</button>
+					<br/>
+
+					<div class="form-group">
+					<br/>
+						<label class="form-label">
+							<input class="form-checkbox text-primary mr-2" type="checkbox" name="_remember_me" checked>
+							<span>
+								Se souvenir de moi
+							</span>
+						</label>
+					</div>
+
+					<p>
+						<a class=" " href="#">
+							Mot de passe oublié ?
+						</a> | 
+
+						Pas encore membre ?
+						<a href="{{ path('security.registration') }}">
+							Inscrivez-vous
+						</a>
+					</p>
+				</div>
+
+				<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+			</form>
+		</div>
+	</div>
+
+{% endblock %}

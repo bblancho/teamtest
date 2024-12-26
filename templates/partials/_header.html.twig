@@ -13,16 +13,9 @@
 
 				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 					<li class="nav-item">
-						<a class="nav-link active" aria-current="page" href="#">Accueil</a>
+						<a href="{{ path('app_index') }}" class="nav-link {{ app.current_route == 'app_index' ? 'active' : '' }}" >Accueil</a>
 					</li>
 
-					{% if is_granted('ROLE_ADMIN') %}
-						<li class="nav-item">
-							<a class="nav-link {{ app.current_route == 'app_index' ? 'active' : '' }}" href="{{ path('app_index') }}">Administration
-								<span class="visually-hidden">(current)</span>
-							</a>
-						</li>
-					{% endif %}
 					<li class="nav-item">
 						<a class="nav-link {{ app.current_route == 'app_inde' ? 'active' : '' }}" href="{{ path('app_index') }}">OFFRES
 						</a>
@@ -39,13 +32,13 @@
 								</a>
 							</li>
 							{# <li class="nav-item">
-								<a class="nav-link {{ app.current_route == 'admin' ? 'active' : '' }}" href="{{ path('offres.en_ligne') }}">OFFRES publiées
-								</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link {{ app.current_route == 'admin' ? 'active' : '' }}" href="{{ path('offres.non_publiee') }}">OFFRES NON publiées
-								</a>
-							</li> #}
+															<a class="nav-link {{ app.current_route == 'admin' ? 'active' : '' }}" href="{{ path('offres.en_ligne') }}">OFFRES publiées
+															</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link {{ app.current_route == 'admin' ? 'active' : '' }}" href="{{ path('offres.non_publiee') }}">OFFRES NON publiées
+															</a>
+														</li> #}
 
 						{% elseif app.user.typeUser == "clients"%}
 							<li class="nav-item">
@@ -53,6 +46,13 @@
 								</a>
 							</li>
 						{% endif %}
+					{% endif %}
+					{% if is_granted('ROLE_ADMIN') %}
+						<li class="nav-item">
+							<a class="nav-link {{ app.current_route == 'app_index' ? 'active' : '' }}" href="{{ path('app_index') }}">Administration
+								<span class="visually-hidden">(current)</span>
+							</a>
+						</li>
 					{% endif %}
 					<li class="nav-item">
 						<a class="nav-link {{ app.current_route == 'contact' ? 'active' : '' }}" href="{{ path('app_index') }}">Contact
@@ -78,12 +78,38 @@
 					</li>
 				</ul>
 
-				<div class="d-flex" id="inscription">
-					<a class="nav-link " href="{{ path('app_index') }}">
-						Connexion
-					</a>
-					<a class="nav-link " href="{{ path('app_index') }}">Inscription
-					</a>
+				<div class="d-flex">
+					<ul class="navbar-nav me-auto">
+						{% if app.user %}
+							<li class="nav-item dropdown" style="margin-right: 5rem;">
+								<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{ app.user.nom }}</a>
+								<div class="dropdown-menu">
+									{% if app.user.typeUser == "clients"  %}
+										<a class="dropdown-item" href="{{ path('user.edit') }}">Modifier mes informations</a>
+										<a class="dropdown-item" href="{{ path('user.password') }}">Changer mot de passe</a>
+									{% elseif app.user.typeUser == "societes"%}
+										<a class="dropdown-item" href="{{ path('societe.edit') }}">Gérer mes informations</a>
+										<a class="dropdown-item" href="{{ path('societe.edit.password') }}">Changer mot de passe</a>
+									{% endif %}
+									<div class="dropdown-divider"></div>
+									{% if 'ROLE_ADMIN' in app.user.roles %}
+										<a class="dropdown-item" href="{{ path('app_index') }}">Administration</a>
+										<div class="dropdown-divider"></div>
+									{% endif %}
+									<a class="dropdown-item" href="{{ path('security.logout') }}">Déconnexion</a>
+								</div>
+							</li>
+						{% else %}
+							<li class="nav-item">
+								<a class="nav-link {{ app.current_route == 'security.login' ? 'active' : '' }}" href="{{ path('security.login') }}">Connexion
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link {{ app.current_route == 'security.registration' ? 'active' : '' }}" href="{{ path('security.registration') }}">Inscription
+								</a>
+							</li>
+						{% endif %}
+					</ul>
 				</div>
 			</div>
 		</div>

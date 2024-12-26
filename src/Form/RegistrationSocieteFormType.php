@@ -2,10 +2,10 @@
 
 namespace App\Form;
 
-use App\Entity\Users;
+use App\Entity\Societes;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Validator\Constraints\Regex;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -18,19 +18,21 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Validator\Constraints\Regex;
 
-class RegistrationFormType extends AbstractType
+class RegistrationSocieteFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('nom', TextType::class, [
+                'required' => true,
                 'attr' => [
                     'class' => 'form-control',
                     'minlenght' => '2',
                     'maxlenght' => '50',
                 ],
-                'label' => 'Nom / Prénom',
+                'label' => "Raison sociale",
                 'label_attr' => [
                     'class' => 'form-label  mt-4'
                 ],
@@ -39,17 +41,29 @@ class RegistrationFormType extends AbstractType
                     new Assert\Length(['min' => 2, 'max' => 50])
                 ]
             ])
-            ->add('imageFile', FileType::class,[
+            ->add('secteurActivite', TextType::class, [
+                'required' => true,
                 'attr' => [
                     'class' => 'form-control',
+                    'minlenght' => '2',
+                    'maxlenght' => '50',
                 ],
-                'required' => false,
-                'label' => 'Logo',
+                'label' => "Secteur d'activité",
                 'label_attr' => [
                     'class' => 'form-label  mt-4'
                 ],
+                'constraints' => [
+                    new Assert\NotBlank(),
+                    new Assert\Length(['min' => 2, 'max' => 50])
+                ]
             ])
+            ->add('imageFile', VichImageType::class, [
+                'required'     => false,
+                'allow_delete' => false,
+                'download_uri' => false
+            ]) 
             ->add('email', EmailType::class, [
+                'required' => true,
                 'attr' => [
                     'class' => 'form-control',
                     'minlenght' => '2',
@@ -66,12 +80,12 @@ class RegistrationFormType extends AbstractType
                 ]
             ])
             ->add('adresse', TextType::class, [
+                'required' => true,
                 'attr' => [
                     'class' => 'form-control',
                     'minlenght' => '2',
                     'maxlenght' => '50',
                 ],
-                'required' => false,
                 'label' => 'Adresse',
                 'label_attr' => [
                     'class' => 'form-label  mt-4'
@@ -81,12 +95,12 @@ class RegistrationFormType extends AbstractType
                 ]
             ])
             ->add('cp', TextType::class, [
+                'required' => true,
                 'attr' => [
                     'class' => 'form-control',
                     'minlenght' => '5',
                     'maxlenght' => '5',
                 ],
-                'required' => false,
                 'label' => 'Code postal',
                 'label_attr' => [
                     'class' => 'form-label  mt-4'
@@ -96,12 +110,12 @@ class RegistrationFormType extends AbstractType
                 ]
             ])
             ->add('ville', TextType::class, [
+                'required' => true,
                 'attr' => [
                     'class' => 'form-control',
                     'minlenght' => '2',
                     'maxlenght' => '50',
                 ],
-                'required' => false,
                 'label' => 'Ville',
                 'label_attr' => [
                     'class' => 'form-label  mt-4'
@@ -111,12 +125,12 @@ class RegistrationFormType extends AbstractType
                 ]
             ])
             ->add('phone', TextType::class, [
+                'required' => true,
                 'attr' => [
                     'class' => 'form-control',
                     'minlenght' => '2',
                     'maxlenght' => '10',
                 ],
-                'required' => false,
                 'label' => 'Télèphone',
                 'label_attr' => [
                     'class' => 'form-label  mt-4'
@@ -126,6 +140,7 @@ class RegistrationFormType extends AbstractType
                 ]
             ])
             ->add('description', TextareaType::class, [
+                'required' => true,
                 'attr' => [
                     'class' => 'form-control',
                     'min' => 1,
@@ -140,19 +155,49 @@ class RegistrationFormType extends AbstractType
                     new Assert\NotBlank()
                 ]
             ])
-            ->add('siret', TextType::class, [
+            ->add('nomContact', TextType::class, [
+                'required' => false,
+                'attr' => [
+                    'class' => 'form-control',
+                    'minlenght' => '2',
+                    'maxlenght' => '50',
+                ],
+                'label' => 'Nom du contact',
+                'label_attr' => [
+                    'class' => 'form-label  mt-4'
+                ],
+                'constraints' => [
+                    new Assert\Length(['min' => 2, 'max' => 50])
+                ]
+            ])
+            ->add('numContact', TextType::class, [
+                'required' => false,
                 'attr' => [
                     'class' => 'form-control',
                     'minlenght' => '2',
                     'maxlenght' => '10',
                 ],
-                'required' => false,
-                'label' => 'Numéro de siret',
+                'label' => "Numéro du contact",
                 'label_attr' => [
                     'class' => 'form-label  mt-4'
                 ],
                 'constraints' => [
                     new Assert\Length(['min' => 2, 'max' => 10])
+                ]
+            ])
+            ->add('siret', TextType::class, [
+                'required' => true,
+                'attr' => [
+                    'class' => 'form-control',
+                    'minlenght' => '8',
+                    'maxlenght' => '10',
+                ],
+                'label' => 'Numéro de siret/siren',
+                'label_attr' => [
+                    'class' => 'form-label  mt-4'
+                ],
+                'constraints' => [
+                    new Assert\Length(14)
                 ]
             ])
             ->add('password', RepeatedType::class, [
@@ -185,16 +230,16 @@ class RegistrationFormType extends AbstractType
                     new Assert\NotBlank(['message' => "Ce champ est obligatoire."]),
                     new Assert\Length([
                         'min' => 8,
-                        'max' => 20,
+                        'max' => 4096,
                         'minMessage' => 'Le mot de passe doit comporter plus de {{ limit }} caractères.',
                         'maxMessage' => 'Le mot de passe doit comporter au maximum de {{ limit }} caractères.',
                     ]),
                     new Regex(
-                        "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,}$/",
-                        "Votre mot de passe doit faire au minimum 8 caractères est contenir: \n
-                            Au moins une majuscule \n
-                            Au moins une minuscule \n
-                            Au moins un chiffre \n
+                        "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,20}$/",
+                        "Votre mot de passe doit faire au minimum 8 caractères est contenir:
+                            Au moins une majuscule 
+                            Au moins une minuscule 
+                            Au moins un chiffre 
                             Au moins un caractère spécial : #?!@$%^&*-
                         "
                     )
@@ -207,7 +252,7 @@ class RegistrationFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Users::class,
+            'data_class' => Societes::class,
         ]);
     }
 }

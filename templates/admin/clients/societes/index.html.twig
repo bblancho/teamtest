@@ -1,0 +1,80 @@
+{% extends "admin/admin.html.twig" %}
+
+{% block title %} Gestion des sociétés {% endblock %}
+
+{% block body %}
+	<div class="container mt-4">
+		{% for message in app.flashes('success') %}
+			<div class="alert alert-success mt-4">
+				{{ message }}
+			</div>
+		{% endfor %}
+
+		<h1 class="mt-4"> Administration des sociétés </h1>
+
+		{% if not societes.items is same as([]) %}
+		
+			<a href="{{ path('admin.societes.create') }}" class="btn btn-primary">
+				Créer une société
+			</a>
+
+			<div class="count mt-4 mb-4"> Il y a
+				{{ societes.getTotalItemCount }}
+				société(s) inscritent sur le site.
+			</div>
+
+			<table class="table table-striped table-bordered">
+				<thead class="thead-dark">
+					<tr>
+						<th scope="col">Nom</th>
+						<th scope="col">Logo</th>
+						<th scope="col">Secteur d'activité</th>
+						<th scope="col">email</th>
+						<th scope="col">Numéro de siret</th>
+						<th scope="col">Ville</th>
+						<th scope="col">Code postal</th>
+						<th scope="col">Actions</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					{% for societe in societes %}
+						<tr>
+							<td><a href="{{ path('admin.societes.edit', {id: societe.id}) }}"> {{ societe.nom }}  </a></td>
+							<td>logo</td>
+							<td>{{ societe.secteurActivite }}</td>
+							<td>{{ societe.email }} </td>
+							<td>{{ societe.siret }} </td>
+							<td>{{ societe.ville }} </td>
+							<td>{{ societe.cp }}  </td>
+							<td>
+								<div class="d-flex gap-1">
+									<a href="{{ path('admin.societes.edit', { id: societe.id }) }}" class="btn btn-primary btn-sm">Modifier</a>
+									<a href="{{ path('admin.societes.activer', { id: societe.id }) }}" class="btn btn-info bt btn-sm">Activer</a>
+									<a href="{{ path('admin.societes.desactiver', { id: societe.id }) }}" class="btn btn-warning btn-sm">Désactiver</a>
+									<form action="{{ path('admin.societes.delete', { id: societe.id }) }}" method="post">
+										<input type="hidden" name="_method" value="DELETE">
+										<button type="submit" class="btn btn-danger btn-sm"> Supprimer </button>
+									</form>
+								</div>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+
+			<div class="navigation d-flex justify-content-center mt-4">
+				{{ knp_pagination_render(societes) }}
+			</div>
+
+		{% else %}
+			<h4>Aucune societes trouvées !</h4>
+
+			<a href="{{ path('societe.new') }}" class="btn btn-primary">
+				Créer une societe
+			</a>
+		{% endif %}
+
+
+	</div>
+{% endblock %}

@@ -20,6 +20,10 @@ body {}
     color: #24a828;
 }
 
+.connexion h1{
+    text-transform: uppercase;
+}
+
 #search_offre{
     width: 70%;
 }
@@ -28,10 +32,11 @@ input[type=search] {
     width: 70%;
 }
 
-
-
 #inscription a {
     margin: 0 5px;
+}
+.navbar-nav .nav-link.active{
+    color: #24a828;
 }
 
 
@@ -138,4 +143,118 @@ footer .footer_1 p{
     #navbarSupportedContent div#inscription {
         display: block !important;
     }
+}
+
+/**************************** new */
+
+.info_mission{
+    padding: 10px;
+    background-color: rgb(249 250 251);
+}
+
+.info_mission_show span{
+    display: block;
+    margin-bottom: 4px;
+}
+
+.sticky {
+    position: sticky;
+}
+
+.mission-bg{
+    background-color: lightgrey;
+    height: 160px;
+}
+
+.lien_mission{
+    text-decoration: none;
+    color: #000;
+    display: block;
+}
+
+.lien_mission span{
+    margin-bottom: 1rem;
+    display: block;
+    text-transform: uppercase;
+}
+
+.badge {
+    /* display: inline-block;
+    padding: 0.25em 0.4em;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.25rem; */
+    background-color: black;
+}
+
+.logo_client img{
+    width: 150px;
+    margin-right: 5px;
+}
+
+.card-text a{
+    text-decoration: none;
+    color: #000;
+}
+
+.px{
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+h1.font-bold {
+    font-weight: 700;
+    font-size: inherit;
+    font-weight: inherit;
+}
+
+h1.text-2xl{
+    font-size: 1.5rem;
+    line-height: 2rem;
+}
+
+h2.text-xl {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+}
+
+h2.font-semibold{
+    font-weight: 600;
+}
+
+
+.entreprise{
+    width: 50%;
+}
+
+.marketing .col-lg-4, .marketing .col-lg-6 {
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.marketing .col-lg-6 p svg{
+    width: 125px;
+}
+
+.marketing p, .marketing h1{
+    text-align: center;
+}
+
+.marketing h2 a{
+    font-weight: 400 !important;
+    color: #000;
+    font-size: 2rem;
+    text-decoration: none;
+}
+
+.marketing h2 a:hover{
+    text-decoration: underline;
+}
+
+.connexion{
+    background-color: #F8F9FA;
 }
