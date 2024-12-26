@@ -2,26 +2,64 @@
 
 namespace App\Entity;
 
-use App\Repository\ClientsRepository;
+use App\Entity\Users;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ClientsRepository;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ClientsRepository::class)]
 #[ORM\Table(name: "clients")]
 class Clients extends Users
 {
-    
-    #[ORM\Column(length: 255)]
-    private ?string $nom = null;
+    #[ORM\Column(nullable: true)]
+    private ?int $tjm = null;
 
-    public function getNom(): ?string
+    #[ORM\Column(nullable: true)]
+    private ?bool $dispo = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $dateDispoAt = null;
+
+    public function getTjm(): ?int
     {
-        return $this->nom;
+        return $this->tjm;
     }
 
-    public function setNom(string $nom): static
+    public function setTjm(int $tjm): static
     {
-        $this->nom = $nom;
+        $this->tjm = $tjm;
 
         return $this;
     }
+
+    public function getDateDispoAt(): ?\DateTimeImmutable
+    {
+        return $this->dateDispoAt;
+    }
+
+    public function setDateDispoAt(?\DateTimeImmutable $dateDispoAt): static
+    {
+        $this->dateDispoAt = $dateDispoAt;
+
+        return $this;
+    }
+
+    public function isDispo(): ?bool
+    {
+        return $this->dispo;
+    }
+
+    public function setDispo(?bool $dispo): static
+    {
+        $this->dispo = $dispo;
+
+        return $this;
+    }
+
+
+    
 }
