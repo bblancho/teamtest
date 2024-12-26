@@ -1,24 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Créer son compte
+{% block title %}Créer son compte société
 {% endblock %}
 
 {% block body %}
 	<div class="album py-5 connexion">
 		<div class="container">
-		<h1>
-			Créer un compte société
-		</h1>
+			<h1>
+				Créer un compte société
+			</h1>
 
-		<p class="titre_inscription">
-			Déjà membre ?
-			<a href="{{ path('security.login') }}">
-				Se connecter
-			</a>
-		</p>
+			{{ form_start(registrationForm) }}
 
-		{{ form_start(registrationForm) }}
-		
 			<div class="row">
 				<div class="col-md-6">
 					<div class="form-group">
@@ -75,19 +68,19 @@
 				</div>
 			</div>
 
-			<button class="btn btn-primary mt-4" type="submit">S'inscrire</button>
+			<button class="btn btn-primary mt-4" type="submit">S'inscrire</button> <br>
 
-		{{ form_end(registrationForm) }}
+			{{ form_end(registrationForm) }}
 
-		<div>
-			<p>
-				Déjà inscrit(e)?
-				<a href="{{ path('security.login') }}">
-					Se connecter
-				</a>
-			</p>
+			<div>
+				<p>
+					Déjà inscrit(e)?
+					<a href="{{ path('security.login') }}">
+						Se connecter
+					</a>
+				</p>
+			</div>
 		</div>
 	</div>
-	</div>
-	
+
 {% endblock %}

@@ -34,7 +34,7 @@ class RegistrationSocieteFormType extends AbstractType
                 ],
                 'label' => "Raison sociale",
                 'label_attr' => [
-                    'class' => 'form-label  mt-4'
+                    'class' => 'form-label'
                 ],
                 'constraints' => [
                     new Assert\NotBlank(),
@@ -50,7 +50,7 @@ class RegistrationSocieteFormType extends AbstractType
                 ],
                 'label' => "Secteur d'activité",
                 'label_attr' => [
-                    'class' => 'form-label  mt-4'
+                    'class' => 'form-label '
                 ],
                 'constraints' => [
                     new Assert\NotBlank(),
@@ -71,7 +71,7 @@ class RegistrationSocieteFormType extends AbstractType
                 ],
                 'label' => 'Email',
                 'label_attr' => [
-                    'class' => 'form-label  mt-4'
+                    'class' => 'form-label'
                 ],
                 'constraints' => [
                     new Assert\NotBlank(),
@@ -88,7 +88,7 @@ class RegistrationSocieteFormType extends AbstractType
                 ],
                 'label' => 'Adresse',
                 'label_attr' => [
-                    'class' => 'form-label  mt-4'
+                    'class' => 'form-label'
                 ],
                 'constraints' => [
                     new Assert\Length(['min' => 2, 'max' => 50])
@@ -103,7 +103,7 @@ class RegistrationSocieteFormType extends AbstractType
                 ],
                 'label' => 'Code postal',
                 'label_attr' => [
-                    'class' => 'form-label  mt-4'
+                    'class' => 'form-label'
                 ],
                 'constraints' => [
                     new Assert\Length(['min' => 5, 'max' => 5])
@@ -118,7 +118,7 @@ class RegistrationSocieteFormType extends AbstractType
                 ],
                 'label' => 'Ville',
                 'label_attr' => [
-                    'class' => 'form-label  mt-4'
+                    'class' => 'form-label '
                 ],
                 'constraints' => [
                     new Assert\Length(['min' => 2, 'max' => 50])
@@ -133,7 +133,7 @@ class RegistrationSocieteFormType extends AbstractType
                 ],
                 'label' => 'Télèphone',
                 'label_attr' => [
-                    'class' => 'form-label  mt-4'
+                    'class' => 'form-label '
                 ],
                 'constraints' => [
                     new Assert\Length(['min' => 2, 'max' => 10])
@@ -149,7 +149,7 @@ class RegistrationSocieteFormType extends AbstractType
                 ],
                 'label' => 'Description de la société',
                 'label_attr' => [
-                    'class' => 'form-label mt-4'
+                    'class' => 'form-label '
                 ],
                 'constraints' => [
                     new Assert\NotBlank()
@@ -164,7 +164,7 @@ class RegistrationSocieteFormType extends AbstractType
                 ],
                 'label' => 'Nom du contact',
                 'label_attr' => [
-                    'class' => 'form-label  mt-4'
+                    'class' => 'form-label'
                 ],
                 'constraints' => [
                     new Assert\Length(['min' => 2, 'max' => 50])
@@ -179,7 +179,7 @@ class RegistrationSocieteFormType extends AbstractType
                 ],
                 'label' => "Numéro du contact",
                 'label_attr' => [
-                    'class' => 'form-label  mt-4'
+                    'class' => 'form-label'
                 ],
                 'constraints' => [
                     new Assert\Length(['min' => 2, 'max' => 10])
@@ -194,7 +194,7 @@ class RegistrationSocieteFormType extends AbstractType
                 ],
                 'label' => 'Numéro de siret/siren',
                 'label_attr' => [
-                    'class' => 'form-label  mt-4'
+                    'class' => 'form-label'
                 ],
                 'constraints' => [
                     new Assert\Length(14)
@@ -209,7 +209,7 @@ class RegistrationSocieteFormType extends AbstractType
                     ],
                     'label' => ' Nouveau mot de passe',
                     'label_attr' => [
-                        'class' => 'form-label  mt-4'
+                        'class' => 'form-label '
                     ],
                     'constraints' => [new Assert\NotBlank()]
                 ],
@@ -219,7 +219,7 @@ class RegistrationSocieteFormType extends AbstractType
                     ],
                     'label' => 'Confirmation du mot de passe',
                     'label_attr' => [
-                        'class' => 'form-label  mt-4'
+                        'class' => 'form-label '
                     ],
                     'required' => true,
                     'constraints' => [

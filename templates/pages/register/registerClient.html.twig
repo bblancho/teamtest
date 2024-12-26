@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Créer son compte
+{% block title %}Créer son compte free-lance
 {% endblock %}
 
 {% block body %}
@@ -9,13 +9,6 @@
 		<h1>
 			Créer un compte free-lance
 		</h1>
-
-		<p class="titre_inscription">
-			Déjà membre ?
-			<a href="{{ path('security.login') }}">
-				Se connecter
-			</a>
-		</p>
 
 		{{ form_start(registrationForm) }}
 
