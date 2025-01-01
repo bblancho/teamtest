@@ -1,0 +1,68 @@
+name: Run Production
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [closed]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Check if changes
+        id: haschanges
+        run: |
+          CHANGED_FILES=$(git diff HEAD^..HEAD)
+          if [ -n "$CHANGED_FILES" ]; then
+          echo "::set-output name=passed::true"
+          fi
+
+      - name: Cache Composer dependencies 📦
+        uses: actions/cache@v3
+        with:
+          path: vendor
+          key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
+
+      - name: Install dependencies with Composer 🧩
+        if: ${{ steps.haschanges.outputs.passed }}
+        uses: php-actions/composer@v6
+        with:
+          php_version: "8.1"
+          php_extensions: pdo pdo_mysql zip xsl gd intl opcache exif mbstring
+          args: --ignore-platform-reqs --prefer-source
+
+      - name: Install SSH Key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          known_hosts: unnecessary
+          if_key_exists: ignore
+
+      - name: Sync files 📌
+        uses: easingthemes/ssh-deploy@main
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          ARGS: "-rlgoDzvc -i"
+          REMOTE_HOST: ${{ secrets.SSH_HOST }}
+          REMOTE_USER: ${{ secrets.SSH_USER }}
+          REMOTE_PORT: ${{ secrets.SSH_PORT }}
+          TARGET: /var/www/team2i/
+
+      - name: Deploy 🚀
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            cd /var/www/team2i/
+            composer install
+            symfony console cache:clear
