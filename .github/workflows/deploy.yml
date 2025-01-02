@@ -64,5 +64,4 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             cd /var/www/team2i/
-            composer install
             symfony console cache:clear
