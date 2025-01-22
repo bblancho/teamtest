@@ -9,9 +9,9 @@
 				<span class="navbar-toggler-icon"></span>
 			</button>
 
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<div class="collapse navbar-collapse text-center" id="navbarSupportedContent">
 
-				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
 					<li class="nav-item">
 						<a href="{{ path('app_index') }}" class="nav-link {{ app.current_route == 'app_index' ? 'active' : '' }}" >Accueil</a>
 					</li>
@@ -23,22 +23,44 @@
 
 					{% if app.user %}
 						{% if app.user.typeUser == "societes"  %}
+							{# 
+								<li class="nav-item">
+									<a class="nav-link {{ app.current_route == 'app_index' ? 'active' : '' }}" href="{{ path('offres.mes_offres') }}">Mes OFFRES
+									</a> 
+								</li> 
+								<li class="nav-item">
+									<a class="nav-link {{ app.current_route == 'app_index' ? 'active' : '' }}" href="{{ path('offres.create') }}">Créér une offre
+									</a>
+								</li>
+
+								<li class="nav-item">
+									<a class="nav-link {{ app.current_route == 'admin' ? 'active' : '' }}" href="{{ path('offres.en_ligne') }}">OFFRES publiées
+									</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link {{ app.current_route == 'admin' ? 'active' : '' }}" href="{{ path('offres.non_publiee') }}">OFFRES NON publiées
+									</a>
+								</li> 
+							#}
+
 							<li class="nav-item">
-								<a class="nav-link {{ app.current_route == 'app_index' ? 'active' : '' }}" href="{{ path('offres.mes_offres') }}">Mes OFFRES
+								<a class="nav-link {{ app.current_route == 'app_index' ? 'active' : '' }}" href="{{ path('app_index') }}">Mes OFFRES
 								</a>
 							</li>
+							
 							<li class="nav-item">
-								<a class="nav-link {{ app.current_route == 'app_index' ? 'active' : '' }}" href="{{ path('offres.create') }}">Créér une offre
+								<a class="nav-link {{ app.current_route == 'app_index' ? 'active' : '' }}" href="{{ path('app_index') }}">Créer une offre
 								</a>
 							</li>
+
 							{# <li class="nav-item">
-															<a class="nav-link {{ app.current_route == 'admin' ? 'active' : '' }}" href="{{ path('offres.en_ligne') }}">OFFRES publiées
-															</a>
-														</li>
-														<li class="nav-item">
-															<a class="nav-link {{ app.current_route == 'admin' ? 'active' : '' }}" href="{{ path('offres.non_publiee') }}">OFFRES NON publiées
-															</a>
-														</li> #}
+								<a class="nav-link {{ app.current_route == 'admin' ? 'active' : '' }}" href="{{ path('app_index') }}">OFFRES publiées
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link {{ app.current_route == 'admin' ? 'active' : '' }}" href="{{ path('app_index') }}">OFFRES NON publiées
+								</a>
+							</li>  #}
 
 						{% elseif app.user.typeUser == "clients"%}
 							<li class="nav-item">
@@ -47,6 +69,7 @@
 							</li>
 						{% endif %}
 					{% endif %}
+
 					{% if is_granted('ROLE_ADMIN') %}
 						<li class="nav-item">
 							<a class="nav-link {{ app.current_route == 'app_index' ? 'active' : '' }}" href="{{ path('app_index') }}">Administration
@@ -54,42 +77,29 @@
 							</a>
 						</li>
 					{% endif %}
+
 					<li class="nav-item">
 						<a class="nav-link {{ app.current_route == 'contact' ? 'active' : '' }}" href="{{ path('app_index') }}">Contact
 						</a>
-					</li>
-
-					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-							Dropdown
-						</a>
-						<ul class="dropdown-menu">
-							<li>
-								<a class="dropdown-item" href="#">Action</a>
-							</li>
-							<li>
-								<a class="dropdown-item" href="#">Another action</a>
-							</li>
-							<li><hr class="dropdown-divider"></li>
-							<li>
-								<a class="dropdown-item" href="#">Something else here</a>
-							</li>
-						</ul>
 					</li>
 				</ul>
 
 				<div class="d-flex">
 					<ul class="navbar-nav me-auto">
 						{% if app.user %}
-							<li class="nav-item dropdown" style="margin-right: 5rem;">
+							<li class="nav-item dropdown">
 								<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{ app.user.nom }}</a>
 								<div class="dropdown-menu">
 									{% if app.user.typeUser == "clients"  %}
-										<a class="dropdown-item" href="{{ path('user.edit') }}">Modifier mes informations</a>
-										<a class="dropdown-item" href="{{ path('user.password') }}">Changer mot de passe</a>
+										{# <a class="dropdown-item" href="{{ path('user.edit') }}">Modifier mes informations</a>
+										<a class="dropdown-item" href="{{ path('user.password') }}">Changer mot de passe</a> #}
+										<a class="dropdown-item" href="{{ path('app_index') }}">Modifier mes informations</a>
+										<a class="dropdown-item" href="{{ path('app_index') }}">Changer mot de passe</a>
 									{% elseif app.user.typeUser == "societes"%}
-										<a class="dropdown-item" href="{{ path('societe.edit') }}">Gérer mes informations</a>
-										<a class="dropdown-item" href="{{ path('societe.edit.password') }}">Changer mot de passe</a>
+										{# <a class="dropdown-item" href="{{ path('societe.edit') }}">Gérer mes informations</a>
+										<a class="dropdown-item" href="{{ path('societe.edit.password') }}">Changer mot de passe</a> #}
+										<a class="dropdown-item" href="{{ path('app_index') }}">Gérer mes informations</a>
+										<a class="dropdown-item" href="{{ path('app_index') }}">Changer mot de passe</a>
 									{% endif %}
 									<div class="dropdown-divider"></div>
 									{% if 'ROLE_ADMIN' in app.user.roles %}
