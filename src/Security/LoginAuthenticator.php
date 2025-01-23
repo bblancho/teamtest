@@ -51,6 +51,7 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
         $user = $this->user->getUser();
 
         if(  in_array('ROLE_CLIENT', $user->getRoles(), true) ){ 
+            // return new RedirectResponse($this->urlGenerator->generate('candidatures', ['id' => $user->getId()] ));
             return new RedirectResponse($this->urlGenerator->generate('app_index'));
         }
 
