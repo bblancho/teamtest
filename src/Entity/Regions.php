@@ -5,7 +5,6 @@ namespace App\Entity;
 use Assert\Regex;
 use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
-use Cocur\Slugify\SlugifySlugify;
 use App\Repository\RegionsRepository;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -31,6 +30,11 @@ class Regions
     #[Assert\Length(min: 3)]
     #[Assert\Regex("/^[a-z0-9]+(?:-[a-z0-9]+)*$/", message: "Invalid Slug")]
     private ?string $slug = null;
+
+    #[ORM\PrePersist()]
+    public function prePresist(){
+        $this->slug = (new Slugify())->slugify($this->nom) ;
+    }
 
     public function getId(): ?int
     {
@@ -60,5 +64,5 @@ class Regions
 
         return $this;
     }
-    
+
 }

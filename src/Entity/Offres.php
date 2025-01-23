@@ -85,9 +85,9 @@ class Offres
     /**
      * @var Collection<int, Skills>
      */
-    // #[ORM\ManyToMany(targetEntity: Skills::class, inversedBy: 'offres')]
-    // #[ORM\JoinColumn(nullable: true)]
-    // private Collection $skills;
+    #[ORM\ManyToMany(targetEntity: Skills::class, inversedBy: 'offres')]
+    #[ORM\JoinColumn(nullable: true)]
+    private Collection $skills;
 
     #[ORM\ManyToOne(targetEntity: Societes::class, inversedBy: 'offres')]
     #[ORM\JoinColumn(nullable: false)]
@@ -96,17 +96,17 @@ class Offres
     /**
      * @var Collection<int, Candidatures>
      */
-    // #[ORM\OneToMany(targetEntity: Candidatures::class, mappedBy: 'offres')]
-    // private Collection $candidatures;
+    #[ORM\OneToMany(targetEntity: Candidatures::class, mappedBy: 'offres')]
+    private Collection $candidatures;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        // $this->skills = new ArrayCollection();
-        // $this->startDateAT = new \DateTimeImmutable();
-        // $this->candidatures = new ArrayCollection();
+        $this->skills = new ArrayCollection();
+        $this->startDateAT = new \DateTimeImmutable();
+        $this->candidatures = new ArrayCollection();
     }
 
     #[ORM\PrePersist()]
@@ -230,26 +230,26 @@ class Offres
     /**
      * @return Collection<int, Skills>
      */
-    // public function getSkills(): Collection
-    // {
-    //     return $this->skills;
-    // }
+    public function getSkills(): Collection
+    {
+        return $this->skills;
+    }
 
-    // public function addSkill(Skills $skill): static
-    // {
-    //     if (!$this->skills->contains($skill)) {
-    //         $this->skills->add($skill);
-    //     }
+    public function addSkill(Skills $skill): static
+    {
+        if (!$this->skills->contains($skill)) {
+            $this->skills->add($skill);
+        }
 
-    //     return $this;
-    // }
+        return $this;
+    }
 
-    // public function removeSkill(Skills $skill): static
-    // {
-    //     $this->skills->removeElement($skill);
+    public function removeSkill(Skills $skill): static
+    {
+        $this->skills->removeElement($skill);
 
-    //     return $this;
-    // }
+        return $this;
+    }
 
     public function getProfil(): ?string
     {
@@ -302,32 +302,32 @@ class Offres
     /**
      * @return Collection<int, Candidatures>
      */
-    // public function getCandidatures(): Collection
-    // {
-    //     return $this->candidatures;
-    // }
+    public function getCandidatures(): Collection
+    {
+        return $this->candidatures;
+    }
 
-    // public function addCandidature(Candidatures $candidature): static
-    // {
-    //     if (!$this->candidatures->contains($candidature)) {
-    //         $this->candidatures->add($candidature);
-    //         $candidature->setOffres($this);
-    //     }
+    public function addCandidature(Candidatures $candidature): static
+    {
+        if (!$this->candidatures->contains($candidature)) {
+            $this->candidatures->add($candidature);
+            $candidature->setOffres($this);
+        }
 
-    //     return $this;
-    // }
+        return $this;
+    }
 
-    // public function removeCandidature(Candidatures $candidature): static
-    // {
-    //     if ($this->candidatures->removeElement($candidature)) {
-    //         // set the owning side to null (unless already changed)
-    //         if ($candidature->getOffres() === $this) {
-    //             $candidature->setOffres(null);
-    //         }
-    //     }
+    public function removeCandidature(Candidatures $candidature): static
+    {
+        if ($this->candidatures->removeElement($candidature)) {
+            // set the owning side to null (unless already changed)
+            if ($candidature->getOffres() === $this) {
+                $candidature->setOffres(null);
+            }
+        }
 
-    //     return $this;
-    // }
+        return $this;
+    }
 
 
 
