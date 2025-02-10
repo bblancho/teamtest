@@ -68,10 +68,8 @@ abstract class Users implements UserInterface, PasswordAuthenticatedUserInterfac
     #[ORM\Column]
     #[Assert\NotBlank()] // Interdit les valeurs vides , rajoute l'attribut required
     #[Assert\Length(
-        min: 5,
-        max: 5,
-        minMessage: "Le code postal doit faire minimum  {{ limit }} caractères .",
-        maxMessage: "Le code postal doit faire au maximum  {{ limit }} caractères .",
+        exactly: 5,
+        exactMessage: "Le code postale doit faire 5 caractères."
     )]
     private int $cp ; 
 
@@ -87,6 +85,10 @@ abstract class Users implements UserInterface, PasswordAuthenticatedUserInterfac
 
     #[ORM\Column(length: 20)]
     #[Assert\NotBlank()]
+    #[Assert\Length(
+        exactly: 10,
+        exactMessage: "Le format du numéro de téléphone est incorrect."
+    )]
     private string $phone = " ";
 
     #[ORM\Column(length: 50)]
@@ -99,10 +101,8 @@ abstract class Users implements UserInterface, PasswordAuthenticatedUserInterfac
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank()] 
     #[Assert\Length(
-        min: 9,
-        max: 14,
-        minMessage: "Le numéro de SIRET/SIREN doit faire au minimum {{ limit }} caractères.",
-        maxMessage: "Le numéro de SIRET/SIREN doit faire au maxmimum {{ limit }} caractères."
+        exactly: 9,
+        exactMessage: "Le numéro de SIRET/SIREN doit faire {{ limit }} caractères."
     )]
     private string $siret = " ";
 

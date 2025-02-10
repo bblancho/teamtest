@@ -57,7 +57,7 @@ class RegistrationClientFormType extends AbstractType
                 'constraints' => [
                     new Assert\NotBlank(),
                     new Assert\Email(),
-                    new Assert\Length(['min' => 2, 'max' => 180])
+                    new Assert\Length(['min' => 2, 'max' => 50])
                 ]
             ])
             ->add('adresse', TextType::class, [
@@ -87,7 +87,7 @@ class RegistrationClientFormType extends AbstractType
                     'class' => 'form-label  mt-4'
                 ],
                 'constraints' => [
-                    new Assert\Length(['min' => 5, 'max' => 5])
+                    new Assert\Length(exactly: 5)
                 ]
             ])
             ->add('ville', TextType::class, [
@@ -117,20 +117,18 @@ class RegistrationClientFormType extends AbstractType
                     'class' => 'form-label  mt-4'
                 ],
                 'constraints' => [
-                    new Assert\Length(['min' => 2, 'max' => 10])
+                    new Assert\Length(exactly: 10)
                 ]
             ])
             ->add('siret', TextType::class, [
                 'required' => true,
                 'attr' => [
                     'class' => 'form-control',
-                    'minlenght' => '9',
-                    'maxlenght' => '14',
                 ],
-                'label' => 'Numéro de SIRET/SIREN',
+                'label' => 'Numéro de SIREN',
                 'label_attr' => [
                     'class' => 'form-label  mt-4'
-                ],
+                ]
             ])
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,

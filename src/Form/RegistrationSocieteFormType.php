@@ -76,7 +76,7 @@ class RegistrationSocieteFormType extends AbstractType
                 'constraints' => [
                     new Assert\NotBlank(),
                     new Assert\Email(),
-                    new Assert\Length(['min' => 2, 'max' => 180])
+                    new Assert\Length(['min' => 2, 'max' => 30])
                 ]
             ])
             ->add('adresse', TextType::class, [
@@ -136,7 +136,7 @@ class RegistrationSocieteFormType extends AbstractType
                     'class' => 'form-label '
                 ],
                 'constraints' => [
-                    new Assert\Length(['min' => 2, 'max' => 10])
+                    new Assert\Length(exactly: 10)
                 ]
             ])
             ->add('description', TextareaType::class, [
@@ -189,16 +189,13 @@ class RegistrationSocieteFormType extends AbstractType
                 'required' => true,
                 'attr' => [
                     'class' => 'form-control',
-                    'minlenght' => '8',
-                    'maxlenght' => '10',
+                    'minlenght' => '9',
+                    'maxlenght' => '9',
                 ],
-                'label' => 'Numéro de siret/siren',
+                'label' => 'Numéro de Siren',
                 'label_attr' => [
                     'class' => 'form-label'
                 ],
-                'constraints' => [
-                    new Assert\Length(14)
-                ]
             ])
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
