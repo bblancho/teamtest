@@ -91,15 +91,11 @@
 								<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{ app.user.nom }}</a>
 								<div class="dropdown-menu">
 									{% if app.user.typeUser == "clients"  %}
-										{# <a class="dropdown-item" href="{{ path('user.edit') }}">Modifier mes informations</a>
-										<a class="dropdown-item" href="{{ path('user.password') }}">Changer mot de passe</a> #}
-										<a class="dropdown-item" href="{{ path('app_index') }}">Modifier mes informations</a>
-										<a class="dropdown-item" href="{{ path('app_index') }}">Changer mot de passe</a>
+										<a class="dropdown-item" href="{{ path('user.edit') }}">Modifier mes informations</a>
+										<a class="dropdown-item" href="{{ path('user.password') }}">Changer mot de passe</a>
 									{% elseif app.user.typeUser == "societes"%}
-										{# <a class="dropdown-item" href="{{ path('societe.edit') }}">Gérer mes informations</a>
-										<a class="dropdown-item" href="{{ path('societe.edit.password') }}">Changer mot de passe</a> #}
-										<a class="dropdown-item" href="{{ path('app_index') }}">Gérer mes informations</a>
-										<a class="dropdown-item" href="{{ path('app_index') }}">Changer mot de passe</a>
+										<a class="dropdown-item" href="{{ path('societe.edit') }}">Gérer mes informations</a>
+										<a class="dropdown-item" href="{{ path('societe.edit.password') }}">Changer mot de passe</a>
 									{% endif %}
 									<div class="dropdown-divider"></div>
 									{% if 'ROLE_ADMIN' in app.user.roles %}
