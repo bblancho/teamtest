@@ -196,6 +196,9 @@ class RegistrationSocieteFormType extends AbstractType
                 'label_attr' => [
                     'class' => 'form-label'
                 ],
+                'constraints' => [
+                    new Assert\Length(9)
+                ]
             ])
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,

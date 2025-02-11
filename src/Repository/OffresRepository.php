@@ -5,15 +5,38 @@ namespace App\Repository;
 use App\Entity\Offres;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @extends ServiceEntityRepository<Offres>
  */
 class OffresRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, private PaginatorInterface $paginator)
     {
         parent::__construct($registry, Offres::class);
+    }
+
+    
+    public function paginateOffres(int $page, ?int $userId): PaginationInterface
+    {
+        $builder =  $this->createQueryBuilder('o') ;
+
+        if($userId){
+            $builder = $builder->andWhere('o.societes = :user')
+            ->setParameter('user', $userId) ;
+        }
+
+        return  $this->paginator->paginate(
+            $builder ,
+            $page ,
+            10 ,
+            [   //securité sur le trie
+                'distinct' => false , 
+                'sortFieldAllowList' => ['o.id'] //securité sur le trie, on choisit sur quel champs on accorde le trie
+            ]
+        );
     }
 
     //    /**
@@ -40,4 +63,34 @@ class OffresRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+/**
+*
+* @return Offres[]
+*/
+public function offreIsPublish(): array
+{
+	return $this->createQueryBuilder('o')
+        ->where('o.isActive = 1')
+        ->orderBy('o.id', 'DESC')
+        ->getQuery() // On génère un objet Query
+        ->getResult() ;
+}
+
+
+/**
+*
+* @return Offres[]
+*/
+public function offreNotPublish(): array
+{
+
+	return $this->createQueryBuilder('o')
+        ->where('o.isActive = 0')
+        ->orderBy('o.id', 'DESC')
+        ->getQuery() // On génère un objet Query
+        ->getResult() ;
+}
+
+
 }

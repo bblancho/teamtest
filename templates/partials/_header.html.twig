@@ -13,45 +13,32 @@
 
 				<ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
 					<li class="nav-item">
-						<a href="{{ path('app_index') }}" class="nav-link {{ app.current_route == 'app_index' ? 'active' : '' }}" >Accueil</a>
-					</li>
-
-					<li class="nav-item">
-						<a class="nav-link {{ app.current_route == 'app_inde' ? 'active' : '' }}" href="{{ path('app_index') }}">OFFRES
-						</a>
+						<a href="{{ path('app_index') }}" class="nav-link {{ app.current_route == 'app_index' ? 'active' : '' }}" >OFFRES</a>
 					</li>
 
 					{% if app.user %}
 						{% if app.user.typeUser == "societes"  %}
-							{# 
-								<li class="nav-item">
-									<a class="nav-link {{ app.current_route == 'app_index' ? 'active' : '' }}" href="{{ path('offres.mes_offres') }}">Mes OFFRES
-									</a> 
-								</li> 
-								<li class="nav-item">
-									<a class="nav-link {{ app.current_route == 'app_index' ? 'active' : '' }}" href="{{ path('offres.create') }}">Créér une offre
-									</a>
-								</li>
-
-								<li class="nav-item">
-									<a class="nav-link {{ app.current_route == 'admin' ? 'active' : '' }}" href="{{ path('offres.en_ligne') }}">OFFRES publiées
-									</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link {{ app.current_route == 'admin' ? 'active' : '' }}" href="{{ path('offres.non_publiee') }}">OFFRES NON publiées
-									</a>
-								</li> 
-							#}
-
+						
 							<li class="nav-item">
-								<a class="nav-link {{ app.current_route == 'app_index' ? 'active' : '' }}" href="{{ path('app_index') }}">Mes OFFRES
+								<a class="nav-link {{ app.current_route == 'app_index' ? 'active' : '' }}" href="{{ path('offres.mes_offres') }}">Mes OFFRES
+								</a> 
+							</li> 
+							<li class="nav-item">
+								<a class="nav-link {{ app.current_route == 'app_index' ? 'active' : '' }}" href="{{ path('offres.create') }}">Créér une offre
 								</a>
 							</li>
+
+							{# <li class="nav-item">
+								<a class="nav-link {{ app.current_route == 'admin' ? 'active' : '' }}" href="{{ path('offres.en_ligne') }}">OFFRES publiées
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link {{ app.current_route == 'admin' ? 'active' : '' }}" href="{{ path('offres.non_publiee') }}">OFFRES NON publiées
+								</a>
+							</li>  #}
+						
+
 							
-							<li class="nav-item">
-								<a class="nav-link {{ app.current_route == 'app_index' ? 'active' : '' }}" href="{{ path('app_index') }}">Créer une offre
-								</a>
-							</li>
 
 							{# <li class="nav-item">
 								<a class="nav-link {{ app.current_route == 'admin' ? 'active' : '' }}" href="{{ path('app_index') }}">OFFRES publiées

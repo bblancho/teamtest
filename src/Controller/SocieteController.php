@@ -53,7 +53,7 @@ class SocieteController extends AbstractController
             $user = $form->getData();
             $manager->flush();
 
-            dd($cheminFichier) ;
+            //dd($cheminFichier) ;
 
             // /** @var UploadFile $file */
             // $file = $form->get('imageFile')->getData() ;
@@ -63,7 +63,7 @@ class SocieteController extends AbstractController
                 'Les informations de votre compte ont bien été modifiées.'
             );
 
-            dd($user) ;
+            //dd($user) ;
 
             return $this->redirectToRoute('offres.mes_offres', ['id' => $user->getId()]);
         }

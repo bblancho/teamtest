@@ -104,13 +104,7 @@ class ClientType extends AbstractType
                     'class' => 'form-label'
                 ],
                 'constraints' => [
-                    new Assert\NotBlank(),
-                    new Assert\Length([
-                        'min' => 9,
-                        'max' => 9,
-                        'minMessage' => 'Le SIRET doit comporter {{ limit }} caractères au minimum.',
-                        'maxMessage' => 'Le SIRET doit comporter {{ limit }} caractères au maximum.',
-                    ]),
+                    new Assert\NotBlank()
                 ]
             ]) 
             ->add('cvFile', FileType::class,[

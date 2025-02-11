@@ -110,12 +110,6 @@ class SocieteType extends AbstractType
                 ],
                 'constraints' => [
                     new Assert\NotBlank(),
-                    new Assert\Length([
-                        'min' => 14,
-                        'max' => 14,
-                        'minMessage' => 'Le SIREN doit comporter {{ limit }} caractères au minimum.',
-                        'maxMessage' => 'Le SIREN doit comporter {{ limit }} caractères au maximum.',
-                    ]),
                 ]
             ]) 
             ->add('isNewsletter', CheckboxType::class, [

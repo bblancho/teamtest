@@ -128,6 +128,9 @@ class RegistrationClientFormType extends AbstractType
                 'label' => 'Numéro de SIREN',
                 'label_attr' => [
                     'class' => 'form-label  mt-4'
+                ],
+                'constraints' => [
+                    new Assert\Length(9)
                 ]
             ])
             ->add('password', RepeatedType::class, [
