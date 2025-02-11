@@ -82,7 +82,7 @@ class MissionController extends AbstractController
                 'Votre mission a été créé avec succès !'
             );
 
-            return $this->redirectToRoute('offres.index');
+            return $this->redirectToRoute('offres.mes_offres');
         }
 
         return $this->render('pages/missions/new.html.twig', [
