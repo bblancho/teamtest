@@ -105,7 +105,7 @@ class MissionType extends AbstractType
                     'type' => 'number',
                     'placeholder' => '0'
                 ],
-                'label' => 'Budget de la mission :',
+                'label' => 'TJM :',
                 'label_attr' => [
                     'class' => 'form-label'
                 ],
