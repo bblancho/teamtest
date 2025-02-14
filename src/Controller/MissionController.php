@@ -42,7 +42,7 @@ class MissionController extends AbstractController
 
         $canListAll = $security->isGranted(OffresVoter::OFFRE_ALL) ;
 
-        // On limite la liste des recettes à celle de l'utilisateur si il n'a pas les permissions de tout voir
+        // On limite la liste des offres à celle de l'utilisateur si il n'a pas les permissions de tout voir
         $missions = $offresRepository->paginateOffres($page , $canListAll ? null : $userId) ;
 
         return $this->render('pages/missions/mes_missions.html.twig', [
@@ -324,12 +324,16 @@ class MissionController extends AbstractController
      * @param Offres $offre
      * @return Response
      */
-    #[Route('/suppression/{id}', 'delete', methods: ['DELETE'])]
+    #[Route('/suppression/{id}', 'delete', methods: ['POST'])]
     #[IsGranted(OffresVoter::OFFRE_DELETE, subject: 'offre')]
     public function delete(
         EntityManagerInterface $manager,
         Offres $offre
     ): Response {
+
+        // On vérifie si l'utilisateur peut supprimer avec le Voter
+        // $this->denyAccessUnlessGranted('PRODUCT_DELETE', $offre);
+
         $manager->remove($offre);
         $manager->flush();
 
@@ -338,7 +342,7 @@ class MissionController extends AbstractController
             'Votre mission a été supprimée avec succès !'
         );
 
-        return $this->redirectToRoute('offre.mes_offres');
+        return $this->redirectToRoute('offres.mes_offres');
     }
 
 }
