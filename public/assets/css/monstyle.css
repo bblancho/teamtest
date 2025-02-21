@@ -259,3 +259,18 @@ h2.font-semibold{
 .connexion{
     background-color: #F8F9FA;
 }
+
+/***** page des offres  ***/
+h4.titre_offre {
+    border-bottom: 1px solid;
+}
+
+a.lien_offre:hover{
+    background-color: #24a828;
+}
+
+small.nom_client{
+    margin: 3px 0px;
+    display: block;
+    font-style: italic;
+}

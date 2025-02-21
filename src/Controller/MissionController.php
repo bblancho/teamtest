@@ -104,7 +104,7 @@ class MissionController extends AbstractController
             return $this->redirectToRoute('offre.show', ['slug' => $mission->getSlug() , 'id' => $mission->getId()]) ;
         }
 
-        return $this->render('pages/missions/client_show.html.twig', [
+        return $this->render('pages/missions/show.html.twig', [
             'mission' => $mission
         ]);
     }

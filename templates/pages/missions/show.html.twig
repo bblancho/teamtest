@@ -1,7 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!
-{% endblock %}
+{% block title  %} {{ mission.nom }}  {% endblock %}
 
 {% block body %}
 
@@ -46,23 +45,7 @@
 							Description de la mission :
 						</h2>
 						<p>
-							Tech Valley renforce ses équipes de consultants / consultantes. Afin de répondre aux besoins de nos clients et dans le cadre de nos projets d’évolution, nous recrutons un(e) Testeur(se) automaticien(ne) à Lyon.
-							Vos missions :
-							<br/>
-
-							Concevoir des tests automatisés utiles et pérennes, orchestrer et exécuter des campagnes de tests automatisés
-							<br/>
-
-							Connaître l’environnement technique web
-							<br/>
-
-							Gérer les environnements et les données de test
-							<br/>
-
-							Installer et configurer des applications sous Unix
-							<br/>
-
-							Mettre en place un serveur d’intégration continue et intégrer ensemble différents types de contrôles (qualimétrie, performance, tests unitaires et d’intégration, tests fonctionnels)
+							{{ mission.description }}
 						</p>
 					</div>
 				</div><br/>
@@ -163,10 +146,10 @@
 								{{ mission.duree }}  mois
 							</span>
 							<span>
-								Budget : 
-								{% if not ( mission.tarif is empty) %}
+								TJM : 
+								
 									{{ mission.tarif }} €
-								{% endif %} 
+								
 							</span>
 							<span>
 								Lieu :
@@ -180,8 +163,9 @@
 								</svg> 
 								{{ mission.lieuMission }} 
 							</span>
-							<a  class="btn btn-primary " href="{{ path('app_postuler', { id: mission.id, slug: mission.slug}) }}"> Postuler </a>
-						</div>
+							{# <a  class="btn btn-primary " href="{{ path('app_postuler', { id: mission.id, slug: mission.slug}) }}"> Postuler </a>
+						 #}
+						 </div>
 					</div>
 				</div>
 				
