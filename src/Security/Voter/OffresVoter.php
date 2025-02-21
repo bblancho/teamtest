@@ -59,10 +59,8 @@ class OffresVoter extends Voter
         return false;
     }
 
-
     private function canEdit(Offres $offre, Societes $societe){
         return $societe === $offre->getSocietes();
     }    
-
 
 }

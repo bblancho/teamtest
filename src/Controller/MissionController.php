@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Offres;
-use App\Entity\Clients;
 use App\Form\OffreType;
 use App\Entity\Societes;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -40,14 +39,11 @@ class MissionController extends AbstractController
         $page = $request->query->getInt('page', 1) ;
         $userId =  $security->getUser()->getId() ;
 
+        // On limite l'affichage aux missions de la société, mettre OFFRE_LIST
         $canListAll = $security->isGranted(OffresVoter::OFFRE_ALL) ;
-
-        // On limite la liste des offres à celle de l'utilisateur si il n'a pas les permissions de tout voir
         $missions = $offresRepository->paginateOffres($page , $canListAll ? null : $userId) ;
 
-        return $this->render('pages/missions/mes_missions.html.twig', [
-            "missions" => $missions
-        ]);
+        return $this->render('pages/missions/mes_missions.html.twig', compact( "missions") );
     }
 
     /**
@@ -89,7 +85,6 @@ class MissionController extends AbstractController
             'form' => $form->createView()
         ]);
     }
-
 
     /**
      * This controller allow us to see a recipe if this one is public
