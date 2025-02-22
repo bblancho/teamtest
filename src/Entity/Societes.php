@@ -58,9 +58,15 @@ class Societes extends Users
     #[ORM\Column(length: 50, nullable: true)]
     private ?string $phoneContact = null;
 
+    /**
+     * @var Collection<int, Offres>
+     */
+    #[ORM\OneToMany(targetEntity: Offres::class, mappedBy: 'societes', orphanRemoval: true)]
+    private Collection $offres;
+
     public function __construct()
     {
-        // $this->offres = new ArrayCollection();
+        $this->offres = new ArrayCollection();
     }
 
     public function getNomContact(): ?string
@@ -156,6 +162,35 @@ class Societes extends Users
         return $this;
     }
 
+    /**
+     * @return Collection<int, Offres>
+     */
+    public function getOffres(): Collection
+    {
+        return $this->offres;
+    }
+
+    public function addOffre(Offres $offre): static
+    {
+        if (!$this->offres->contains($offre)) {
+            $this->offres->add($offre);
+            $offre->setSocietes($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOffre(Offres $offre): static
+    {
+        if ($this->offres->removeElement($offre)) {
+            // set the owning side to null (unless already changed)
+            if ($offre->getSocietes() === $this) {
+                $offre->setSocietes(null);
+            }
+        }
+
+        return $this;
+    }
 
 
 }

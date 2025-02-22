@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Offres;
+use App\Entity\Users;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\Pagination\PaginationInterface;
@@ -19,7 +20,7 @@ class OffresRepository extends ServiceEntityRepository
     }
 
     
-    public function paginateOffres(int $page, $userId): PaginationInterface
+    public function paginateOffres(int $page, Users $userId): PaginationInterface
     {
         $builder =  $this->createQueryBuilder('o') ;
 

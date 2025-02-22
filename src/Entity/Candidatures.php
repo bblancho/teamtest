@@ -9,7 +9,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 #[ORM\Entity(repositoryClass: CandidaturesRepository::class)]
 #[UniqueEntity(
     fields: ['offres', 'clients'],
-    message: 'Vous avez déjà postulé à cette offre',
+    message: 'Vous avez déjà postulé à cette offre.',
 )]
 class Candidatures
 {
