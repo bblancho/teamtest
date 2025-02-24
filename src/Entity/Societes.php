@@ -12,11 +12,13 @@ use Symfony\Component\Serializer\Attribute\Ignore;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Vich\UploaderBundle\Entity\File as EmbeddedFile;
 
 
 #[ORM\Entity(repositoryClass: SocietesRepository::class)]
 #[ORM\Table(name: "societes")]
+#[UniqueEntity('siret')]
 #[Vich\Uploadable]
 class Societes extends Users
 {
@@ -57,6 +59,14 @@ class Societes extends Users
     
     #[ORM\Column(length: 50, nullable: true)]
     private ?string $phoneContact = null;
+
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank()] 
+    #[Assert\Length(
+        exactly: 14,
+        exactMessage: "Le numéro de SIRET doit faire {{ limit }} caractères."
+    )]
+    private string $siret = " ";
 
     /**
      * @var Collection<int, Offres>
@@ -158,6 +168,18 @@ class Societes extends Users
     public function setPhoneContact(?string $phoneContact): static
     {
         $this->phoneContact = $phoneContact;
+
+        return $this;
+    }
+
+    public function getSiret(): string
+    {
+        return $this->siret;
+    }
+
+    public function setSiret(string $siret): static
+    {
+        $this->siret = $siret;
 
         return $this;
     }

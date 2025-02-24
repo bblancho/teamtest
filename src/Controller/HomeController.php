@@ -36,4 +36,5 @@ class HomeController extends AbstractController
 
         return $this->render('pages/missions/index.html.twig', compact( "missions") );
     }
+    
 }

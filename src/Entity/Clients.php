@@ -9,10 +9,12 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ClientsRepository;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ClientsRepository::class)]
 #[ORM\Table(name: "clients")]
+#[UniqueEntity('siren')]
 class Clients extends Users
 {
     #[ORM\Column(nullable: true)]
@@ -24,6 +26,14 @@ class Clients extends Users
 
     #[ORM\Column(nullable: true)]
     private ?bool $dispo = null;
+
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank()] 
+    #[Assert\Length(
+        exactly: 9,
+        exactMessage: "Le numéro de SIREN doit faire {{ limit }} caractères."
+    )]
+    private string $siren = " ";
 
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $dateDispoAt = null;
@@ -60,6 +70,18 @@ class Clients extends Users
     public function setDispo(?bool $dispo): static
     {
         $this->dispo = $dispo;
+
+        return $this;
+    }
+
+    public function getSiren(): string
+    {
+        return $this->siren;
+    }
+
+    public function setSiren(string $siren): static
+    {
+        $this->siren = $siren;
 
         return $this;
     }

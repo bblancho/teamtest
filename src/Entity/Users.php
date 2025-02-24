@@ -98,14 +98,6 @@ abstract class Users implements UserInterface, PasswordAuthenticatedUserInterfac
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $dateInscriptionAt ;
 
-    #[ORM\Column(length: 255)]
-    #[Assert\NotBlank()] 
-    #[Assert\Length(
-        exactly: 9,
-        exactMessage: "Le numéro de SIRET/SIREN doit faire {{ limit }} caractères."
-    )]
-    private string $siret = " ";
-
     #[ORM\Column]
     #[Assert\NotNull]
     private ?bool $isVerified = false;
@@ -306,18 +298,6 @@ abstract class Users implements UserInterface, PasswordAuthenticatedUserInterfac
     public function setDateInscriptionAt(?\DateTimeImmutable $dateInscriptionAt): static
     {
         $this->dateInscriptionAt = $dateInscriptionAt;
-
-        return $this;
-    }
-
-    public function getSiret(): string
-    {
-        return $this->siret;
-    }
-
-    public function setSiret(string $siret): static
-    {
-        $this->siret = $siret;
 
         return $this;
     }
