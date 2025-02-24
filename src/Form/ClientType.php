@@ -92,14 +92,14 @@ class ClientType extends AbstractType
                     'class' => 'form-label'
                 ],
             ])
-            ->add('siret', TextType::class, [
+            ->add('siren', TextType::class, [
                 'required' => false,
                 'attr' => [
                     'class' => 'form-control',
                     'minlenght' => '9',
                     'maxlenght' => '9',
                 ],
-                'label' => 'Numéro de siret',
+                'label' => 'Numéro de siren',
                 'label_attr' => [
                     'class' => 'form-label'
                 ],

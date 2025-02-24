@@ -57,7 +57,7 @@ class Clients extends Users
 
     public function __construct()
     {
-        parent::__construct();
+        //parent::__construct();
         $this->candidatures = new ArrayCollection();
     }
 
