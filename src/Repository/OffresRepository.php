@@ -18,14 +18,12 @@ class OffresRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Offres::class);
     }
-
     
-    public function paginateOffres(int $page, Users $userId): PaginationInterface
+    public function paginateOffres(int $page, ?int $userId): PaginationInterface
     {
         $builder =  $this->createQueryBuilder('o') ;
 
         if($userId){
-            $userId = $userId->getId() ;
             $builder = $builder->andWhere('o.societes = :user')
             ->setParameter('user', $userId) ;
         }

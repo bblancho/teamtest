@@ -18,7 +18,6 @@
 
 					{% if app.user %}
 						{% if app.user.typeUser == "societes"  %}
-						
 							<li class="nav-item">
 								<a class="nav-link {{ app.current_route == 'offres.mes_offres' ? 'active' : '' }}" href="{{ path('offres.mes_offres') }}">Mes OFFRES
 								</a> 
@@ -27,28 +26,6 @@
 								<a class="nav-link {{ app.current_route == 'offres.create' ? 'active' : '' }}" href="{{ path('offres.create') }}">Creer une offre
 								</a>
 							</li>
-
-							{# <li class="nav-item">
-								<a class="nav-link {{ app.current_route == 'admin' ? 'active' : '' }}" href="{{ path('offres.en_ligne') }}">OFFRES publiées
-								</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link {{ app.current_route == 'admin' ? 'active' : '' }}" href="{{ path('offres.non_publiee') }}">OFFRES NON publiées
-								</a>
-							</li>  #}
-						
-
-							
-
-							{# <li class="nav-item">
-								<a class="nav-link {{ app.current_route == 'admin' ? 'active' : '' }}" href="{{ path('app_index') }}">OFFRES publiées
-								</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link {{ app.current_route == 'admin' ? 'active' : '' }}" href="{{ path('app_index') }}">OFFRES NON publiées
-								</a>
-							</li>  #}
-
 						{% elseif app.user.typeUser == "clients"%}
 							<li class="nav-item">
 								<a class="nav-link {{ app.current_route == 'app_index' ? 'active' : '' }}" href="{{ path('app_index') }}">Mes candidatures

@@ -29,7 +29,33 @@ class MissionController extends AbstractController
      * @return Response
      */
     #[Route('/societe/mes-offres', name: 'mes_offres', methods: ['GET'])]
-    #[IsGranted(OffresVoter::OFFRE_LIST)]
+    #[IsGranted(OffresVoter::OFFRE_ALL)]
+    public function index(
+        OffresRepository $offresRepository,
+        Request $request,
+        Security $security
+    ): Response {
+
+        $page = $request->query->getInt('page', 1) ;
+        $userId =  $security->getUser()->getId() ;
+
+        // On limite l'affichage aux missions de la société, mettre OFFRE_LIST
+        $canListAll = $security->isGranted(OffresVoter::OFFRE_ALL) ;
+        $missions   = $offresRepository->paginateOffres($page , $canListAll ? null : $userId) ;
+
+        return $this->render('pages/home/index.html.twig', compact( "missions") );
+    }
+
+    /**
+     * 
+     * @param OffresRepository $offresRepository
+     * @param Request $request
+     * @param Security $security
+     * 
+     * @return Response
+     */
+    #[Route('/societe/mes-offres', name: 'mes_offres', methods: ['GET'])]
+    #[IsGranted(OffresVoter::OFFRE_CLIENT)]
     public function mesOffres(
         OffresRepository $offresRepository,
         Request $request,
@@ -41,7 +67,7 @@ class MissionController extends AbstractController
 
         // On limite l'affichage aux missions de la société, mettre OFFRE_LIST
         $canListAll = $security->isGranted(OffresVoter::OFFRE_ALL) ;
-        $missions = $offresRepository->paginateOffres($page , $canListAll ? null : $userId) ;
+        $missions   = $offresRepository->paginateOffres($page , $canListAll ? null : $userId) ;
 
         return $this->render('pages/missions/mes_missions.html.twig', compact( "missions") );
     }
