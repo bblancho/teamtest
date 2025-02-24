@@ -9,24 +9,38 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ClientsRepository;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ClientsRepository::class)]
-#[ORM\Table(name: "clients")]
-#[UniqueEntity('siren')]
+#[Vich\Uploadable]
 class Clients extends Users
 {
     #[ORM\Column(nullable: true)]
-    #[Assert\Type(
-        type: 'integer',
-        message: "La valeur {{ value }} n'est pas de {{ type }}.",
-    )]
     private ?int $tjm = null;
 
     #[ORM\Column(nullable: true)]
     private ?bool $dispo = null;
 
+    #[Vich\UploadableField(mapping: 'clients', fileNameProperty: 'cvName')]
+    #[Assert\File(
+        mimeTypes:["image/jpeg", "image/jpg", "image/png"],
+        mimeTypesMessage: "Ce type de document {{ type }} n'est pas accepté.",
+        maxSize: "2M",
+        maxSizeMessage:" La taille maximum acceptée est de ({{ size }} {{ suffix }}. ",
+        extensions: [ 
+            'png',
+            'jpeg',
+            'jpg',
+        ],
+    )]
+    private ?File $cvFile = null;
+
+    #[ORM\Column( length: 255, nullable: true)]
+    private ?string $cvName = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $dateDispoAt = null;
+    
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank()] 
     #[Assert\Length(
@@ -35,8 +49,17 @@ class Clients extends Users
     )]
     private string $siren = " ";
 
-    #[ORM\Column(nullable: true)]
-    private ?\DateTimeImmutable $dateDispoAt = null;
+    /**
+     * @var Collection<int, Candidatures>
+     */
+    #[ORM\OneToMany(targetEntity: Candidatures::class, mappedBy: 'clients')]
+    private Collection $candidatures;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->candidatures = new ArrayCollection();
+    }
 
     public function getTjm(): ?int
     {
@@ -74,6 +97,41 @@ class Clients extends Users
         return $this;
     }
 
+    /**
+     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
+     * of 'UploadedFile' is injected into this setter to trigger the update. If this
+     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
+     * must be able to accept an instance of 'File' as the bundle will inject one here
+     * during Doctrine hydration.
+     *
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile|null $cvFile
+     */
+    public function setCvFile(?File $cvFile = null): void
+    {
+        $this->cvFile = $cvFile;
+
+        // if (null !== $cvFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+        //     $this->updatedAt = new \DateTimeImmutable();
+        // }
+    }
+
+    public function getCvFile(): ?File
+    {
+        return $this->cvFile;
+    }
+
+    public function setCvName(?string $cvName): void
+    {
+        $this->cvName = $cvName;
+    }
+
+    public function getCvName(): ?string
+    {
+        return $this->cvName;
+    }
+
     public function getSiren(): string
     {
         return $this->siren;
@@ -86,6 +144,35 @@ class Clients extends Users
         return $this;
     }
 
+    /**
+     * @return Collection<int, Candidatures>
+     */
+    public function getCandidatures(): Collection
+    {
+        return $this->candidatures;
+    }
+
+    public function addCandidature(Candidatures $candidature): static
+    {
+        if (!$this->candidatures->contains($candidature)) {
+            $this->candidatures->add($candidature);
+            $candidature->setClients($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCandidature(Candidatures $candidature): static
+    {
+        if ($this->candidatures->removeElement($candidature)) {
+            // set the owning side to null (unless already changed)
+            if ($candidature->getClients() === $this) {
+                $candidature->setClients(null);
+            }
+        }
+
+        return $this;
+    }
 
     
 }

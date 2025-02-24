@@ -27,7 +27,7 @@ class Candidatures
     private Clients $clients ;
 
     #[ORM\Column(nullable: true)]
-    private ?bool $isConsulte = null;
+    private ?bool $consulte = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
@@ -66,12 +66,12 @@ class Candidatures
 
     public function isConsulte(): ?bool
     {
-        return $this->isConsulte;
+        return $this->consulte;
     }
 
-    public function setConsulte(?bool $isConsulte): static
+    public function setConsulte(?bool $consulte): static
     {
-        $this->isConsulte = $isConsulte;
+        $this->consulte = $consulte;
 
         return $this;
     }
