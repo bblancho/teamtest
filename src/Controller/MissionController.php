@@ -113,29 +113,6 @@ class MissionController extends AbstractController
     }
 
     /**
-     * This controller allow us to see a recipe if this one is public
-     *
-     * @param OffresRepository $offresRepository
-     * @return Response
-     */
-    #[Route('/client/{slug}-{id}', name: 'show', methods: ['GET'], requirements: ['id' => '\d+' , 'slug' => '[a-z0-9-]+'] )]
-    #[IsGranted(OffresVoter::OFFRE_VIEW, subject: 'offre')]
-    public function show(
-        OffresRepository $offresRepository, int $id, string $slug , Offres $offre
-    ): Response {
-
-        $mission = $offresRepository->find($id);
-
-        if( $mission->getSlug() != $slug){
-            return $this->redirectToRoute('offre.show', ['slug' => $mission->getSlug() , 'id' => $mission->getId()]) ;
-        }
-
-        return $this->render('pages/missions/show.html.twig', [
-            'mission' => $mission
-        ]);
-    }
-
-    /**
      * This controller allow us to edit an ingredient
      *
      * @param Offres $offre

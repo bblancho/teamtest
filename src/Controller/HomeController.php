@@ -2,15 +2,18 @@
 
 namespace App\Controller;
 
+use App\Entity\Offres;
 use App\Entity\Candidatures;
 use App\Security\Voter\OffresVoter;
 use App\Repository\OffresRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HomeController extends AbstractController
@@ -37,6 +40,71 @@ class HomeController extends AbstractController
         $missions   = $offresRepository->paginateOffres($page , $userId) ;
 
         return $this->render('pages/missions/index.html.twig', compact( "missions") );
+    }
+
+    /**
+     * Affiche une mission
+     *
+     * @param OffresRepository $offresRepository
+     * @return Response
+     */
+    #[Route('/client/{slug}-{id}', name: 'app_show_offre', methods: ['GET'], requirements: ['id' => '\d+' , 'slug' => '[a-z0-9-]+'] )]
+    public function show(
+        OffresRepository $offresRepository, int $id, string $slug , Offres $offre
+    ): Response {
+
+        $mission = $offresRepository->find($id);
+
+        if( $mission->getSlug() != $slug){
+            return $this->redirectToRoute('app_show_offre', ['slug' => $mission->getSlug() , 'id' => $mission->getId()]) ;
+        }
+
+        return $this->render('pages/missions/show.html.twig', [
+            'mission' => $mission
+        ]);
+    }
+
+    /**
+     * This controller allow us to see a recipe if this one is public
+     *
+     * @param OffresRepository $offresRepository
+     * @return Response
+     */
+    #[Route('/{slug}-{id}/postuler', name: 'app_postuler', methods: ['GET'], requirements: ['id' => '\d+' , 'slug' => '[a-z0-9-]+'] )]
+    #[IsGranted(new Expression('is_granted("ROLE_USER") and is_granted("ROLE_CLIENT")'))]
+    public function postuler(
+        OffresRepository $offresRepository, 
+        int $id, 
+        string $slug ,
+        EntityManagerInterface $manager
+    ): Response {
+
+        $mission = $offresRepository->find($id);
+
+        if( $mission->getSlug() != $slug){
+            return $this->redirectToRoute('offre.show', ['slug' => $mission->getSlug() , 'id' => $mission->getId()]) ;
+        }
+
+        $freeLance = $this->getUser() ;
+
+        $candidature = new Candidatures() ;
+
+        $candidature->setOffres($mission)
+            ->setClients($freeLance)
+            ->setConsulte(false)
+            ->setCreatedAt(new \DateTimeImmutable())
+        ;
+
+        $manager->persist($candidature);
+        $manager->flush();
+
+        $this->addFlash(
+            'success',
+            "Merci pour votre candidature, sans réponse de notre part sous un délai de 2 semaines,
+            considérer votre candidature comme non retenue."
+        );
+
+        return $this->redirectToRoute('app_index');
     }
 
     /**
@@ -75,49 +143,6 @@ class HomeController extends AbstractController
         return $this->render('pages/missions/show.html.twig', [
             'mission' => $mission
         ]);
-    }
-
-
-    /**
-     * This controller allow us to see a recipe if this one is public
-     *
-     * @param OffresRepository $offresRepository
-     * @return Response
-     */
-    #[Route('/{slug}-{id}/postuler', name: 'app_postuler', methods: ['GET'], requirements: ['id' => '\d+' , 'slug' => '[a-z0-9-]+'] )]
-    public function postuler(
-        OffresRepository $offresRepository, 
-        int $id, 
-        string $slug ,
-        EntityManagerInterface $manager
-    ): Response {
-
-        $mission = $offresRepository->find($id);
-
-        if( $mission->getSlug() != $slug){
-            return $this->redirectToRoute('offre.show', ['slug' => $mission->getSlug() , 'id' => $mission->getId()]) ;
-        }
-
-        $freeLance = $this->getUser() ;
-
-        $candidature = new Candidatures() ;
-
-        $candidature->setOffres($mission)
-            ->setClients($freeLance)
-            ->setConsulte(false)
-            ->setCreatedAt(new \DateTimeImmutable())
-        ;
-
-        $manager->persist($candidature);
-        $manager->flush();
-
-        $this->addFlash(
-            'success',
-            "Merci pour votre candidature, sans réponse de notre part sous un délai de 2 semaines,
-            considérer votre candidature comme non retenue."
-        );
-
-        return $this->redirectToRoute('app_index');
     }
 
     /**
