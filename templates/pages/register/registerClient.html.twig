@@ -8,7 +8,7 @@
 		<div class="container">
 		<h1>
 			Créer un compte free-lance
-		</h1>
+		</h1><br/>
 
 		{{ form_start(registrationForm) }}
 
@@ -50,13 +50,13 @@
 				</div>
 			</div>
 
-			<button class="btn btn-primary mt-4" type="submit">S'inscrire en tant que Free-lance</button>
+			<button class="btn btn-primary mt-3 mb-2" type="submit">S'inscrire en tant que Free-lance</button>
 
 		{{ form_end(registrationForm) }}
 
 		<div>
 			<p>
-				Déjà inscrit(e)?
+				Déjà inscrit ?  
 				<a href="{{ path('security.login') }}">
 					Se connecter
 				</a>

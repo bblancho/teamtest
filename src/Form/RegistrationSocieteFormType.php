@@ -182,22 +182,24 @@ class RegistrationSocieteFormType extends AbstractType
                     'class' => 'form-label'
                 ],
                 'constraints' => [
-                    new Assert\Length(['min' => 2, 'max' => 10])
+                    new Assert\Length(10)
                 ]
             ])
             ->add('siret', TextType::class, [
                 'required' => true,
                 'attr' => [
                     'class' => 'form-control',
-                    'minlenght' => '9',
-                    'maxlenght' => '9',
                 ],
                 'label' => 'Numéro de Siren',
                 'label_attr' => [
                     'class' => 'form-label'
                 ],
                 'constraints' => [
-                    new Assert\Length(9)
+                    new Assert\Length([
+                        'min' =>14,
+                        'max'=> 14,
+                        'exactMessage'=> 'Le numéro de SIRET doit faire {{ limit }} caractères.'
+                    ])
                 ]
             ])
             ->add('password', RepeatedType::class, [
