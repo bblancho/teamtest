@@ -274,3 +274,52 @@ small.nom_client{
     display: block;
     font-style: italic;
 }
+
+/** Page article **/
+.breadcrumb__item:after {
+    border-right: .1em solid #24a828;
+    content: "";
+    display: inline-block;
+    height: .85em;
+    margin: 0 12px;
+    position: relative;
+    top: 2px;
+    transform: rotate(165deg);
+}
+
+.titre-offre{
+    color: rgb(0, 0, 0);
+    font-family: welcome-font, sans-serif;
+    font-weight: 600;
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+    letter-spacing: -0.0625rem;
+}
+
+.breadcrumb a {
+    color: #000;
+    text-decoration: none;
+}
+
+.breadcrumb a:hover {
+    color: #24a828;
+}
+
+.breadcrumb>span {
+    color: #9ca3af;
+    scroll-snap-align: end;
+}
+
+.info-offre{
+    background-color: rgb(246, 243, 239);
+    padding: 1.5rem;
+}
+
+.info-offre>h3{
+    color: rgb(0, 0, 0);
+    font-family: welcome-font, sans-serif;
+    font-weight: 600;
+    font-size: 1.625rem;
+    line-height: 2rem;
+    letter-spacing: -0.05625rem;
+}

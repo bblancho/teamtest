@@ -5,195 +5,178 @@
 {% endblock %}
 
 {% block body %}
+	<main role="main">
 
-	<div class="container">
+		<section class="jumbotron text-center bg-light pt-1 pb-1 mb-3">
+			<div class="container">
+				<nav aria-label="Breadcrumb" role="navigation"  class="breadcrumb scrolling-touch">
+					<a href="{{ path('app_index') }}" class="breadcrumb__item active" > Accueil </a> 
+					<a href="{{ path('app_index') }}" class="breadcrumb__item" > Offres  </a> 
+					<span aria-current="page"> {{ mission.nom }} </span>
+				</nav>
+			</div>
+		</section>
 
-		<div class="row">
+		<div class="container">
 
-			<div class="col-md-9">
+			<div class="row">
 
-				<div class="card shadow-sm mb-2 mission-bg">
-					<div class=" d-flex card-body px">
-						<div class="pe-3">
-							<p class='logo_client'>
-								<img src="https://photo.maxifoot.fr/rennes-doue-2.jpg" alt="image"/>
-							</p>
-						</div>
+				<div class="col-md-9">
+					<div class="card shadow-sm">
+						<div class="card-body">
+							<div class="card-text">
+								<h1 class="text-2xl font-bold">
+									{{ mission.nom }}
+								</h1>
+								<p>
+									<span class="badge badge-pill badge-dark">helm</span>
+									<span class="badge badge-pill badge-dark">PHP</span>
+									<span class="badge badge-pill badge-dark">PostgreSQL</span>
+									<span class="badge badge-pill badge-dark">Github</span>
+								</p>
+							</div>
 
-						<div class="card-text">
-							<em class="block text-xs">
-								Mission :
-							</em>
-							<h1 class="text-2xl font-bold">
-								Dev
-							</h1>
-							<h2 class="text-xl font-bold">
-								Pas-de-Calais
+							<h2 class="info-offre text-xl font-semibold ">
+								Description de la mission :
 							</h2>
-
 							<p>
-								<span class="badge badge-pill badge-dark">helm</span>
-								<span class="badge badge-pill badge-dark">PHP</span>
-								<span class="badge badge-pill badge-dark">PostgreSQL</span>
-								<span class="badge badge-pill badge-dark">Github</span>
+								{{ mission.description }}
 							</p>
 						</div>
-					</div>
+					</div><br/>
+
+					<div class="card shadow-sm">
+						<div class="card-body">
+							<div class="info-offre">
+								<h3> Profil recherché : </h3>
+							</div>
+							De formation Bac+2 à Bac +5 Ingénieur ou formation équivalente en informatique, vous justifiez d’une expérience similaire.<br/>
+
+							Vous êtes à l’aise dans l’environnement technique suivant :<br/>
+
+							Maîtriser les outils Selenium, Robotframework, Jenkins, SoaopUI, NeoLoad, Squash, SonarQube<br/>
+
+							Maîtriser la qualimétrie, les tests de performance et les tests de sécurité<br/>
+
+							Maîtriser les concepts de la livraison continue et du déploiement continu<br/>
+
+							Expérience : 5 ans minimum hors stage et alternance<br/>
+
+							Rémunération selon profil<br/>
+
+							Cet environnement technique vous parle et vous souhaitez vous investir sur des missions innovantes ? N’attendez plus et envoyez votre CV pour rejoindre nos équipes.<br/>
+						</div>
+					</div><br/>
+
+					<div class="card shadow-sm">
+						<div class="card-body">
+							<div class="info-offre">
+								<h3> Environnement de travail : </h3>
+							</div>
+
+							Télétravail Hybride
+							<br/>
+
+							Début de la mission : Immédiatement
+							<br/>
+
+							Lieu : Issy les Moulineaux
+							<br/>
+
+							Autres compétences/souhaitées :
+							<br/>
+
+							Modelio
+							<br/>
+
+							Excel
+							<br/>
+
+							Analyse des données avec Dremio, Microstrategy<br/>
+
+							Niveau en anglais : Bilingue
+						</div>
+					</div><br/>
 				</div>
 
-				<div class="card shadow-sm">
-					<div class="card-body">
-						<h2 class="info-offre text-xl font-semibold ">
-							Description de la mission :
-						</h2>
-						<p>
-							{{ mission.description }}
-						</p>
-					</div>
-				</div><br/>
-
-				<div class="card shadow-sm">
-					<div class="card-body">
-						<h2 class="info-offre text-xl font-semibold ">
-							Profil recherché :
-						</h2>
-						De formation Bac+2 à Bac +5 Ingénieur ou formation équivalente en informatique, vous justifiez d’une expérience similaire.<br/>
-
-						Vous êtes à l’aise dans l’environnement technique suivant :<br/>
-
-						Maîtriser les outils Selenium, Robotframework, Jenkins, SoaopUI, NeoLoad, Squash, SonarQube<br/>
-
-						Maîtriser la qualimétrie, les tests de performance et les tests de sécurité<br/>
-
-						Maîtriser les concepts de la livraison continue et du déploiement continu<br/>
-
-						Expérience : 5 ans minimum hors stage et alternance<br/>
-
-						Rémunération selon profil<br/>
-
-						Cet environnement technique vous parle et vous souhaitez vous investir sur des missions innovantes ? N’attendez plus et envoyez votre CV pour rejoindre nos équipes.<br/>
-					</div>
-				</div><br/>
-
-				<div class="card shadow-sm">
-					<div class="card-body">
-						<h2 class="info-offre text-xl font-semibold">
-							Environnement de travail :
-						</h2>
-
-						Télétravail Hybride
-						<br/>
-
-						Début de la mission : Immédiatement
-						<br/>
-
-						Lieu : Issy les Moulineaux
-						<br/>
-
-						Autres compétences/souhaitées :
-						<br/>
-
-						Modelio
-						<br/>
-
-						Excel
-						<br/>
-
-						Analyse des données avec Dremio, Microstrategy<br/>
-
-						Niveau en anglais : Bilingue
-					</div>
-				</div><br/>
-
-			</div>
-
-			<div class="col-md-3 sticky">
-
-				<div class="card shadow-sm">
-					<div class="card-body">
-						<div class="info_mission_show">
-							<h2 class="info-offre text-xl font-semibold ">
-								{{ mission.nom }}
-							</h2>
-							<span>
-								Ref mission: #{{ mission.refMission }}
-							</span>
-							<span>
-								Date de démarrage :
-								<svg fill="#000000" height="15px" width="15px" version="1.0" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewbox="0 0 24 24" enable-background="new 0 0 24 24" xml:space="preserve">
-									<g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-									<g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-									<g id="SVGRepo_iconCarrier">
-										<g>
-											<path d="M21,13.6V4.5C21,3.7,20.3,3,19.5,3H17V1.5C17,0.7,16.3,0,15.5,0h-1C13.7,0,13,0.7,13,1.5V3H8V1.5C8,0.7,7.3,0,6.5,0h-1 C4.7,0,4,0.7,4,1.5V3H1.5C0.7,3,0,3.7,0,4.5v16C0,21.3,0.7,22,1.5,22h12.8c1,1.2,2.5,2,4.2,2c3,0,5.5-2.5,5.5-5.5 C24,16.4,22.8,14.5,21,13.6z M13.6,16H11v-4h4v2.3C14.4,14.7,14,15.3,13.6,16z M6,16v-4h4v4H6z M10,17v4H6v-4H10z M15,7v4h-4V7H15z M10,11H6V7h4V11z M5,11H1V7h4V11z M5,12v4H1v-4H5z M16,12h4v1.2c-0.5-0.1-1-0.2-1.5-0.2c-0.9,0-1.7,0.2-2.5,0.6V12z M20,11h-4V7h4 V11z M14,1.5C14,1.2,14.2,1,14.5,1h1C15.8,1,16,1.2,16,1.5v2C16,3.8,15.8,4,15.5,4h-1C14.2,4,14,3.8,14,3.5V1.5z M5,1.5 C5,1.2,5.2,1,5.5,1h1C6.8,1,7,1.2,7,1.5v2C7,3.8,6.8,4,6.5,4h-1C5.2,4,5,3.8,5,3.5V1.5z M1.5,4h2.6c0.2,0.6,0.8,1,1.4,1h1 c0.7,0,1.2-0.4,1.4-1h5.2c0.2,0.6,0.8,1,1.4,1h1c0.7,0,1.2-0.4,1.4-1h2.6C19.8,4,20,4.2,20,4.5V6H1V4.5C1,4.2,1.2,4,1.5,4z M1,20.5 V17h4v4H1.5C1.2,21,1,20.8,1,20.5z M11,21v-4h2.2c-0.1,0.5-0.2,1-0.2,1.5c0,0.9,0.2,1.7,0.6,2.5H11z M18.5,23C16,23,14,21,14,18.5 s2-4.5,4.5-4.5s4.5,2,4.5,4.5S21,23,18.5,23z"></path>
+				<div class="col-md-3 sticky">
+					<div class="card shadow-sm">
+						<div class="card-body">
+							<div class="info_mission_show">
+								<div class="info-offre">
+									<h3> {{ mission.nom }}</h3>
+								</div>
+								<span>
+									Ref mission: #{{ mission.refMission }}
+								</span>
+								<span>
+									Date de démarrage :
+									<svg fill="#000000" height="15px" width="15px" version="1.0" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewbox="0 0 24 24" enable-background="new 0 0 24 24" xml:space="preserve">
+										<g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+										<g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+										<g id="SVGRepo_iconCarrier">
 											<g>
-												<path d="M17.5,21c-0.1,0-0.3-0.1-0.4-0.1l-2-2c-0.2-0.2-0.2-0.5,0-0.7s0.5-0.2,0.7,0l1.6,1.6l2.7-3.5c0.2-0.2,0.5-0.3,0.7-0.1 c0.2,0.2,0.3,0.5,0.1,0.7l-3,4C17.8,20.9,17.7,21,17.5,21C17.5,21,17.5,21,17.5,21z"></path>
+												<path d="M21,13.6V4.5C21,3.7,20.3,3,19.5,3H17V1.5C17,0.7,16.3,0,15.5,0h-1C13.7,0,13,0.7,13,1.5V3H8V1.5C8,0.7,7.3,0,6.5,0h-1 C4.7,0,4,0.7,4,1.5V3H1.5C0.7,3,0,3.7,0,4.5v16C0,21.3,0.7,22,1.5,22h12.8c1,1.2,2.5,2,4.2,2c3,0,5.5-2.5,5.5-5.5 C24,16.4,22.8,14.5,21,13.6z M13.6,16H11v-4h4v2.3C14.4,14.7,14,15.3,13.6,16z M6,16v-4h4v4H6z M10,17v4H6v-4H10z M15,7v4h-4V7H15z M10,11H6V7h4V11z M5,11H1V7h4V11z M5,12v4H1v-4H5z M16,12h4v1.2c-0.5-0.1-1-0.2-1.5-0.2c-0.9,0-1.7,0.2-2.5,0.6V12z M20,11h-4V7h4 V11z M14,1.5C14,1.2,14.2,1,14.5,1h1C15.8,1,16,1.2,16,1.5v2C16,3.8,15.8,4,15.5,4h-1C14.2,4,14,3.8,14,3.5V1.5z M5,1.5 C5,1.2,5.2,1,5.5,1h1C6.8,1,7,1.2,7,1.5v2C7,3.8,6.8,4,6.5,4h-1C5.2,4,5,3.8,5,3.5V1.5z M1.5,4h2.6c0.2,0.6,0.8,1,1.4,1h1 c0.7,0,1.2-0.4,1.4-1h5.2c0.2,0.6,0.8,1,1.4,1h1c0.7,0,1.2-0.4,1.4-1h2.6C19.8,4,20,4.2,20,4.5V6H1V4.5C1,4.2,1.2,4,1.5,4z M1,20.5 V17h4v4H1.5C1.2,21,1,20.8,1,20.5z M11,21v-4h2.2c-0.1,0.5-0.2,1-0.2,1.5c0,0.9,0.2,1.7,0.6,2.5H11z M18.5,23C16,23,14,21,14,18.5 s2-4.5,4.5-4.5s4.5,2,4.5,4.5S21,23,18.5,23z"></path>
+												<g>
+													<path d="M17.5,21c-0.1,0-0.3-0.1-0.4-0.1l-2-2c-0.2-0.2-0.2-0.5,0-0.7s0.5-0.2,0.7,0l1.6,1.6l2.7-3.5c0.2-0.2,0.5-0.3,0.7-0.1 c0.2,0.2,0.3,0.5,0.1,0.7l-3,4C17.8,20.9,17.7,21,17.5,21C17.5,21,17.5,21,17.5,21z"></path>
+												</g>
 											</g>
 										</g>
-									</g>
-								</svg>
-								{{ mission.startDateAT|date('d/m/Y') }}
-							</span>
-							<span>
-								Durée :
-								<svg width="15px" height="15px" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-									<g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-									<g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-									<g id="SVGRepo_iconCarrier">
-										<path d="M12 22C16.4183 22 20 18.4183 20 14C20 9.58172 16.4183 6 12 6C7.58172 6 4 9.58172 4 14C4 18.4183 7.58172 22 12 22Z" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-										<path d="M9 2H15" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-										<path d="M15.24 10.76L12 14" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-									</g>
-								</svg>
-								{{ mission.duree }}
-								mois
-							</span>
-							<span>
-								TJM :
+									</svg>
+									{{ mission.startDateAT|date('d/m/Y') }}
+								</span>
+								<span>
+									Durée :
+									<svg width="15px" height="15px" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+										<g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+										<g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+										<g id="SVGRepo_iconCarrier">
+											<path d="M12 22C16.4183 22 20 18.4183 20 14C20 9.58172 16.4183 6 12 6C7.58172 6 4 9.58172 4 14C4 18.4183 7.58172 22 12 22Z" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+											<path d="M9 2H15" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+											<path d="M15.24 10.76L12 14" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+										</g>
+									</svg>
+									{{ mission.duree }}
+									mois
+								</span>
+								<span>
+									TJM : {{ mission.tarif }} €/j
+								</span>
+								<span>
+									Lieu :
+									<svg width="15px" height="15px" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+										<g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+										<g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+										<g id="SVGRepo_iconCarrier">
+											<path d="M12 21C15.5 17.4 19 14.1764 19 10.2C19 6.22355 15.866 3 12 3C8.13401 3 5 6.22355 5 10.2C5 14.1764 8.5 17.4 12 21Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+											<path d="M12 12C13.1046 12 14 11.1046 14 10C14 8.89543 13.1046 8 12 8C10.8954 8 10 8.89543 10 10C10 11.1046 10.8954 12 12 12Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+										</g>
+									</svg>
+									{{ mission.lieuMission }}
+								</span>
+								<a class="btn btn-primary " href="{{ path('app_postuler', { id: mission.id, slug: mission.slug}) }}">
+									Postuler
+								</a>
+							</div>
+						</div>
+					</div>
 
-								{{ mission.tarif }}
-								€
+					<br/>
 
-							</span>
-							<span>
-								Lieu :
-								<svg width="15px" height="15px" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-									<g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-									<g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-									<g id="SVGRepo_iconCarrier">
-										<path d="M12 21C15.5 17.4 19 14.1764 19 10.2C19 6.22355 15.866 3 12 3C8.13401 3 5 6.22355 5 10.2C5 14.1764 8.5 17.4 12 21Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-										<path d="M12 12C13.1046 12 14 11.1046 14 10C14 8.89543 13.1046 8 12 8C10.8954 8 10 8.89543 10 10C10 11.1046 10.8954 12 12 12Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-									</g>
-								</svg>
-								{{ mission.lieuMission }}
-							</span>
-							<a class="btn btn-primary " href="{{ path('app_postuler', { id: mission.id, slug: mission.slug}) }}">
-								Postuler
-							</a>
+					<div class="card shadow-sm">
+						<div class="card-body">
+							<div class="info-offre">
+								<h3> L'entreprise : </h3>
+							</div>
+							<p> {{ mission.description }} </p>
 						</div>
 					</div>
 				</div>
 
-				<br/>
-
-				<div class="card shadow-sm">
-					<div class="card-body">
-						<h2 class="info-offre text-xl font-semibold">
-							Description de la société :
-						</h2>
-
-						<p>
-							Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
-														molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum
-														numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium
-														optio, eaque rerum! Provident similique accusantium nemo autem.
-						</p>
-					</div>
-				</div>
 			</div>
 
 		</div>
-
-	</div>
+		
+	</main>
 
 {% endblock %}
