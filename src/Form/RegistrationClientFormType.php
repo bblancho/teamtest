@@ -130,7 +130,11 @@ class RegistrationClientFormType extends AbstractType
                     'class' => 'form-label  mt-4'
                 ],
                 'constraints' => [
-                    new Assert\Length(9)
+                    new Assert\Length([
+                        'min' =>9,
+                        'max'=> 9,
+                        'exactMessage'=> 'Le numéro de siret doit faire {{ limit }} caractères.'
+                    ])
                 ]
             ])
             ->add('password', RepeatedType::class, [

@@ -43,10 +43,10 @@ class Clients extends Users
     
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank()] 
-    #[Assert\Length(
-        exactly: 9,
-        exactMessage: "Le numéro de SIREN doit faire {{ limit }} caractères."
-    )]
+    // #[Assert\Length(
+    //     exactly: 9,
+    //     exactMessage: "Le numéro de SIREN doit faire {{ limit }} caractères."
+    // )]
     private string $siren = " ";
 
     /**

@@ -51,21 +51,17 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
         $user = $this->user->getUser();
 
         if(  in_array('ROLE_CLIENT', $user->getRoles(), true) ){ 
-            // return new RedirectResponse($this->urlGenerator->generate('candidatures', ['id' => $user->getId()] ));
             return new RedirectResponse($this->urlGenerator->generate('app_index'));
         }
 
         if( in_array('ROLE_SOCIETE', $user->getRoles(), true)){
-            // return new RedirectResponse($this->urlGenerator->generate('offres.mes_offres', ['id' => $user->getId()] ));
-            return new RedirectResponse($this->urlGenerator->generate('app_index'));
+            return new RedirectResponse($this->urlGenerator->generate('offres.mes_offres'));
         }
         
         if (in_array('ROLE_ADMIN', $user->getRoles(), true)) {
             // return new RedirectResponse($this->urlGenerator->generate('admin'));
             return new RedirectResponse($this->urlGenerator->generate('app_index'));
         }
-
-        return new RedirectResponse($this->urlGenerator->generate('app_index'));
     }
 
     protected function getLoginUrl(Request $request): string

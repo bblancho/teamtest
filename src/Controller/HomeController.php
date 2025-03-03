@@ -71,7 +71,7 @@ class HomeController extends AbstractController
      * @return Response
      */
     #[Route('/{slug}-{id}/postuler', name: 'app_postuler', methods: ['GET'], requirements: ['id' => '\d+' , 'slug' => '[a-z0-9-]+'] )]
-    #[IsGranted(new Expression('is_granted("ROLE_USER") and is_granted("ROLE_CLIENT")'))]
+    #[IsGranted(new Expression('is_granted("ROLE_USER") or is_granted("ROLE_ADMIN")'))]
     public function postuler(
         OffresRepository $offresRepository, 
         int $id, 
@@ -80,6 +80,11 @@ class HomeController extends AbstractController
     ): Response {
 
         $mission = $offresRepository->find($id);
+
+        if($this->isGranted('ROLE_SOCIETE'))
+        {
+            return $this->redirectToRoute('offre.mes_offres') ;
+        }
 
         if( $mission->getSlug() != $slug){
             return $this->redirectToRoute('offre.show', ['slug' => $mission->getSlug() , 'id' => $mission->getId()]) ;

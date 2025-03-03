@@ -40,6 +40,10 @@ input[type=search] {
     color: #24a828;
 }
 
+h1.jumbotron-heading{
+    text-transform: uppercase;
+}
+
 
 /************************ Footer *************************/
 

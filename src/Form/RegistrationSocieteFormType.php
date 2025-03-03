@@ -198,7 +198,7 @@ class RegistrationSocieteFormType extends AbstractType
                     new Assert\Length([
                         'min' =>14,
                         'max'=> 14,
-                        'exactMessage'=> 'Le numéro de SIRET doit faire {{ limit }} caractères.'
+                        'exactMessage'=> 'Le numéro de siren doit faire {{ limit }} caractères.'
                     ])
                 ]
             ])

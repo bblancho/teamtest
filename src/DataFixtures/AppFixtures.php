@@ -30,59 +30,75 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         // Users
-        // $users = [];
+        // $userAdmins = [];
 
-        // $admin = new Users();
-        // $admin->setNom('Bany Blanchard')
-        //     ->SetEmail('blanchard@gmail.com')
-        //     ->setRoles(['ROLE_USER', 'ROLE_ADMIN'])
-        //     ->setAdresse($this->faker->departmentName())
-        //     ->setCp($this->faker->postcode())
-        //     ->setVille($this->faker->city())
-        //     ->setPhone($this->faker->mobileNumber())
-        //     ->setTypeUser('admin')
-        //     ->setIsVerified(true)
-        //     ->setPassword(
-        //         $this->hasher->hashPassword( $admin, "password" )
-        //     )
-        // ;
+        $admin = "";
+        $admin = new Societes();
 
-        // $users[] = $admin;
-        // $manager->persist($admin);
+        $admin->setNom($this->faker->company())
+            ->setEmail('blanchard@gmail.com')
+            ->setRoles(['ROLE_USER', 'ROLE_ADMIN'])
+            ->setAdresse($this->faker->secondaryAddress())
+            ->setCp ($this->faker->postcode())
+            ->setVille($this->faker->city())
+            ->setPhone($this->faker->mobileNumber())
+            ->setTypeUser('societes')
+            ->setDescription(  $this->faker->text(300)) 
+            ->setSiret( $this->faker->siret(14) )
+            ->setIsVerified( true ) 
+            ->setPassword( $this->hasher->hashPassword( $admin, "Azerty24@" ) )
+        ;
 
-        // for ($i = 0; $i < 6; $i++) {
+        $manager->persist($admin);
 
-        //     $societe = new Societes();
+        for ($i = 0; $i < 6; $i++) {
 
-        //     $societe->setNom($this->faker->company())
-        //         ->setEmail( $this->faker->email() )
-        //         ->setRoles(['ROLE_USER','ROLE_CLIENT'])
-        //         ->setAdresse($this->faker->secondaryAddress())
-        //         ->setCp ($this->faker->postcode())
-        //         ->setVille($this->faker->city())
-        //         ->setPhone($this->faker->mobileNumber())
-        //         ->setTypeUser('societes')
-        //         ->setDescription(  $this->faker->text(300)) 
-        //         ->setSiret( $this->faker->siret(14) )
-        //         ->setIsVerified( mt_rand(0, 1) == 1 ? true : false ) 
-        //         ->setPassword(
-        //             $this->hasher->hashPassword( $societe, "password" )
-        //         )
-        //     ;
+            $societe = new Societes();
 
-        //     $societes[] = $societe;
-        //     $manager->persist($societe);
-        // }
+            $societe->setNom($this->faker->company())
+                ->setEmail( $this->faker->email() )
+                ->setRoles(['ROLE_USER','ROLE_SOCIETE'])
+                ->setAdresse($this->faker->secondaryAddress())
+                ->setCp ($this->faker->postcode())
+                ->setVille($this->faker->city())
+                ->setPhone($this->faker->mobileNumber())
+                ->setTypeUser('societes')
+                ->setDescription(  $this->faker->text(250)) 
+                ->setSiret( $this->faker->siret(14) )
+                ->setIsVerified( mt_rand(0, 1) == 1 ? true : false ) 
+                ->setPassword(
+                    $this->hasher->hashPassword( $societe, "Azerty24@" )
+                )
+            ;
+
+            $societes[] = $societe;
+            $manager->persist($societe);
+        }
+        $manager->flush();
 
         $societes = $this->repoSocietes->findAll();
 
         //Missions
-        $jobs = [];
-        for ($j = 0; $j < 40; $j++) {
+
+        $articleTitles = [
+            'Développeur WEB',
+            'Développeur PHP',
+            'Développeur REACT',
+            'Développeur API',
+            'Développeur Front',
+            'Développeur BACK',
+            "Webdesigner",
+            "Réseau",
+            "Graphiste",
+            "COmmunity manager",
+            "Webmaster"
+        ];
+
+        for ($j = 0; $j < 20; $j++) {
 
             $job = new Offres();
 
-            $job->setNom($this->faker->word(8))
+            $job->setNom($articleTitles[mt_rand(0, count($articleTitles) - 1)])
                 ->setDescription(  $this->faker->text(300)  )
                 ->setLieuMission( $this->faker->city() )
                 ->setIsActive(mt_rand(0, 1) == 1 ? true : false)
@@ -97,13 +113,13 @@ class AppFixtures extends Fixture
             $manager->persist($job);
         }
 
-        for ($i = 0; $i < 15; $i++) {
+        for ($i = 0; $i < 6; $i++) {
 
             $client = new Clients();
 
             $client->setNom($this->faker->userName())
                 ->setEmail( $this->faker->email() )
-                ->setRoles(['ROLE_USER','ROLE_SOCIETE'])
+                ->setRoles(['ROLE_USER','ROLE_CLIENT'])
                 ->setAdresse($this->faker->secondaryAddress())
                 ->setCp ($this->faker->postcode())
                 ->setVille($this->faker->city())
@@ -112,13 +128,12 @@ class AppFixtures extends Fixture
                 ->setSiren( $this->faker->siret(9) )
                 ->setIsVerified( mt_rand(0, 1) == 1 ? true : false ) 
                 ->setPassword(
-                    $this->hasher->hashPassword( $client, "password" )
+                    $this->hasher->hashPassword( $client, "Azerty24@" )
                 )
             ;
             
             $manager->persist($client);
         }
-
 
         $manager->flush();
 

@@ -154,9 +154,13 @@
 									</svg>
 									{{ mission.lieuMission }}
 								</span>
-								<a class="btn btn-primary " href="{{ path('app_postuler', { id: mission.id, slug: mission.slug}) }}">
-									Postuler
-								</a>
+
+								{% if not is_granted('ROLE_SOCIETE') %}
+									<a class="btn btn-primary" href="{{ path('app_postuler', { id: mission.id, slug: mission.slug}) }}">
+										Postuler
+									</a>
+								{% endif %}
+								
 							</div>
 						</div>
 					</div>

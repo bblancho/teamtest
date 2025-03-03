@@ -55,7 +55,7 @@ class MissionController extends AbstractController
      * @return Response
      */
     #[Route('/societe/mes-offres', name: 'mes_offres', methods: ['GET'])]
-    #[IsGranted(OffresVoter::OFFRE_CLIENT)]
+    #[IsGranted(OffresVoter::OFFRE_SOCIETE)]
     public function mesOffres(
         OffresRepository $offresRepository,
         Request $request,
