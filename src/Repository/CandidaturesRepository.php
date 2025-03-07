@@ -2,9 +2,11 @@
 
 namespace App\Repository;
 
+use App\Entity\Offres;
+use App\Entity\Clients;
 use App\Entity\Candidatures;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Candidatures>
@@ -31,7 +33,7 @@ class CandidaturesRepository extends ServiceEntityRepository
         ;
     }
 
-    public function userAsPostule($user, $offre): bool
+    public function aDejaPostule(Clients $user, Offres $offre)
     {
         return $this->createQueryBuilder(alias: 'c')
             ->andWhere('c.clients = :idClient and c.offres = :idOffre')
@@ -39,7 +41,7 @@ class CandidaturesRepository extends ServiceEntityRepository
                 'idClient' => $user,
                 'idOffre' => $offre,
             ])
-            ->setMaxResults(50)
+
             ->getQuery()
             ->getSingleScalarResult()
         ;

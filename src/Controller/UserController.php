@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Candidatures;
 use App\Entity\Users;
 use App\Form\UserType;
 use App\Entity\Clients;
+use App\Entity\Offres;
 use App\Form\ClientType;
 use App\Form\UserPasswordType;
 use App\Repository\OffresRepository;
@@ -22,6 +24,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+
+use function Symfony\Component\Clock\now;
 
 #[Route("/compte", 'user.')]
 class UserController extends AbstractController
@@ -150,6 +154,7 @@ class UserController extends AbstractController
     #[Route('/candidature/offre-{id}-{slug}', name: 'candidature', methods: ['GET'], requirements: ['id' => Requirement::DIGITS, 'slug' => Requirement::ASCII_SLUG])]
     public function candidature(
         OffresRepository $offresRepository, 
+        CandidaturesRepository $candidaturesRepository, 
         int $id, 
         string $slug ,
         EntityManagerInterface $manager
@@ -162,13 +167,36 @@ class UserController extends AbstractController
             return $this->redirectToRoute('offre.show', ['slug' => $mission->getSlug() , 'id' => $mission->getId()]) ;
         }
 
-        // On vérifie que le user n'ai pas déjà postulé
-            // On fait la redirection sur la page show
-        // On crée notre objet Candidature
-        // On le sauvegarde
-        // On fait la redirection sur la page show + message
+        // On vérifie si le user a déjà postulé
+        $candidature = $candidaturesRepository->aDejaPostule($freeLance, $mission);
 
-        return $this->redirectToRoute('offre.show', ['slug' => $mission->getSlug() , 'id' => $mission->getId()]) ;
+        dd($candidature) ;
+
+        if( $candidature != 0 ){
+            $this->addFlash(
+                'warning',
+                'Vous avez déjà postulé à cette offre.'
+            );
+        }else{
+            $candidature = new Candidatures();
+
+            $candidature
+                ->setOffres($mission)
+                ->setClients($freeLance)
+                ->setConsulte(false)
+                ->setCreatedAt(now())
+            ;
+
+            $manager->persist($candidature);
+            $manager->flush();
+
+            $this->addFlash(
+                'success',
+                'Merci pour votre candidature.'
+            );
+        }
+
+        return $this->redirectToRoute('user.mesCandidatures');
     }
 
     /**
@@ -188,15 +216,7 @@ class UserController extends AbstractController
         $user = $this->getUser();
         $idClient = $user->getId();
 
-        $result = [];
-        $data = $candidatureRepository->findByUser($idClient);
-
-        // foreach($data as $e)
-        // {                   
-        //     dd($e) ;
-
-        //     $result = [$e];
-        // }
+        //dd( "id = " . $idClient ) ;
 
         $candidatures =  $paginator->paginate(
             $candidatureRepository->findByUser($idClient),
