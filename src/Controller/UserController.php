@@ -150,7 +150,7 @@ class UserController extends AbstractController
      * @param EntityManagerInterface $manager
      * @return Response
      */
-    #[IsGranted('ROLE_USER')]
+    #[IsGranted(new Expression('is_granted("ROLE_USER") or is_granted("ROLE_ADMIN")'))]
     #[Route('/candidature/offre-{id}-{slug}', name: 'candidature', methods: ['GET'], requirements: ['id' => Requirement::DIGITS, 'slug' => Requirement::ASCII_SLUG])]
     public function candidature(
         OffresRepository $offresRepository, 
@@ -160,12 +160,19 @@ class UserController extends AbstractController
         EntityManagerInterface $manager
     ): Response {
         
+        if($this->isGranted('ROLE_SOCIETE'))
+        {
+            return $this->redirectToRoute('offre.mes_offres') ;
+        }
+        
         $mission    = $offresRepository->find($id);
-        $freeLance  = $this->getUser() ;
 
         if( $mission->getSlug() != $slug ){
             return $this->redirectToRoute('offre.show', ['slug' => $mission->getSlug() , 'id' => $mission->getId()]) ;
         }
+
+        /** @var Clients $freeLance */
+        $freeLance  = $this->getUser() ;
 
         // On vérifie si le user a déjà postulé
         $candidature = $candidaturesRepository->aDejaPostule($freeLance, $mission);
@@ -178,13 +185,14 @@ class UserController extends AbstractController
                 'Vous avez déjà postulé à cette offre.'
             );
         }else{
-            $candidature = new Candidatures();
+            $freeLance = $this->getUser() ;
 
-            $candidature
-                ->setOffres($mission)
+            $candidature = new Candidatures() ;
+    
+            $candidature->setOffres($mission)
                 ->setClients($freeLance)
                 ->setConsulte(false)
-                ->setCreatedAt(now())
+                ->setCreatedAt(new \DateTimeImmutable())
             ;
 
             $manager->persist($candidature);
@@ -192,8 +200,10 @@ class UserController extends AbstractController
 
             $this->addFlash(
                 'success',
-                'Merci pour votre candidature.'
+                "Merci pour votre candidature, sans réponse de notre part sous un délai de 2 semaines,
+                considérer votre candidature comme non retenue."
             );
+
         }
 
         return $this->redirectToRoute('user.mesCandidatures');

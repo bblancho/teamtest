@@ -37,11 +37,8 @@ class CandidaturesRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder(alias: 'c')
             ->andWhere('c.clients = :idClient and c.offres = :idOffre')
-            ->setParameters([
-                'idClient' => $user,
-                'idOffre' => $offre,
-            ])
-
+            ->setParameter('idClient', $user)
+            ->setParameter('idOffre', $offre)
             ->getQuery()
             ->getSingleScalarResult()
         ;

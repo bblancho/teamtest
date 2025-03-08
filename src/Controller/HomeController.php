@@ -7,12 +7,13 @@ use App\Entity\Candidatures;
 use App\Security\Voter\OffresVoter;
 use App\Repository\OffresRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\CandidaturesRepository;
 use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -74,6 +75,7 @@ class HomeController extends AbstractController
     #[IsGranted(new Expression('is_granted("ROLE_USER") or is_granted("ROLE_ADMIN")'))]
     public function postuler(
         OffresRepository $offresRepository, 
+        CandidaturesRepository $candidaturesRepository, 
         int $id, 
         string $slug ,
         EntityManagerInterface $manager
@@ -92,6 +94,11 @@ class HomeController extends AbstractController
 
         $freeLance = $this->getUser() ;
 
+        // On vérifie si le user a déjà postulé
+        // $candidature = $candidaturesRepository->aDejaPostule($freeLance, $mission);
+
+        // dd($candidature) ;
+ 
         $candidature = new Candidatures() ;
 
         $candidature->setOffres($mission)
