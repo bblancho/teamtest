@@ -16,8 +16,9 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\Routing\Requirement\Requirement;
-use Symfony\Component\Validator\Constraints\Expression;
+// use Symfony\Component\Validator\Constraints\Expression;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -151,35 +152,32 @@ class UserController extends AbstractController
      * @return Response
      */
     #[IsGranted(new Expression('is_granted("ROLE_USER") or is_granted("ROLE_ADMIN")'))]
-    #[Route('/candidature/offre-{id}-{slug}', name: 'candidature', methods: ['GET'], requirements: ['id' => Requirement::DIGITS, 'slug' => Requirement::ASCII_SLUG])]
-    public function candidature(
+    #[Route('/{slug}-{id}/postuler', name: 'postuler', methods: ['GET'], requirements: ['id' => '\d+' , 'slug' => '[a-z0-9-]+'] )]
+    public function postuler(
         OffresRepository $offresRepository, 
         CandidaturesRepository $candidaturesRepository, 
         int $id, 
         string $slug ,
         EntityManagerInterface $manager
     ): Response {
-        
+
+        $mission = $offresRepository->find($id);
+
         if($this->isGranted('ROLE_SOCIETE'))
         {
             return $this->redirectToRoute('offre.mes_offres') ;
         }
-        
-        $mission    = $offresRepository->find($id);
 
-        if( $mission->getSlug() != $slug ){
+        if( $mission->getSlug() != $slug){
             return $this->redirectToRoute('offre.show', ['slug' => $mission->getSlug() , 'id' => $mission->getId()]) ;
         }
 
-        /** @var Clients $freeLance */
-        $freeLance  = $this->getUser() ;
+        $freeLance = $this->getUser() ;
 
         // On vérifie si le user a déjà postulé
         $candidature = $candidaturesRepository->aDejaPostule($freeLance, $mission);
 
-        dd($candidature) ;
-
-        if( $candidature != 0 ){
+        if( $candidature != null ){
             $this->addFlash(
                 'warning',
                 'Vous avez déjà postulé à cette offre.'

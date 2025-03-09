@@ -51,7 +51,10 @@ class HomeController extends AbstractController
      */
     #[Route('/client/{slug}-{id}', name: 'app_show_offre', methods: ['GET'], requirements: ['id' => '\d+' , 'slug' => '[a-z0-9-]+'] )]
     public function show(
-        OffresRepository $offresRepository, int $id, string $slug , Offres $offre
+        OffresRepository $offresRepository, 
+        CandidaturesRepository $candidaturesRepository, 
+        int $id, 
+        string $slug
     ): Response {
 
         $mission = $offresRepository->find($id);
@@ -60,63 +63,20 @@ class HomeController extends AbstractController
             return $this->redirectToRoute('app_show_offre', ['slug' => $mission->getSlug() , 'id' => $mission->getId()]) ;
         }
 
-        return $this->render('pages/missions/show.html.twig', [
-            'mission' => $mission
-        ]);
-    }
-
-    /**
-     * This controller allow us to see a recipe if this one is public
-     *
-     * @param OffresRepository $offresRepository
-     * @return Response
-     */
-    #[Route('/{slug}-{id}/postuler', name: 'app_postuler', methods: ['GET'], requirements: ['id' => '\d+' , 'slug' => '[a-z0-9-]+'] )]
-    #[IsGranted(new Expression('is_granted("ROLE_USER") or is_granted("ROLE_ADMIN")'))]
-    public function postuler(
-        OffresRepository $offresRepository, 
-        CandidaturesRepository $candidaturesRepository, 
-        int $id, 
-        string $slug ,
-        EntityManagerInterface $manager
-    ): Response {
-
-        $mission = $offresRepository->find($id);
-
-        if($this->isGranted('ROLE_SOCIETE'))
-        {
-            return $this->redirectToRoute('offre.mes_offres') ;
-        }
-
-        if( $mission->getSlug() != $slug){
-            return $this->redirectToRoute('offre.show', ['slug' => $mission->getSlug() , 'id' => $mission->getId()]) ;
-        }
-
         $freeLance = $this->getUser() ;
 
         // On vérifie si le user a déjà postulé
-        // $candidature = $candidaturesRepository->aDejaPostule($freeLance, $mission);
+        $candidature = $candidaturesRepository->aDejaPostule($freeLance, $mission);
 
-        // dd($candidature) ;
- 
-        $candidature = new Candidatures() ;
+        if( $candidature != null ){
+            $aDejaPostule = true ;
+        }else{
+            $aDejaPostule = false ; 
+        }
 
-        $candidature->setOffres($mission)
-            ->setClients($freeLance)
-            ->setConsulte(false)
-            ->setCreatedAt(new \DateTimeImmutable())
-        ;
-
-        $manager->persist($candidature);
-        $manager->flush();
-
-        $this->addFlash(
-            'success',
-            "Merci pour votre candidature, sans réponse de notre part sous un délai de 2 semaines,
-            considérer votre candidature comme non retenue."
+        return $this->render('pages/missions/show.html.twig', 
+            compact('mission', 'aDejaPostule', 'candidature')
         );
-
-        return $this->redirectToRoute('app_index');
     }
 
     /**

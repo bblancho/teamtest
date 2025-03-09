@@ -40,7 +40,7 @@ class CandidaturesRepository extends ServiceEntityRepository
             ->setParameter('idClient', $user)
             ->setParameter('idOffre', $offre)
             ->getQuery()
-            ->getSingleScalarResult()
+            ->getOneOrNullResult()
         ;
     }
 

@@ -156,9 +156,18 @@
 								</span>
 
 								{% if not is_granted('ROLE_SOCIETE') %}
-									<a class="btn btn-primary" href="{{ path('app_postuler', { id: mission.id, slug: mission.slug}) }}">
-										Postuler
-									</a>
+
+									{% if aDejaPostule == true %}
+										<span class="text-xl font-semibold text-success"> Vous avez postulé à cette offre le {{candidature.createdAt|date('d/m/Y')}} </span>
+									{% else %}
+										<a class="btn btn-primary" href="{{ path('user.postuler', { id: mission.id, slug: mission.slug}) }}">
+											Postuler
+										</a>
+									{% endif %}
+								{% endif %}
+
+								{% if not is_granted('ROLE_CLIENT') %}
+									<a href="{{ path('offres.edit', { id: mission.id }) }}" class="btn btn-primary">Modifier</a>
 								{% endif %}
 								
 							</div>

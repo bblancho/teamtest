@@ -323,7 +323,7 @@ small.nom_client{
     color: rgb(0, 0, 0);
     font-family: welcome-font, sans-serif;
     font-weight: 600;
-    font-size: 1.625rem;
-    line-height: 2rem;
+    font-size: 1.5rem;
+    line-height: 1rem;
     letter-spacing: -0.05625rem;
 }
