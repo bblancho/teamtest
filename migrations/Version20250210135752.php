@@ -20,7 +20,7 @@ final class Version20250210135752 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE candidatures CHANGE consulte is_consulte TINYINT(1) DEFAULT NULL');
+        $this->addSql('ALTER TABLE  candidatures CHANGE consulte is_consulte TINYINT(1) DEFAULT NULL');
     }
 
     public function down(Schema $schema): void
