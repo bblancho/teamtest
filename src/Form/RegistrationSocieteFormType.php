@@ -190,7 +190,7 @@ class RegistrationSocieteFormType extends AbstractType
                 'attr' => [
                     'class' => 'form-control',
                 ],
-                'label' => 'Numéro de Siren',
+                'label' => 'Numéro de Siret',
                 'label_attr' => [
                     'class' => 'form-label'
                 ],
@@ -198,7 +198,7 @@ class RegistrationSocieteFormType extends AbstractType
                     new Assert\Length([
                         'min' =>14,
                         'max'=> 14,
-                        'exactMessage'=> 'Le numéro de siren doit faire {{ limit }} caractères.'
+                        'exactMessage'=> 'Le numéro de siret doit faire {{ limit }} caractères.'
                     ])
                 ]
             ])
@@ -233,8 +233,6 @@ class RegistrationSocieteFormType extends AbstractType
                     new Assert\Length([
                         'min' => 8,
                         'max' => 4096,
-                        'minMessage' => 'Le mot de passe doit comporter plus de {{ limit }} caractères.',
-                        'maxMessage' => 'Le mot de passe doit comporter au maximum de {{ limit }} caractères.',
                     ]),
                     new Regex(
                         "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,20}$/",

@@ -120,7 +120,7 @@ class RegistrationClientFormType extends AbstractType
                     new Assert\Length(exactly: 10)
                 ]
             ])
-            ->add('siret', TextType::class, [
+            ->add('siren', TextType::class, [
                 'required' => true,
                 'attr' => [
                     'class' => 'form-control',
@@ -133,7 +133,7 @@ class RegistrationClientFormType extends AbstractType
                     new Assert\Length([
                         'min' =>9,
                         'max'=> 9,
-                        'exactMessage'=> 'Le numéro de siret doit faire {{ limit }} caractères.'
+                        'exactMessage'=> 'Le numéro de siren doit faire {{ limit }} caractères.'
                     ])
                 ]
             ])

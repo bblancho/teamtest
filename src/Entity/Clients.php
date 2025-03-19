@@ -3,16 +3,18 @@
 namespace App\Entity;
 
 use App\Entity\Users;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ClientsRepository;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\HttpFoundation\File\File;
+use Doctrine\Common\Collections\ArrayCollection;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: ClientsRepository::class)]
 #[Vich\Uploadable]
+#[UniqueEntity('siren')]
 class Clients extends Users
 {
     #[ORM\Column(nullable: true)]
@@ -43,10 +45,6 @@ class Clients extends Users
     
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank()] 
-    // #[Assert\Length(
-    //     exactly: 9,
-    //     exactMessage: "Le numéro de SIREN doit faire {{ limit }} caractères."
-    // )]
     private string $siren = " ";
 
     /**

@@ -62,10 +62,6 @@ class Societes extends Users
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank()] 
-    // #[Assert\Length(
-    //     exactly: 14,
-    //     exactMessage: "Le numéro de SIRET doit faire {{ limit }} caractères."
-    // )]
     private string $siret = " ";
 
     /**
