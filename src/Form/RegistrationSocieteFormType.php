@@ -190,7 +190,7 @@ class RegistrationSocieteFormType extends AbstractType
                 'attr' => [
                     'class' => 'form-control',
                 ],
-                'label' => 'Numéro de Siret',
+                'label' => 'Numéro de siret',
                 'label_attr' => [
                     'class' => 'form-label'
                 ],

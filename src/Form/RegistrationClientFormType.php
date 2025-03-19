@@ -125,7 +125,7 @@ class RegistrationClientFormType extends AbstractType
                 'attr' => [
                     'class' => 'form-control',
                 ],
-                'label' => 'Numéro de SIREN',
+                'label' => 'Numéro de siren',
                 'label_attr' => [
                     'class' => 'form-label  mt-4'
                 ],
