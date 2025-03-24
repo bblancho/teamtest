@@ -11,18 +11,19 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 class OffresVoter extends Voter
 {
     public const OFFRE_EDIT = 'offre_edit';
-    public const OFFRE_DELETE = 'offre_delete';
     public const OFFRE_VIEW = 'offre_view';
     public const OFFRE_CREATE = 'offre_create';
-    public const OFFRE_SOCIETE = 'offre_societe';
-    public const OFFRE_ALL = 'offre_all';
+    public const OFFRE_DELETE = 'offre_delete';
+    public const OFFRE_LIST = 'offre_list'; // Les offres de la societe
+    public const OFFRE_LIST_ALL = 'offre_all';
 
     protected function supports(string $attribute, mixed $offre): bool
     {
         return
-            in_array( $attribute, [self::OFFRE_CREATE, self::OFFRE_ALL, self::OFFRE_SOCIETE] )  ||
+            // Soit on a pas besoin d'un sujet sinon ce le cas
+            in_array( $attribute, [self::OFFRE_CREATE, self::OFFRE_LIST, self::OFFRE_LIST_ALL] )  ||
             ( 
-                in_array($attribute, [self::OFFRE_EDIT, self::OFFRE_DELETE, self::OFFRE_VIEW] ) && $offre instanceof \App\Entity\Offres 
+                in_array($attribute, [self::OFFRE_EDIT, self::OFFRE_DELETE] ) && $offre instanceof \App\Entity\Offres 
             );
     }
 
@@ -45,14 +46,13 @@ class OffresVoter extends Voter
         // ... (check conditions and return true to grant permission) ...
         switch ($attribute) {
             case self::OFFRE_DELETE:
-            case self::OFFRE_VIEW:
             case self::OFFRE_EDIT:
                 return $this->canEdit($offre, $user) ;
                 break;
 
+            case self::OFFRE_LIST:
             case self::OFFRE_CREATE:
-            case self::OFFRE_SOCIETE:
-            case self::OFFRE_ALL:
+            case self::OFFRE_VIEW:
                 return true ;
                 break;
         }

@@ -29,33 +29,7 @@ class MissionController extends AbstractController
      * @return Response
      */
     #[Route('/societe/mes-offres', name: 'mes_offres', methods: ['GET'])]
-    #[IsGranted(OffresVoter::OFFRE_ALL)]
-    public function index(
-        OffresRepository $offresRepository,
-        Request $request,
-        Security $security
-    ): Response {
-
-        $page = $request->query->getInt('page', 1) ;
-        $userId =  $security->getUser()->getId() ;
-
-        // On limite l'affichage aux missions de la société, mettre OFFRE_LIST
-        $canListAll = $security->isGranted(OffresVoter::OFFRE_ALL) ;
-        $missions   = $offresRepository->paginateOffres($page , $canListAll ? null : $userId) ;
-
-        return $this->render('pages/home/index.html.twig', compact( "missions") );
-    }
-
-    /**
-     * 
-     * @param OffresRepository $offresRepository
-     * @param Request $request
-     * @param Security $security
-     * 
-     * @return Response
-     */
-    #[Route('/societe/mes-offres', name: 'mes_offres', methods: ['GET'])]
-    #[IsGranted(OffresVoter::OFFRE_SOCIETE)]
+    #[IsGranted(OffresVoter::OFFRE_LIST)]
     public function mesOffres(
         OffresRepository $offresRepository,
         Request $request,
@@ -65,8 +39,8 @@ class MissionController extends AbstractController
         $page = $request->query->getInt('page', 1) ;
         $userId =  $security->getUser()->getId() ;
 
-        // On limite l'affichage aux missions de la société, mettre OFFRE_LIST
-        $canListAll = $security->isGranted(OffresVoter::OFFRE_ALL) ;
+        // On limite l'affichage aux missions de la société
+        $canListAll = $security->isGranted(OffresVoter::OFFRE_LIST_ALL) ;
         $missions   = $offresRepository->paginateOffres($page , $canListAll ? null : $userId) ;
 
         return $this->render('pages/missions/mes_missions.html.twig', compact( "missions") );
@@ -81,7 +55,7 @@ class MissionController extends AbstractController
      */
     #[Route('/creation', name: 'create', methods: ['GET', 'POST'])]
     #[IsGranted(OffresVoter::OFFRE_CREATE)]
-    public function new(
+    public function create(
         Request $request,
         EntityManagerInterface $manager
     ): Response {
@@ -152,120 +126,6 @@ class MissionController extends AbstractController
         ]);
     }
 
-
-    /**
-     * This controller display all ingredients
-     *
-     * @param OffresRepository $offresRepository
-     * @param PaginatorInterface $paginator
-     * @param Request $request
-     * @return Response
-     */
-    #[Route('/offres-enligne', name: 'en_ligne', methods: ['GET'])]
-    public function offrePublie(
-        OffresRepository $offresRepository,
-        PaginatorInterface $paginator,
-        Request $request
-    ): Response {
-
-        $missions =  $paginator->paginate(
-            $offresRepository->findAll(),
-            $request->query->getInt('page', 1),
-            10
-        );
-
-        return $this->render('pages/missions/index.html.twig', [
-            'missions' => $missions
-        ]);
-    }
-
-    /**
-     * This controller display all ingredients
-     *
-     * @param OffresRepository $offresRepository
-     * @param PaginatorInterface $paginator
-     * @param Request $request
-     * @return Response
-     */
-    #[Route('/offres-non-publiee', name: 'non_publiee', methods: ['GET'])]
-    public function offreNonPublie(
-        OffresRepository $offresRepository,
-        PaginatorInterface $paginator,
-        Request $request
-    ): Response {
-
-        $missions =  $paginator->paginate(
-            $offresRepository->findAll(),
-            $request->query->getInt('page', 1),
-            10
-        );
-
-        return $this->render('pages/missions/index.html.twig', [
-            'missions' => $missions
-        ]);
-    }
-
-    /**
-     * 
-     * @param OffresRepository $offresRepository
-     * @param PaginatorInterface $paginator
-     * @param Request $request
-     * @return Response
-     */
-    #[IsGranted('ROLE_USER')]
-    #[Route('/societe/mes-offres-non-publiee', name: 'mes_offres_non_publiees', methods: ['GET'])]
-    public function mesOffresNonPubliees(
-        OffresRepository $offresRepository,
-        PaginatorInterface $paginator,
-        Request $request,
-    ): Response {
-
-        
-        //$offres = $offresRepository->findBy(['societes' => $userId]) ;
-    
-       // $societe->getOffres(),
-
-        // $missions = $paginator->paginate(
-        //     $offres,
-        //     $request->query->getInt('page', 1),
-        //     10
-        // );
-
-        // dd($user) ;
-
-        // $products = $OffresRepository->findBy(
-        //     ['users_id' => $userId],
-        //     ['id' => 'DESC']
-        // );
-
-        $missions ='';
-
-        return $this->render('pages/missions/mes_missions_non_publiees.html.twig', [
-            "missions" => $missions
-        ]);
-    }
-
-    /**
-     * @param OffresRepository $offresRepository
-     * @param PaginatorInterface $paginator
-     * @param Request $request
-     * @return Response
-     */
-    #[IsGranted('ROLE_USER')]
-    #[Route('/societe/mes-offres-publiees', name: 'mes_offres_publiees', methods: ['GET'])]
-    public function mesOffresPubliees(
-        OffresRepository $offresRepository,
-        PaginatorInterface $paginator,
-        Request $request,
-    ): Response {
-
-        $missions ='';
-
-        return $this->render('pages/missions/mes_missions_publiees.html.twig', [
-            "missions" => $missions
-        ]);
-    }
-
     /**
      * This controller allows us to delete an ingredient
      *
@@ -275,7 +135,7 @@ class MissionController extends AbstractController
      */
     #[IsGranted('ROLE_USER')]
     #[Route('/{id}/activer',  name: 'activer', requirements: ['id' => Requirement::DIGITS], methods: ['GET'] )]
-    // #[Security("is_granted('ROLE_USER') and user === ingredient.getUser()")]
+    #[IsGranted(OffresVoter::OFFRE_EDIT, subject: 'offre')]
     public function activer(
         EntityManagerInterface $manager,
         Offres $offre
@@ -286,8 +146,7 @@ class MissionController extends AbstractController
             'Votre mission a été publiée avec succès !'
         );
 
-    
-        return $this->redirectToRoute('admin.offres.index');
+        return $this->redirectToRoute('offres.mes_offres');
     }
 
     /**
@@ -299,7 +158,7 @@ class MissionController extends AbstractController
      */
     #[IsGranted('ROLE_USER')]
     #[Route('/{id}/desactiver',  name: 'desactiver', requirements: ['id' => Requirement::DIGITS], methods: ['GET'] )]
-    // #[Security("is_granted('ROLE_USER') and user === ingredient.getUser()")]
+    #[IsGranted(OffresVoter::OFFRE_EDIT, subject: 'offre')]
     public function desactiver(
         EntityManagerInterface $manager,
         Offres $offre
@@ -312,7 +171,7 @@ class MissionController extends AbstractController
             'Votre mission a été désactivée avec succès !'
         );
 
-        return $this->redirectToRoute('admin.offres.index');
+        return $this->redirectToRoute('offres.mes_offres');
     }
 
     /**
@@ -329,9 +188,6 @@ class MissionController extends AbstractController
         Offres $offre
     ): Response {
 
-        // On vérifie si l'utilisateur peut supprimer avec le Voter
-        // $this->denyAccessUnlessGranted('PRODUCT_DELETE', $offre);
-
         $manager->remove($offre);
         $manager->flush();
 
@@ -342,5 +198,7 @@ class MissionController extends AbstractController
 
         return $this->redirectToRoute('offres.mes_offres');
     }
+
+
 
 }
