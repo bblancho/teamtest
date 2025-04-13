@@ -44,8 +44,10 @@ class Clients extends Users
     private ?\DateTimeImmutable $dateDispoAt = null;
     
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank()] 
-    private string $siren = " ";
+    #[Assert\NotBlank(
+        message: "Veuillez renseigner ce champ.",
+    )] 
+    private string $siren ;
 
     /**
      * @var Collection<int, Candidatures>
