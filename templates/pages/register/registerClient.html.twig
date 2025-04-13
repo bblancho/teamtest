@@ -27,14 +27,18 @@
 					</div>
 
 					<div class="form-group">
-						{{ form_row(registrationForm.cp) }}
+						<div class="row mt-0">
+							<div class="col-md-4">	
+								{{ form_row(registrationForm.cp) }}
+							</div>
+							<div class="col-md-8">
+								{{ form_row(registrationForm.ville) }}
+							</div>
+						</div>
 					</div>
 				</div>
 
 				<div class="col-md-6">
-					<div class="form-group">
-						{{ form_row(registrationForm.ville) }}
-					</div>
 
 					<div class="form-group">
 						{{ form_row(registrationForm.phone) }}
@@ -50,7 +54,11 @@
 				</div>
 			</div>
 
-			<button class="btn btn-primary mt-3 mb-2" type="submit">S'inscrire en tant que Free-lance</button>
+			<div class="centre ">
+				<button class="btn btn-primary mt-3 mb-2" type="submit">
+					S'inscrire en tant que Free-lance
+				</button>
+			</div>
 
 		{{ form_end(registrationForm) }}
 

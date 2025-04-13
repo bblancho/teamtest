@@ -21,6 +21,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class MissionController extends AbstractController
 {   
     /**
+     * This controller list all mission for the current Company
      * 
      * @param OffresRepository $offresRepository
      * @param Request $request
@@ -47,7 +48,7 @@ class MissionController extends AbstractController
     }
 
     /**
-     * This controller show a form which create an mission
+     * This method allow us to create an mission
      *
      * @param Request $request
      * @param EntityManagerInterface $manager
@@ -87,7 +88,7 @@ class MissionController extends AbstractController
     }
 
     /**
-     * This controller allow us to edit an ingredient
+     * This method allow us to edit an mission
      *
      * @param Offres $offre
      * @param Request $request
@@ -105,10 +106,13 @@ class MissionController extends AbstractController
         $form = $this->createForm(OffreType::class, $offre);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ( $form->isSubmitted() && $form->isValid() ) {
+            
             $offre = $form->getData();
 
-            $offre->setSlug($form["nom"]->getData());
+            if( $offre->getNom() !== $form["nom"]->getData()  ){
+                $offre->setSlug($form["nom"]->getData());
+            }
 
             $manager->flush();
 
@@ -127,7 +131,32 @@ class MissionController extends AbstractController
     }
 
     /**
-     * This controller allows us to delete an ingredient
+     * This method allows us to delete an mission
+     *
+     * @param EntityManagerInterface $manager
+     * @param Offres $offre
+     * @return Response
+     */
+    #[Route('/suppression/{id}', 'delete', methods: ['POST'])]
+    #[IsGranted(OffresVoter::OFFRE_DELETE, subject: 'offre')]
+    public function delete(
+        EntityManagerInterface $manager,
+        Offres $offre
+    ): Response {
+
+        $manager->remove($offre);
+        $manager->flush();
+
+        $this->addFlash(
+            'success',
+            'Votre mission a été supprimée avec succès !'
+        );
+
+        return $this->redirectToRoute('offres.mes_offres');
+    }
+
+    /**
+     * This method allows us to delete an mission
      *
      * @param EntityManagerInterface $manager
      * @param Offres $offre
@@ -141,6 +170,8 @@ class MissionController extends AbstractController
         Offres $offre
     ): Response {   
 
+        $manager->flush();
+
         $this->addFlash(
             'success',
             'Votre mission a été publiée avec succès !'
@@ -150,7 +181,7 @@ class MissionController extends AbstractController
     }
 
     /**
-     * This controller allows us to delete an ingredient
+     * This method allows us to delete an ingredient
      *
      * @param EntityManagerInterface $manager
      * @param Offres $offre
@@ -174,30 +205,7 @@ class MissionController extends AbstractController
         return $this->redirectToRoute('offres.mes_offres');
     }
 
-    /**
-     * This controller allows us to delete an ingredient
-     *
-     * @param EntityManagerInterface $manager
-     * @param Offres $offre
-     * @return Response
-     */
-    #[Route('/suppression/{id}', 'delete', methods: ['POST'])]
-    #[IsGranted(OffresVoter::OFFRE_DELETE, subject: 'offre')]
-    public function delete(
-        EntityManagerInterface $manager,
-        Offres $offre
-    ): Response {
-
-        $manager->remove($offre);
-        $manager->flush();
-
-        $this->addFlash(
-            'success',
-            'Votre mission a été supprimée avec succès !'
-        );
-
-        return $this->redirectToRoute('offres.mes_offres');
-    }
+   
 
 
 

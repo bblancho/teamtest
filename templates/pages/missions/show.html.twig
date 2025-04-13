@@ -164,9 +164,8 @@
 											Postuler
 										</a>
 									{% endif %}
-								{% endif %}
-
-								{% if not is_granted('ROLE_CLIENT') %}
+								
+								{% else %}
 									<a href="{{ path('offres.edit', { id: mission.id }) }}" class="btn btn-primary">Modifier</a>
 								{% endif %}
 								

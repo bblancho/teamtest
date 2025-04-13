@@ -44,6 +44,10 @@ h1.jumbotron-heading{
     text-transform: uppercase;
 }
 
+.form-label{
+    margin-top: 1px !important;
+}
+
 
 /************************ Footer *************************/
 

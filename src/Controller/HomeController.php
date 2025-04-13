@@ -65,13 +65,21 @@ class HomeController extends AbstractController
 
         $freeLance = $this->getUser() ;
 
-        // On vérifie si le user a déjà postulé
-        $candidature = $candidaturesRepository->aDejaPostule($freeLance, $mission);
+        if( $this->isGranted('ROLE_CLIENT') )
+        {
+           // On vérifie si le user a déjà postulé
+            $candidature = $candidaturesRepository->aDejaPostule($freeLance, $mission);
+    
+            if( $candidature != null ){
+                $aDejaPostule = true ;
+            }else{
+                $aDejaPostule = false ; 
+            }
 
-        if( $candidature != null ){
+        } else {
+    
             $aDejaPostule = true ;
-        }else{
-            $aDejaPostule = false ; 
+            $candidature = true;
         }
 
         return $this->render('pages/missions/show.html.twig', 

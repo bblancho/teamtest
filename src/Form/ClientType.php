@@ -51,7 +51,7 @@ class ClientType extends AbstractType
                 ],
                 'label' => 'Code postal',
                 'label_attr' => [
-                    'class' => 'form-label'
+                    'class' => 'form-label mt-0'
                 ],
             ])
             ->add('ville', TextType::class, [
@@ -63,7 +63,7 @@ class ClientType extends AbstractType
                 ],
                 'label' => 'Ville',
                 'label_attr' => [
-                    'class' => 'form-label'
+                    'class' => 'form-label mt-0'
                 ],
             ])
             ->add('phone', TextType::class, [
