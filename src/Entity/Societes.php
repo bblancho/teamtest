@@ -44,11 +44,15 @@ class Societes extends Users
     private ?string  $imageName = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    #[Assert\NotBlank()]
+    #[Assert\NotBlank(
+        message: "La description de la société est obligatoire.",
+    )]
     private ?string $description = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Assert\NotBlank()]
+    #[Assert\NotBlank(
+        message: "Le champ secteur d'activité est obligatoire.",
+    )]
     #[Assert\Length(
         min: 2,
         max: 50,
@@ -61,7 +65,9 @@ class Societes extends Users
     private ?string $phoneContact = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank()] 
+    #[Assert\NotBlank(
+        message: "Le champ siret est obligatoire.",
+    )] 
     private string $siret = " ";
 
     /**

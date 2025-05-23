@@ -83,8 +83,7 @@ class ClientType extends AbstractType
                 'attr' => [
                     'class' => 'form-control',
                     'max' => 2000,
-                    'type' => 'number',
-                    'placeholder' => ''
+                    'type' => 'number'
                 ],
                 'currency' => 'EUR',
                 'label' => 'Taux journalier :',

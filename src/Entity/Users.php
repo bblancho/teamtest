@@ -26,7 +26,9 @@ abstract class Users implements UserInterface, PasswordAuthenticatedUserInterfac
     private ?int $id = null;
 
     #[ORM\Column(length: 180)]
-    #[Assert\NotBlank()]  // Interdit les valeurs vides, rajoute l'attribut required
+    #[Assert\NotBlank(
+        message:"Veuillez renseigner un e-mail."
+    )]  // Interdit les valeurs vides, rajoute l'attribut required
     #[Assert\Email(
         message: " L'adresse e-mail {{ value }} saisie est incorrecte.",
     )]
@@ -46,7 +48,9 @@ abstract class Users implements UserInterface, PasswordAuthenticatedUserInterfac
     private string $password ;
 
     #[ORM\Column(length: 50)]
-    #[Assert\NotBlank(message:"Veuillez renseigner votre nom.")] // Interdit les valeurs vides , rajoute l'attribut required
+    #[Assert\NotBlank(
+        message:"Veuillez renseigner votre nom."
+    )] // Interdit les valeurs vides , rajoute l'attribut required
     #[Assert\Length(
         min: 2,
         max: 50,
@@ -56,7 +60,9 @@ abstract class Users implements UserInterface, PasswordAuthenticatedUserInterfac
     private string $nom = " " ; 
 
     #[ORM\Column]
-    #[Assert\NotBlank(message:"Veuillez renseigner un code postale.")] // Interdit les valeurs vides , rajoute l'attribut required
+    #[Assert\NotBlank(
+        message:"Veuillez renseigner un code postale."
+    )] // Interdit les valeurs vides , rajoute l'attribut required
     #[Assert\Length(
         exactly: 5,
         exactMessage: "Le code postale doit faire {{ limit }} caractères."
@@ -64,7 +70,9 @@ abstract class Users implements UserInterface, PasswordAuthenticatedUserInterfac
     private int $cp ; 
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message:"Veuillez renseigner votre ville.")] // Interdit les valeurs vides , rajoute l'attribut required
+    #[Assert\NotBlank(
+        message:"Veuillez renseigner votre ville."
+    )] // Interdit les valeurs vides , rajoute l'attribut required
     #[Assert\Length(
         min: 2,
         max: 50,
@@ -74,7 +82,9 @@ abstract class Users implements UserInterface, PasswordAuthenticatedUserInterfac
     private string $ville = " ";
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message:"Veuillez renseigner votre adresse.")] // Interdit les valeurs vides , rajoute l'attribut required
+    #[Assert\NotBlank(
+        message:"Veuillez renseigner votre adresse."
+    )] // Interdit les valeurs vides , rajoute l'attribut required
     #[Assert\Length(
         min: 2,
         max: 50,
@@ -84,10 +94,12 @@ abstract class Users implements UserInterface, PasswordAuthenticatedUserInterfac
     private string $adresse = " " ; 
 
     #[ORM\Column(length: 20)]
-    #[Assert\NotBlank(message:"Veuillez renseigner votre numéro de télèlphone.")]
+    #[Assert\NotBlank(
+        message:"Veuillez renseigner votre numéro de télèlphone."
+    )]
     #[Assert\Length(
         exactly: 10,
-        exactMessage: "Le du numéro de téléphone est incorrect."
+        exactMessage: "le format du numéro de téléphone est incorrect."
     )]
     private string $phone = " ";
 

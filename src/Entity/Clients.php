@@ -45,7 +45,7 @@ class Clients extends Users
     
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(
-        message: "Veuillez renseigner ce champ.",
+        message: "Le champ siren est obligatoire.",
     )] 
     private string $siren ;
 
