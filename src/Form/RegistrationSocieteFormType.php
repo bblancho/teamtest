@@ -49,11 +49,6 @@ class RegistrationSocieteFormType extends AbstractType
                     'class' => 'form-label '
                 ]
             ])
-            ->add('imageFile', VichImageType::class, [
-                'required'     => false,
-                'allow_delete' => false,
-                'download_uri' => false
-            ]) 
             ->add('email', EmailType::class, [
                 'required' => true,
                 'attr' => [
@@ -137,12 +132,6 @@ class RegistrationSocieteFormType extends AbstractType
                 'label' => 'Nom du contact',
                 'label_attr' => [
                     'class' => 'form-label'
-                ],
-                'constraints' => [
-                    new Assert\Length([
-                        'min' => 2, 
-                        'max' => 50
-                    ])
                 ]
             ])
             ->add('numContact', TextType::class, [
@@ -155,9 +144,6 @@ class RegistrationSocieteFormType extends AbstractType
                 'label' => "Numéro du contact",
                 'label_attr' => [
                     'class' => 'form-label'
-                ],
-                'constraints' => [
-                    new Assert\Length(10)
                 ]
             ])
             ->add('siret', TextType::class, [

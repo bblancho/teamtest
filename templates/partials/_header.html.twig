@@ -84,6 +84,11 @@
 									<a class="nav-link active" href="{{ path('security.registration') }}">Inscription
 									</a>
 								</li>
+							{% else %}
+								<li class="nav-item">
+									<a class="nav-link {{ app.current_route == 'security.registration' ? 'active' : '' }}" href="{{ path('security.registration') }}">Inscription
+									</a>
+								</li>
 							{% endif %}
 
 						{% endif %}
