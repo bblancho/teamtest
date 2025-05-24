@@ -67,7 +67,11 @@ class Societes extends Users
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(
         message: "Le champ siret est obligatoire.",
-    )] 
+    )]
+    #[Assert\Length( 
+        exactly: 14,
+        exactMessage: "Le numéro de siret doit faire {{ limit }} caractères."
+    )]
     private string $siret = " ";
 
     /**

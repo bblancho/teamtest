@@ -37,10 +37,6 @@ class RegistrationClientFormType extends AbstractType
                 'label' => 'Nom / Prénom',
                 'label_attr' => [
                     'class' => 'form-label  mt-4'
-                ],
-                'constraints' => [
-                    new Assert\NotBlank(),
-                    new Assert\Length(['min' => 2, 'max' => 50])
                 ]
             ])
             ->add('email', EmailType::class, [
@@ -53,11 +49,6 @@ class RegistrationClientFormType extends AbstractType
                 'label' => 'Email',
                 'label_attr' => [
                     'class' => 'form-label  mt-4'
-                ],
-                'constraints' => [
-                    new Assert\NotBlank(),
-                    new Assert\Email(),
-                    new Assert\Length(['min' => 2, 'max' => 50])
                 ]
             ])
             ->add('adresse', TextType::class, [
@@ -70,9 +61,6 @@ class RegistrationClientFormType extends AbstractType
                 'label' => 'Adresse',
                 'label_attr' => [
                     'class' => 'form-label  mt-4'
-                ],
-                'constraints' => [
-                    new Assert\Length(['min' => 2, 'max' => 50])
                 ]
             ])
             ->add('cp', TextType::class, [
@@ -85,9 +73,6 @@ class RegistrationClientFormType extends AbstractType
                 'label' => 'Code postal',
                 'label_attr' => [
                     'class' => 'form-label  mt-4'
-                ],
-                'constraints' => [
-                    new Assert\Length(exactly: 5)
                 ]
             ])
             ->add('ville', TextType::class, [
@@ -100,9 +85,6 @@ class RegistrationClientFormType extends AbstractType
                 'label' => 'Ville',
                 'label_attr' => [
                     'class' => 'form-label  mt-4'
-                ],
-                'constraints' => [
-                    new Assert\Length(['min' => 2, 'max' => 50])
                 ]
             ])
             ->add('phone', TextType::class, [
@@ -115,9 +97,6 @@ class RegistrationClientFormType extends AbstractType
                 'label' => 'Télèphone',
                 'label_attr' => [
                     'class' => 'form-label  mt-4'
-                ],
-                'constraints' => [
-                    new Assert\Length(exactly: 10)
                 ]
             ])
             ->add('siren', TextType::class, [
@@ -128,13 +107,6 @@ class RegistrationClientFormType extends AbstractType
                 'label' => 'Numéro de siren',
                 'label_attr' => [
                     'class' => 'form-label  mt-4'
-                ],
-                'constraints' => [
-                    new Assert\Length([
-                        'min' =>9,
-                        'max'=> 9,
-                        'exactMessage'=> 'Le numéro de siren doit faire {{ limit }} caractères.'
-                    ])
                 ]
             ])
             ->add('password', RepeatedType::class, [
@@ -148,7 +120,9 @@ class RegistrationClientFormType extends AbstractType
                     'label_attr' => [
                         'class' => 'form-label  mt-4'
                     ],
-                    'constraints' => [new Assert\NotBlank()]
+                    'constraints' => [
+                        new Assert\NotBlank(['message' => "Ce champ est obligatoire."])
+                    ]
                 ],
                 'second_options' => [
                     'attr' => [
@@ -160,7 +134,7 @@ class RegistrationClientFormType extends AbstractType
                     ],
                     'required' => true,
                     'constraints' => [
-                        new Assert\NotBlank(),
+                        new Assert\NotBlank(['message' => "Ce champ est obligatoire."]),
                     ]
                 ],
                 'constraints' => [
@@ -185,59 +159,6 @@ class RegistrationClientFormType extends AbstractType
                 ],
                 'invalid_message' => 'Les mots de passe doivent être identique.',
             ])
-            // ->add('cvFile', VichFileType::class,[
-            //     'required'  => false,
-            //     'mapped'    => false,
-            //     'attr' => [
-            //         'class' => 'form-control',
-            //     ],
-            //     'label' => 'Cv',
-            //     'label_attr' => [
-            //         'class' => 'form-label  mt-4'
-            //     ],
-            // ])
-            // ->add('tjm', MoneyType::class, [
-            //     'required' => false,
-            //     'attr' => [
-            //         'class' => 'form-control',
-            //         'max' => 2000,
-            //         'type' => 'number',
-            //         'placeholder' => '0.00'
-            //     ],
-            //     'currency' => 'EUR',
-            //     'required' => true,
-            //     'label' => 'Taux journalier :',
-            //     'label_attr' => [
-            //         'class' => 'form-label mt-4'
-            //     ],
-            //     'constraints' => [
-            //         new Assert\Positive(),
-            //         new Assert\LessThan(2000)
-            //     ]
-            // ])
-            // ->add('dispo', CheckboxType::class, [
-            //     'attr' => [
-            //         'class' => 'form-check-input',
-            //     ],
-            //     'required' => false,
-            //     'label' => "Disponible immédiatement",
-            //     'label_attr' => [
-            //         'class' => 'form-check-label'
-            //     ],
-            //     'constraints' => [
-            //         new Assert\NotNull()
-            //     ]
-            // ])
-            // ->add('dateDispoAt', null, [
-            //        'required' => false,
-            //     'attr' => [
-            //         'class' => 'form-control',
-            //     ],
-            //     'required' => true,
-            //     'label' => 'Date de disponibilité :',
-            //     'widget' => 'single_text',
-            // ])
-            
         ;
     }
 

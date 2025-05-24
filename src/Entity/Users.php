@@ -50,7 +50,7 @@ abstract class Users implements UserInterface, PasswordAuthenticatedUserInterfac
     #[ORM\Column(length: 50)]
     #[Assert\NotBlank(
         message:"Veuillez renseigner votre nom."
-    )] // Interdit les valeurs vides , rajoute l'attribut required
+    )]
     #[Assert\Length(
         min: 2,
         max: 50,
@@ -62,7 +62,7 @@ abstract class Users implements UserInterface, PasswordAuthenticatedUserInterfac
     #[ORM\Column]
     #[Assert\NotBlank(
         message:"Veuillez renseigner un code postale."
-    )] // Interdit les valeurs vides , rajoute l'attribut required
+    )]
     #[Assert\Length(
         exactly: 5,
         exactMessage: "Le code postale doit faire {{ limit }} caractères."
@@ -72,7 +72,7 @@ abstract class Users implements UserInterface, PasswordAuthenticatedUserInterfac
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(
         message:"Veuillez renseigner votre ville."
-    )] // Interdit les valeurs vides , rajoute l'attribut required
+    )]
     #[Assert\Length(
         min: 2,
         max: 50,
@@ -84,7 +84,7 @@ abstract class Users implements UserInterface, PasswordAuthenticatedUserInterfac
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(
         message:"Veuillez renseigner votre adresse."
-    )] // Interdit les valeurs vides , rajoute l'attribut required
+    )]
     #[Assert\Length(
         min: 2,
         max: 50,
