@@ -38,8 +38,8 @@ class OffreAdminType extends AbstractType
                 'required' => true,
                 'attr' => [
                     'class' => 'form-control',
-                    'minlenght' => '2',
-                    'maxlenght' => '50',
+                    'minLength' => '2',
+                    'maxLength' => '50',
                 ],
                 'label' => 'Titre de la mission :',
                 'label_attr' => [
@@ -65,8 +65,8 @@ class OffreAdminType extends AbstractType
                 'required' => true,
                 'attr' => [
                     'class' => 'form-control',
-                    'minlenght' => '2',
-                    'maxlenght' => '50',
+                    'minLength' => '2',
+                    'maxLength' => '50',
                 ],
                 'label' => 'Ref annonce :',
                 'label_attr' => [
@@ -114,8 +114,8 @@ class OffreAdminType extends AbstractType
                 'required' => false,
                 'attr' => [
                     'class' => 'form-control',
-                    'minlenght' => '2',
-                    'maxlenght' => '50',
+                    'minLength' => '2',
+                    'maxLength' => '50',
                 ],
                 'label' => 'Localisation :',
                 'label_attr' => [

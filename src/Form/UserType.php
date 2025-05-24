@@ -23,8 +23,8 @@ class UserType extends AbstractType
             ->add('nom', TextType::class, [
                 'attr' => [
                     'class' => 'form-control',
-                    'minlenght' => '2',
-                    'maxlenght' => '50',
+                    'minLength' => '2',
+                    'maxLength' => '50',
                 ],
                 'label' => 'Nom / Prénom',
                 'label_attr' => [
@@ -38,8 +38,8 @@ class UserType extends AbstractType
             ->add('adresse', TextType::class, [
                 'attr' => [
                     'class' => 'form-control',
-                    'minlenght' => '2',
-                    'maxlenght' => '50',
+                    'minLength' => '2',
+                    'maxLength' => '50',
                 ],
                 'required' => false,
                 'label' => 'Adresse',
@@ -53,8 +53,8 @@ class UserType extends AbstractType
             ->add('cp', TextType::class, [
                 'attr' => [
                     'class' => 'form-control',
-                    'minlenght' => '5',
-                    'maxlenght' => '5',
+                    'minLength' => '5',
+                    'maxLength' => '5',
                 ],
                 'required' => false,
                 'label' => 'Code postal',
@@ -68,8 +68,8 @@ class UserType extends AbstractType
             ->add('ville', TextType::class, [
                 'attr' => [
                     'class' => 'form-control',
-                    'minlenght' => '2',
-                    'maxlenght' => '50',
+                    'minLength' => '2',
+                    'maxLength' => '50',
                 ],
                 'required' => false,
                 'label' => 'Ville',
@@ -83,8 +83,8 @@ class UserType extends AbstractType
             ->add('phone', TextType::class, [
                 'attr' => [
                     'class' => 'form-control',
-                    'minlenght' => '2',
-                    // 'maxlenght' => '10',
+                    'minLength' => '2',
+                    // 'maxLength' => '10',
                 ],
                 'required' => false,
                 'label' => 'Télèphone',
@@ -112,8 +112,8 @@ class UserType extends AbstractType
             ->add('siret', TextType::class, [
                 'attr' => [
                     'class' => 'form-control',
-                    'minlenght' => '2',
-                    'maxlenght' => '20',
+                    'minLength' => '2',
+                    'maxLength' => '20',
                 ],
                 'required' => false,
                 'label' => 'Numéro de siret',

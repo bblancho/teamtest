@@ -7,11 +7,12 @@ use Symfony\Component\Form\AbstractType;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Validator\Constraints as Assert;
 
 class ClientType extends AbstractType
 {
@@ -22,8 +23,8 @@ class ClientType extends AbstractType
                 'required' => true,
                 'attr' => [
                     'class' => 'form-control',
-                    'minlenght' => '2',
-                    'maxlenght' => '50',
+                    'minLength' => '2',
+                    'maxLength' => '50',
                 ],
                 'label' => 'Nom / Prénom',
                 'label_attr' => [
@@ -34,8 +35,8 @@ class ClientType extends AbstractType
                 'required' => false,
                 'attr' => [
                     'class' => 'form-control',
-                    'minlenght' => '2',
-                    'maxlenght' => '50',
+                    'minLength' => '2',
+                    'maxLength' => '50',
                 ],
                 'label' => 'Adresse',
                 'label_attr' => [
@@ -46,8 +47,7 @@ class ClientType extends AbstractType
                 'required' => false,
                 'attr' => [
                     'class' => 'form-control',
-                    'minlenght' => '5',
-                    'maxlenght' => '5',
+                    'exactly'   => '5'
                 ],
                 'label' => 'Code postal',
                 'label_attr' => [
@@ -58,8 +58,8 @@ class ClientType extends AbstractType
                 'required' => false,
                 'attr' => [
                     'class' => 'form-control',
-                    'minlenght' => '2',
-                    'maxlenght' => '50',
+                    'minLength' => '2',
+                    'maxLength' => '50',
                 ],
                 'label' => 'Ville',
                 'label_attr' => [
@@ -70,8 +70,7 @@ class ClientType extends AbstractType
                 'required' => false,
                 'attr' => [
                     'class' => 'form-control',
-                    'minlenght' => '2',
-                    // 'maxlenght' => '10',
+                    'exactly'   => '10',
                 ],
                 'label' => 'Télèphone',
                 'label_attr' => [
@@ -91,21 +90,16 @@ class ClientType extends AbstractType
                     'class' => 'form-label'
                 ],
             ])
-            ->add('siren', TextType::class, [
-                'required' => false,
-                'attr' => [
-                    'class' => 'form-control',
-                    'minlenght' => '9',
-                    'maxlenght' => '9',
-                ],
-                'label' => 'Numéro de siren',
-                'label_attr' => [
-                    'class' => 'form-label'
-                ],
-                'constraints' => [
-                    new Assert\NotBlank()
-                ]
-            ]) 
+            // ->add('siren', TextType::class, [
+            //     'attr' => [
+            //         'class' => 'form-control',
+            //         //'disabled' => true,
+            //     ],
+            //     'label' => 'Numéro de siren',
+            //     'label_attr' => [
+            //         'class' => 'form-label'
+            //     ]
+            // ]) 
             ->add('cvFile', FileType::class,[
                 'required'  => false,
                 'mapped'    => false,

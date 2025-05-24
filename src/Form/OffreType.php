@@ -34,8 +34,8 @@ class OffreType extends AbstractType
             ->add('nom', TextType::class, [
                 'attr' => [
                     'class' => 'form-control',
-                    'minlenght' => '2',
-                    'maxlenght' => '100',
+                    'minLength' => '2',
+                    'maxLength' => '100',
                 ],
                 'required' => true,
                 'label' => 'Titre de la mission :',
@@ -53,8 +53,8 @@ class OffreType extends AbstractType
             ->add('refMission', TextType::class, [
                 'attr' => [
                     'class' => 'form-control',
-                    'minlenght' => '2',
-                    'maxlenght' => '50',
+                    'minLength' => '2',
+                    'maxLength' => '50',
                 ],
                 'label' => 'Ref annonce :',
                 'label_attr' => [
@@ -83,8 +83,8 @@ class OffreType extends AbstractType
             ->add('lieuMission', TextType::class, [
                 'attr' => [
                     'class' => 'form-control',
-                    'minlenght' => '2',
-                    'maxlenght' => '50',
+                    'minLength' => '2',
+                    'maxLength' => '50',
                 ],
                 'label' => 'Localisation :',
                 'label_attr' => [

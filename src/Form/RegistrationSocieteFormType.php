@@ -29,8 +29,8 @@ class RegistrationSocieteFormType extends AbstractType
                 'required' => true,
                 'attr' => [
                     'class' => 'form-control',
-                    'minlenght' => '2',
-                    'maxlenght' => '50',
+                    'minLength' => '2',
+                    'maxLength' => '50',
                 ],
                 'label' => "Raison sociale",
                 'label_attr' => [
@@ -41,8 +41,8 @@ class RegistrationSocieteFormType extends AbstractType
                 'required' => true,
                 'attr' => [
                     'class' => 'form-control',
-                    'minlenght' => '2',
-                    'maxlenght' => '50',
+                    'minLength' => '2',
+                    'maxLength' => '50',
                 ],
                 'label' => "Secteur d'activité",
                 'label_attr' => [
@@ -53,8 +53,8 @@ class RegistrationSocieteFormType extends AbstractType
                 'required' => true,
                 'attr' => [
                     'class' => 'form-control',
-                    'minlenght' => '2',
-                    'maxlenght' => '180',
+                    'minLength' => '2',
+                    'maxLength' => '180',
                 ],
                 'label' => 'Email',
                 'label_attr' => [
@@ -65,8 +65,8 @@ class RegistrationSocieteFormType extends AbstractType
                 'required' => true,
                 'attr' => [
                     'class' => 'form-control',
-                    'minlenght' => '2',
-                    'maxlenght' => '50',
+                    'minLength' => '2',
+                    'maxLength' => '50',
                 ],
                 'label' => 'Adresse',
                 'label_attr' => [
@@ -77,8 +77,8 @@ class RegistrationSocieteFormType extends AbstractType
                 'required' => true,
                 'attr' => [
                     'class' => 'form-control',
-                    'minlenght' => '5',
-                    'maxlenght' => '5',
+                    'minLength' => '5',
+                    'maxLength' => '5',
                 ],
                 'label' => 'Code postal',
                 'label_attr' => [
@@ -89,8 +89,8 @@ class RegistrationSocieteFormType extends AbstractType
                 'required' => true,
                 'attr' => [
                     'class' => 'form-control',
-                    'minlenght' => '2',
-                    'maxlenght' => '50',
+                    'minLength' => '2',
+                    'maxLength' => '50',
                 ],
                 'label' => 'Ville',
                 'label_attr' => [
@@ -101,8 +101,9 @@ class RegistrationSocieteFormType extends AbstractType
                 'required' => true,
                 'attr' => [
                     'class' => 'form-control',
-                    'minlenght' => '2',
-                    'maxlenght' => '10',
+                    'minLength' => '2',
+                    'maxLength' => '10',
+                    'placeholder' => "0145859657",
                 ],
                 'label' => 'Télèphone',
                 'label_attr' => [
@@ -126,8 +127,8 @@ class RegistrationSocieteFormType extends AbstractType
                 'required' => false,
                 'attr' => [
                     'class' => 'form-control',
-                    'minlenght' => '2',
-                    'maxlenght' => '50',
+                    'minLength' => '2',
+                    'maxLength' => '50',
                 ],
                 'label' => 'Nom du contact',
                 'label_attr' => [
@@ -138,8 +139,8 @@ class RegistrationSocieteFormType extends AbstractType
                 'required' => false,
                 'attr' => [
                     'class' => 'form-control',
-                    'minlenght' => '2',
-                    'maxlenght' => '10',
+                    'minLength' => '2',
+                    'maxLength' => '10',
                 ],
                 'label' => "Numéro du contact",
                 'label_attr' => [
