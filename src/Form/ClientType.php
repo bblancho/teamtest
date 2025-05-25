@@ -91,9 +91,10 @@ class ClientType extends AbstractType
                 ],
             ])
             // ->add('siren', TextType::class, [
+            //     'mapped' => false,
             //     'attr' => [
             //         'class' => 'form-control',
-            //         //'disabled' => true,
+            //         'disabled' => true,
             //     ],
             //     'label' => 'Numéro de siren',
             //     'label_attr' => [

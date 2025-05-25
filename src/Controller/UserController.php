@@ -65,7 +65,6 @@ class UserController extends AbstractController
             $user->setVille($form["ville"]->getData());
             $user->setPhone($form["phone"]->getData());
             $user->setTjm($form["tjm"]->getData());
-            $user->setSiret($form["siret"]->getData());
             // $user->setDispo($form["dispo"]->getData());
             $user->setIsNewsletter($form["isNewsletter"]->getData());
 

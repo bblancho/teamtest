@@ -55,11 +55,11 @@
 								<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{ app.user.nom }}</a>
 								<div class="dropdown-menu">
 									{% if app.user.typeUser == "clients"  %}
-										<a class="dropdown-item" href="{{ path('user.edit') }}">Modifier mes informations</a>
-										<a class="dropdown-item" href="{{ path('user.password') }}">Changer mot de passe</a>
+										<a class="dropdown-item {{ app.current_route == 'user.edit' ? 'active' : '' }}" href="{{ path('user.edit') }}">Modifier mes informations</a>
+										<a class="dropdown-item {{ app.current_route == 'user.password' ? 'active' : '' }}" href="{{ path('user.password') }}">Changer mot de passe</a>
 									{% elseif app.user.typeUser == "societes"%}
-										<a class="dropdown-item" href="{{ path('societe.edit') }}">Gérer mes informations</a>
-										<a class="dropdown-item" href="{{ path('societe.edit.password') }}">Changer mot de passe</a>
+										<a class="dropdown-item {{ app.current_route == 'societe.edit' ? 'active' : '' }}" href="{{ path('societe.edit') }}">Gérer mes informations</a>
+										<a class="dropdown-item {{ app.current_route == 'societe.edit.password' ? 'active' : '' }}" href="{{ path('societe.edit.password') }}">Changer mot de passe</a>
 									{% endif %}
 
 									<div class="dropdown-divider"></div>

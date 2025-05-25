@@ -24,7 +24,7 @@ class UserPasswordType extends AbstractType
                 'label' => 'Mot de passe actuel',
                 'constraints' => [
                     new Assert\NotBlank(['message' => "Ce champ est obligatoire."]),
-                    new UserPassword(['message' => "Le mot de passe courant est invalid."])
+                    new UserPassword(['message' => "Le mot de passe courant est invalide."])
                 ]
             ])
             ->add('plainPassword', RepeatedType::class, [
