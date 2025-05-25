@@ -17,102 +17,54 @@
 					<div class="row">
 						<div class="col-md-6">
 							<div class="form-group">
-								{{ form_label(form.nom) }}
-								{{ form_widget(form.nom) }}
-								<div class="form-error">
-									{{ form_errors(form.nom) }}
-								</div>
+								{{ form_row(form.nom) }}
 							</div>
 
 							<div class="form-group">
-								{{ form_label(form.secteurActivite) }}
-								{{ form_widget(form.secteurActivite) }}
-								<div class="form-error">
-									{{ form_errors(form.secteurActivite) }}
-								</div>
+								{{ form_row(form.secteurActivite) }}
 							</div>
 
 							<div class="form-group">
-								{{ form_label(form.siret) }}
-								{{ form_widget(form.siret) }}
-								<div class="form-error">
-									{{ form_errors(form.siret) }}
-								</div>
+								{{ form_row(form.siret) }}
 							</div>
 
 							<div class="form-group">
-								<img src="{{ vich_uploader_asset(user, 'imageFile') }}" alt="logo">
+								{{ form_row(form.adresse) }}
 							</div>
 
 							<div class="form-group">
-								{{ form_label(form.adresse) }}
-								{{ form_widget(form.adresse) }}
-								<div class="form-error">
-									{{ form_errors(form.adresse) }}
-								</div>
+								{{ form_row(form.cp) }}
 							</div>
 
 							<div class="form-group">
-								{{ form_label(form.cp) }}
-								{{ form_widget(form.cp) }}
-								<div class="form-error">
-									{{ form_errors(form.cp) }}
-								</div>
-							</div>
-
-							<div class="form-group">
-								{{ form_label(form.ville) }}
-								{{ form_widget(form.ville) }}
-								<div class="form-error">
-									{{ form_errors(form.ville) }}
-								</div>
+								{{ form_row(form.ville) }}
 							</div>
 
 						</div>
 
 						<div class="col-md-6">
 							<div class="form-group">
-								{{ form_label(form.description) }}
-								{{ form_widget(form.description) }}
-								<div class="form-error">
-									{{ form_errors(form.description) }}
-								</div>
+								{{ form_row(form.description) }}
 							</div>
 
 							<div class="form-group">
-								{{ form_label(form.phone) }}
-								{{ form_widget(form.phone) }}
-								<div class="form-error">
-									{{ form_errors(form.phone) }}
-								</div>
+								{{ form_row(form.phone) }}
 							</div>
 
 							<div class="form-group">
-								{{ form_label(form.nomContact) }}
-								{{ form_widget(form.nomContact) }}
-								<div class="form-error">
-									{{ form_errors(form.nomContact) }}
-								</div>
+								{{ form_row(form.nomContact) }}
 							</div>
 
 							<div class="form-group">
-								{{ form_label(form.phoneContact) }}
-								{{ form_widget(form.phoneContact) }}
-								<div class="form-error">
-									{{ form_errors(form.phoneContact) }}
-								</div>
+								{{ form_row(form.phoneContact) }}
 							</div>
 
 							<div class="form-group">
-									{{ form_label(form.isNewsletter) }}
-									{{ form_widget(form.isNewsletter) }}
-								<div class="form-error">
-									{{ form_errors(form.isNewsletter) }}
-								</div>
+								{{ form_row(form.isNewsletter) }}
 							</div>
 
 							<div class="form-group mt-4">
-								<button class="btn btn-lg btn-primary" type="submit">
+								<button class="btn btn-lg btn-primary mb-4" type="submit">
 									Modifier
 								</button>
 							</div>

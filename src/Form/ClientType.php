@@ -44,14 +44,15 @@ class ClientType extends AbstractType
                 ],
             ])
             ->add('cp', TextType::class, [
-                'required' => false,
+                'required' => true,
                 'attr' => [
                     'class' => 'form-control',
-                    'exactly'   => '5'
+                    'minLength' => '5',
+                    'maxLength' => '5',
                 ],
                 'label' => 'Code postal',
                 'label_attr' => [
-                    'class' => 'form-label mt-0'
+                    'class' => 'form-label mt-4'
                 ],
             ])
             ->add('ville', TextType::class, [

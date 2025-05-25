@@ -75,7 +75,7 @@ class SocieteType extends AbstractType
                 'attr' => [
                     'class' => 'form-control',
                     'minLength' => '2',
-                    // 'maxLength' => '10',
+                    'maxLength' => '10',
                 ],
                 'label' => 'Télèphone',
                 'label_attr' => [
@@ -97,21 +97,18 @@ class SocieteType extends AbstractType
                     new Assert\NotBlank()
                 ]
             ])
-            ->add('siret', TextType::class, [
-                'required' => true,
-                'attr' => [
-                    'class' => 'form-control',
-                    'minLength' => '14',
-                    'maxLength' => '14',
-                ],
-                'label' => 'Numéro de siret',
-                'label_attr' => [
-                    'class' => 'form-label'
-                ],
-                'constraints' => [
-                    new Assert\NotBlank(),
-                ]
-            ]) 
+            // ->add('siret', TextType::class, [
+            //     'required' => true,
+            //     'attr' => [
+            //         'class' => 'form-control',
+            //         'minLength' => '14',
+            //         'maxLength' => '14',
+            //     ],
+            //     'label' => 'Numéro de siret',
+            //     'label_attr' => [
+            //         'class' => 'form-label'
+            //     ],
+            // ]) 
             ->add('isNewsletter', CheckboxType::class, [
                 'required' => false,
                 'empty_data' => '',
@@ -123,11 +120,6 @@ class SocieteType extends AbstractType
                     'class' => 'form-check-label '
                 ],
             ]) 
-            ->add('imageFile', VichImageType::class, [
-                'required'     => false,
-                'allow_delete' => false,
-                'download_uri' => false
-            ])
             ->add('nomContact',TextType::class, [
                 'required' => false,
                 'attr' => [
@@ -161,13 +153,6 @@ class SocieteType extends AbstractType
                 'label' => "Secteur d'activité",
                 'label_attr' => [
                     'class' => 'form-label mt-4'
-                ],
-                'constraints' => [
-                    new Assert\NotBlank(),
-                    new Assert\Length([
-                        'min' => 3,
-                        'minMessage' => 'Ce champ doit faire {{ limit }} caractères au minimum.',
-                    ]),
                 ]
             ])
         ;

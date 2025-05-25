@@ -102,10 +102,8 @@ class RegistrationClientFormType extends AbstractType
             ])
             ->add('siren', TextType::class, [
                 'required' => true,
-                'disabled' => 'disabled',
                 'attr' => [
                     'class' => 'form-control',
-                    'disabled' => 'disabled',
                 ],
                 'label' => 'Numéro de siren',
                 'label_attr' => [
