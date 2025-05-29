@@ -2,21 +2,26 @@
 
 namespace App\Controller;
 
-use App\Entity\Users;
 use App\Entity\Clients;
 use App\Entity\Societes;
-use App\Service\UserService;
-use App\Form\RegistrationFormType;
+use App\Entity\Users;
 use App\Form\RegistrationClientFormType;
-use Doctrine\ORM\EntityManagerInterface;
 use App\Form\RegistrationSocieteFormType;
+use App\Service\UserService;
+use Doctrine\ORM\EntityManagerInterface;
+use Random\RandomException;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
-use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 class SecurityController extends AbstractController
 {
@@ -57,9 +62,16 @@ class SecurityController extends AbstractController
 
     /**
      * This controller allow us to register.
+     * @throws RandomException
+     * @throws TransportExceptionInterface
      */
     #[Route('/inscription-client', 'security.registration-client', methods: ['GET', 'POST'])]
-    public function registerClient(Request $request, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entityManager): Response
+    public function registerClient(
+        Request $request,
+        UserPasswordHasherInterface $passwordHasher,
+        EntityManagerInterface $entityManager,
+        MailerInterface $mailer
+    ): Response
     {
         $user = new Clients();
         $user->setRoles(['ROLE_USER','ROLE_CLIENT']);
@@ -77,29 +89,29 @@ class SecurityController extends AbstractController
 
             $user->setPassword($hashedPassword);
 
-            $entityManager->persist($user);
-            $entityManager->flush();
-
-            $this->addFlash(
-                'success',
-                'Votre compte a bien été créé.'
-            );
+            $this->generateSecurityRegistration($user, $entityManager, $mailer);
 
             return $this->redirectToRoute('security.login');
         }
 
-        return $this->render('pages/register/registerClient.html.twig', [
-            'registrationForm' => $form,
-        ]);
+        return $this->render(
+            'pages/register/registerClient.html.twig',
+            [
+                'registrationForm' => $form,
+            ]
+        );
     }
 
     /**
      * This controller allow us to register.
      */
     #[Route('/inscription-societe', 'security.registration.societe', methods: ['GET', 'POST'])]
-    public function registerSociete(Request $request, UserPasswordHasherInterface $passwordHasher, 
+    public function registerSociete(
+        Request $request,
+        UserPasswordHasherInterface $passwordHasher,
         EntityManagerInterface $entityManager,
-        UploaderHelper $helper
+        UploaderHelper $helper,
+        MailerInterface $mailer
     ): Response
     {
         $user = new Societes();
@@ -118,20 +130,93 @@ class SecurityController extends AbstractController
             );
 
             $user->setPassword($hashedPassword);
+            $this->generateSecurityRegistration($user, $entityManager, $mailer);
 
-            $entityManager->persist($user);
-            $entityManager->flush();
+            return $this->redirectToRoute('security.login');
+        }
 
+        return $this->render(
+            'pages/register/registerSociete.html.twig',
+            [
+                'registrationForm' => $form,
+            ]
+        );
+    }
+
+    /**
+     * @param string $token
+     * @param EntityManagerInterface $em
+     * @return Response
+     */
+    #[Route('/verify/email/{token}', name: 'app_verify_email')]
+    public function verifyUserEmail(string $token, EntityManagerInterface $em): Response
+    {
+        $user = $em->getRepository(Users::class)->findOneBy(['confirmationToken' => $token]);
+
+        if (!$user) {
             $this->addFlash(
-                'success',
-                'Votre compte a bien été créé.'
+                'danger',
+                'Lien de confirmation invalide ou expiré.'
             );
 
             return $this->redirectToRoute('security.login');
         }
 
-        return $this->render('pages/register/registerSociete.html.twig', [
-            'registrationForm' => $form,
-        ]);
+        $user->setIsVerified(true);
+        $user->setConfirmationToken(null);
+        $em->flush();
+
+        $this->addFlash(
+            'success',
+            'Votre e-mail a été confirmé. Vous pouvez maintenant vous connecter.'
+        );
+
+        return $this->redirectToRoute('security.login');
+    }
+
+    /**
+     * @param Clients|Societes $user
+     * @param EntityManagerInterface $entityManager
+     * @param MailerInterface $mailer
+     * @return void
+     * @throws RandomException
+     * @throws TransportExceptionInterface
+     */
+    public function generateSecurityRegistration(
+        Clients|Societes $user,
+        EntityManagerInterface $entityManager,
+        MailerInterface $mailer
+    ): void
+    {
+        $confirmationToken = bin2hex(random_bytes(32));
+        $user->setConfirmationToken($confirmationToken);
+
+        $entityManager->persist($user);
+        $entityManager->flush();
+
+        // On génère l’URL de confirmation
+        $confirmationUrl = $this->generateUrl('app_verify_email', [
+            'token' => $confirmationToken,
+        ], UrlGeneratorInterface::ABSOLUTE_URL);
+
+        // Envoie l’e-mail
+        $email = (new TemplatedEmail())
+            ->from(new Address('noreply@team2i.com', 'Team2i'))
+            ->to($user->getEmail())
+            ->subject('Veuillez confirmer votre e-mail')
+            ->htmlTemplate('emails/confirm_email.html.twig')
+            ->context(
+                [
+                    'confirmationUrl' => $confirmationUrl,
+                    'user' => $user,
+                ]
+            );
+
+        $mailer->send($email);
+
+        $this->addFlash(
+            'success',
+            'Votre compte a bien été créé. Un lien vous a été envoyé, veuillez confirmer votre e-mail.'
+        );
     }
 }
