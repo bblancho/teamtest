@@ -18,7 +18,7 @@ use Vich\UploaderBundle\Entity\File as EmbeddedFile;
 
 #[ORM\Entity(repositoryClass: SocietesRepository::class)]
 #[ORM\Table(name: "societes")]
-#[UniqueEntity('siret')]
+#[UniqueEntity('siret', message: "Cette valeur est déjà utilisée.")]
 #[Vich\Uploadable]
 class Societes extends Users
 {

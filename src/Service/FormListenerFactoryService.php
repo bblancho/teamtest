@@ -13,11 +13,13 @@ class FormListenerFactoryService {
 		return function(PreSubmitEvent $event) use($fields){
 			
 			$data = $event->getData(); // On récupère les données lors de la soumission du formulaire
+
+			//dd("ee", $data['refMission']) ;
 			
 			if( empty($data['slug']) ) 
 			{
 				$slugger = new AsciiSlugger() ;
-				$data['slug'] = strtolower( $slugger->slug($data[$fields]) ) ;
+				$data['slug'] = strtolower( $slugger->slug( $data[$fields] ) ) ;
 				$event->setData($data) ;
 			}
 		}	;	
