@@ -44,7 +44,7 @@ class OffresVoter extends Voter
     {
         $user = $token->getUser();
 
-         // ROLE_SUPER_ADMIN can do anything! The power!
+        // ROLE_SUPER_ADMIN can do anything! The power!
         if ($this->accessDecisionManager->decide($token, ['ROLE_ADMIN'])) {
             return true;
         }

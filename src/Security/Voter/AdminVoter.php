@@ -11,6 +11,7 @@ class AdminVoter extends Voter
 {
     public const EDIT = 'POST_EDIT';
     public const VIEW = 'POST_VIEW';
+    public const DELETE = 'POST_DELETE';
 
     protected function supports(string $attribute, mixed $subject): bool
     {
