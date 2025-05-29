@@ -4,8 +4,9 @@ namespace App\Security\Voter;
 
 use App\Entity\Offres;
 use App\Entity\Societes;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 
 
 class OffresVoter extends Voter
@@ -17,10 +18,15 @@ class OffresVoter extends Voter
     public const OFFRE_LIST = 'offre_list'; // Les offres de la societe
     public const OFFRE_LIST_ALL = 'offre_all';
 
+    public function __construct(
+        private AccessDecisionManagerInterface $accessDecisionManager,
+    ) {
+    }
+
     protected function supports(string $attribute, mixed $offre): bool
     {
         return
-            // Soit on a pas besoin d'un sujet sinon ce le cas
+            // Soit on a pas besoin d'un sujet sinon c'est le cas
             in_array( $attribute, [self::OFFRE_CREATE, self::OFFRE_LIST, self::OFFRE_LIST_ALL] )  ||
             ( 
                 in_array($attribute, [self::OFFRE_EDIT, self::OFFRE_DELETE] ) && $offre instanceof \App\Entity\Offres 
@@ -37,6 +43,11 @@ class OffresVoter extends Voter
     protected function voteOnAttribute(string $attribute, mixed $offre, TokenInterface $token): bool
     {
         $user = $token->getUser();
+
+         // ROLE_SUPER_ADMIN can do anything! The power!
+        if ($this->accessDecisionManager->decide($token, ['ROLE_ADMIN'])) {
+            return true;
+        }
 
         // if the user is anonymous, do not grant access
         if (!$user instanceof Societes) {
