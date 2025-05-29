@@ -25,7 +25,7 @@ class Offres
     private ?int $id = null;
 
     #[ORM\Column(length: 100)]
-    #[Assert\NotBlank()]
+    #[Assert\NotBlank( message: "Ce champ est obligatoire.",)]
     #[Assert\Length(
         min: 2,
         max: 100,
@@ -35,7 +35,7 @@ class Offres
     private string $nom  = '' ;
 
     #[ORM\Column(type: Types::TEXT)]
-    #[Assert\NotBlank()]
+    #[Assert\NotBlank( message: "Ce champ est obligatoire.",)]
     #[Assert\Length(
         min: 5,
         minMessage: "La description doit faire minimum {{ limit }} caractères.",
@@ -56,11 +56,14 @@ class Offres
     private ?int $duree = null;
 
     #[ORM\Column(length: 100)]
+    #[Assert\NotBlank( message: "Ce champ est obligatoire.",)]
     #[Assert\Length(
         min: 2,
         max: 50,
+        minMessage: "Le lieu de la mission doit faire minimum {{ limit }} caractères.",
+        maxMessage: "Le lieu de la mission doit faire au maximum {{ limit }} caractères."
     )]
-    private ?string $lieuMission = null;
+    private string $lieuMission = '';
 
     #[ORM\Column]
     private ?bool $isActive = false;
@@ -69,14 +72,22 @@ class Offres
     #[Assert\Positive()]
     private ?int $experience = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $profil = null;
+    #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank( message: "Ce champ est obligatoire.",)]
+    private string $profil = " ";
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $contraintes = null;
 
-    #[ORM\Column(length: 100, nullable: true)]
-    private ?string $refMission = null;
+    #[ORM\Column(length: 100)]
+    #[Assert\NotBlank( message: "Ce champ est obligatoire.",)]
+    #[Assert\Length(
+        min: 2,
+        max: 50,
+        minMessage: "La réfèrence doit faire minimum {{ limit }} caractères.",
+        maxMessage: "Le réfèrence doit faire au maximum {{ limit }} caractères."
+    )]
+    private ?string $refMission = '';
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     #[Assert\NotNull()]

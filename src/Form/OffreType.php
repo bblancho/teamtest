@@ -42,10 +42,6 @@ class OffreType extends AbstractType
                 'label_attr' => [
                     'class' => 'form-label  mt-4'
                 ],
-                'constraints' => [
-                    new Assert\NotBlank(),
-                    new Assert\Length(['min' => 2, 'max' => 100])
-                ]
             ])
             ->add('slug', HiddenType::class, [
                 'empty_data' => '',
@@ -60,10 +56,6 @@ class OffreType extends AbstractType
                 'label_attr' => [
                     'class' => 'form-label'
                 ],
-                'constraints' => [
-                    new Assert\NotBlank(),
-                    new Assert\Length(['min' => 2, 'max' => 50])
-                ]
             ])
             ->add('description', TextareaType::class, [
                 'attr' => [
@@ -76,9 +68,6 @@ class OffreType extends AbstractType
                 'label_attr' => [
                     'class' => 'form-label'
                 ],
-                'constraints' => [
-                    new Assert\NotBlank()
-                ]
             ])
             ->add('lieuMission', TextType::class, [
                 'attr' => [
@@ -90,10 +79,6 @@ class OffreType extends AbstractType
                 'label_attr' => [
                     'class' => 'form-label  mt-4'
                 ],
-                'constraints' => [
-                    new Assert\NotBlank(),
-                    new Assert\Length(['min' => 2, 'max' => 50])
-                ]
             ])
             ->add('tarif', MoneyType::class, [
                 'required' => true,
@@ -108,10 +93,6 @@ class OffreType extends AbstractType
                     'class' => 'form-label'
                 ],
                 'currency' => 'EUR',
-                'constraints' => [
-                    new Assert\Positive(),
-                    new Assert\LessThan(2000)
-                ]
             ])
             ->add('duree', IntegerType::class, [
                 'required' => false,
@@ -124,10 +105,6 @@ class OffreType extends AbstractType
                 'label_attr' => [
                     'class' => 'form-label mt-4'
                 ],
-                'constraints' => [
-                    new Assert\Positive(),
-                    new Assert\LessThan(24)
-                ]
             ])
             ->add('contraintes', TextareaType::class, [
                 'required' => false,
@@ -152,9 +129,6 @@ class OffreType extends AbstractType
                 'label_attr' => [
                     'class' => 'form-label'
                 ],
-                'constraints' => [
-                    new Assert\NotBlank()
-                ]
             ])
             ->add('experience', IntegerType::class, [
                 'required' => false,
@@ -163,21 +137,17 @@ class OffreType extends AbstractType
                     'min' => 1,
                     'max' => 15
                 ],
-                'label' => "Nombre d'année d'expérience minimum :",
+                'label' => "Année d'expérience minimum :",
                 'label_attr' => [
                     'class' => 'form-label '
                 ],
-                'constraints' => [
-                    new Assert\Positive(),
-                    new Assert\LessThan(15)
-                ]
             ])
             ->add('startDateAT', null, [
                 'required' => true,
                 'attr' => [
                     'class' => 'form-control',
                 ],
-                'label' => 'Date de début de mission :',
+                'label' => 'Démarrage le :',
                 'label_attr' => [
                     'class' => 'form-label'
                 ],
