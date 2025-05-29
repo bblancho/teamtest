@@ -130,21 +130,34 @@ abstract class Users implements UserInterface, PasswordAuthenticatedUserInterfac
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $lastLonginAt = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $confirmationToken = null;
+
     // public function __construct()
     // {
     //     $this->skills = new ArrayCollection();
     // }
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return string
+     */
     public function getEmail(): string
     {
         return $this->email;
     }
 
+    /**
+     * @param string $email
+     * @return $this
+     */
     public function setEmail(string $email): static
     {
         $this->email = $email;
@@ -376,6 +389,25 @@ abstract class Users implements UserInterface, PasswordAuthenticatedUserInterfac
     public function setLastLonginAt(?\DateTimeImmutable $lastLonginAt): static
     {
         $this->lastLonginAt = $lastLonginAt;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getConfirmationToken(): ?string
+    {
+        return $this->confirmationToken;
+    }
+
+    /**
+     * @param string|null $confirmationToken
+     * @return $this
+     */
+    public function setConfirmationToken(?string $confirmationToken): static
+    {
+        $this->confirmationToken = $confirmationToken;
 
         return $this;
     }
