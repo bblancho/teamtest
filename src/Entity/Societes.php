@@ -29,6 +29,7 @@ class Societes extends Users
         minMessage: "Le nom doit faire minimum {{ limit }} caractères.",
         maxMessage: "Le nom doit faire au maximum {{ limit }} caractères."
     )]
+    #[Assert\Regex("/^[a-z]+(?:-[A-Z]+)*$/", message: "Le nom est incorrect.")]
     private ?string $nomContact = null;
 
     #[ORM\Column(length: 50, nullable: true)]
@@ -72,6 +73,7 @@ class Societes extends Users
         exactly: 14,
         exactMessage: "Le numéro de siret doit faire {{ limit }} caractères."
     )]
+    #[Assert\Regex("/^[0-9]+*$/", message: "Le sirentest doit faire 14 caractères.")]
     private string $siret = " ";
 
     /**
