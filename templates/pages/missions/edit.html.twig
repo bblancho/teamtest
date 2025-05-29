@@ -1,19 +1,19 @@
 {% extends "base.html.twig" %}
 
-{% block title  "Modification de la mission {{ offre.nom }}" %}
+{% block title  "Modification d'un offre" %}
 
 {% block body %}
 	<main role="main">
 
 		<section class="jumbotron text-center bg-light pt-4 pb-4">
 			<div class="container">
-				<h1 class="jumbotron-heading"> Edition de l'offre : {{ offre.nom }}n </h1>
+				<h1 class="jumbotron-heading"> Edition de l'offre : {{ offre.nom }} </h1>
 			</div>
 		</section>
 
 		<div class="album bg-white">
 			<div class="container">
-				<div class="mt-2"> <a  href="{{ path('offres.mes_offres', {id: offre.id}) }}" class="btn btn-primary"> Mes offres </a> </div>
+				<div class="mt-2 mb-3"> <a  href="{{ path('offres.mes_offres', {id: offre.id}) }}" class="btn btn-primary"> Mes offres </a> </div>
 
 				{{ form_start(form) }}
 					<div class="row mb-2">

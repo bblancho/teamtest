@@ -104,13 +104,13 @@ class MissionController extends AbstractController
     ): Response {
 
         $form = $this->createForm(OffreType::class, $offre);
+
+        $hold_name = $offre->getNom() ;
         $form->handleRequest($request);
 
         if ( $form->isSubmitted() && $form->isValid() ) {
             
-            $offre = $form->getData();
-
-            if( $offre->getNom() !== $form["nom"]->getData()  ){
+            if( $hold_name !== $form["nom"]->getData()  ){
                 $offre->setSlug($form["nom"]->getData());
             }
 

@@ -13,7 +13,7 @@
 			</div>
 		</section>
 
-		<div class="album bg-white">
+		<div class="album bg-white mt-3">
 			<div class="container">
 				{{ form_start(form) }}
 					<div class="row mb-2">
@@ -60,13 +60,10 @@
 									{{ form_errors(form.tarif) }}
 								</div>
 							</div>
-							<div class="form-group mt-3">
-								{{ form_label(form.isActive) }}
-								{{ form_widget(form.isActive) }}
-								<div class="form-error">
-									{{ form_errors(form.isActive) }}
-								</div>
-							</div>
+						</div>
+
+						<div class="col-md-6">
+
 							<div class="form-group">
 								{{ form_label(form.experience) }}
 								{{ form_widget(form.experience) }}
@@ -74,9 +71,7 @@
 									{{ form_errors(form.experience) }}
 								</div>
 							</div>
-						</div>
 
-						<div class="col-md-6">
 							<div class="form-group">
 								{{ form_label(form.profil) }}
 								{{ form_widget(form.profil) }}
@@ -97,6 +92,14 @@
 								{{ form_widget(form.contraintes) }}
 								<div class="form-error">
 									{{ form_errors(form.contraintes) }}
+								</div>
+							</div>
+
+							<div class="form-group mt-3">
+								{{ form_label(form.isActive) }}
+								{{ form_widget(form.isActive) }}
+								<div class="form-error">
+									{{ form_errors(form.isActive) }}
 								</div>
 							</div>
 							
