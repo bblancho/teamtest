@@ -18,6 +18,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 class Clients extends Users
 {
     #[ORM\Column(nullable: true)]
+    #[Assert\Positive(message: "La valeur saisie n'est pas valide.",)]
     private ?int $tjm = null;
 
     #[ORM\Column(nullable: true)]
@@ -51,6 +52,7 @@ class Clients extends Users
     #[Assert\NotBlank(
         message: "Le champ siren est obligatoire.",
     )] 
+    #[Assert\Regex("/^[0-9]+*$/", message: "Le siren est doit faire 9 caractères.")]
     private string $siren ;
 
     /**
