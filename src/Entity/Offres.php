@@ -16,7 +16,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: OffresRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-#[UniqueEntity('slug')]
+#[UniqueEntity('slug', message: "Cette valeur est déjà utilisée.")]
+#[UniqueEntity('refMission', message: "Cette valeur est déjà utilisée.")]
 class Offres
 {
     #[ORM\Id]
@@ -48,11 +49,11 @@ class Offres
     private string $slug = '';
 
     #[ORM\Column(nullable: true)]
-    #[Assert\Positive()]
+    #[Assert\Positive(message: "La valeur saisie n'est pas valide.",)]
     private ?int $tarif = null;
 
     #[ORM\Column(nullable: true)]
-    #[Assert\Positive()]
+    #[Assert\Positive(message: "La valeur saisie n'est pas valide.",)]
     private ?int $duree = null;
 
     #[ORM\Column(length: 100)]
@@ -69,7 +70,7 @@ class Offres
     private ?bool $isActive = false;
 
     #[ORM\Column(nullable: true)]
-    #[Assert\Positive()]
+    #[Assert\Positive(message: "La valeur saisie {{ value }} n'est pas valide.",)]
     private ?int $experience = null;
 
     #[ORM\Column(type: Types::TEXT)]
@@ -87,7 +88,7 @@ class Offres
         minMessage: "La réfèrence doit faire minimum {{ limit }} caractères.",
         maxMessage: "Le réfèrence doit faire au maximum {{ limit }} caractères."
     )]
-    private ?string $refMission = '';
+    private string $refMission = '';
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     #[Assert\NotNull()]

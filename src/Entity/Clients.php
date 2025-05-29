@@ -14,7 +14,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: ClientsRepository::class)]
 #[Vich\Uploadable]
-#[UniqueEntity('siren')]
+#[UniqueEntity('siren', message: "Cette valeur est déjà utilisée.")]
 class Clients extends Users
 {
     #[ORM\Column(nullable: true)]

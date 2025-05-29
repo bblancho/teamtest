@@ -66,10 +66,10 @@ class MissionController extends AbstractController
         $form = $this->createForm(OffreType::class, $mission);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ( $form->isSubmitted() && $form->isValid() ) {
 
-            $mission->setSocietes($this->getUser());
-            $mission->setSlug($form["nom"]->getData());
+            $mission->setSocietes( $this->getUser() );
+            $mission->setSlug($form["nom"]->getData().$form["refMission"]->getData());
 
             $manager->persist($mission);
             $manager->flush();
@@ -111,7 +111,7 @@ class MissionController extends AbstractController
         if ( $form->isSubmitted() && $form->isValid() ) {
             
             if( $hold_name !== $form["nom"]->getData()  ){
-                $offre->setSlug($form["nom"]->getData());
+                $offre->setSlug($form["nom"]->getData().$form["refMission"]->getData());
             }
 
             $manager->flush();
@@ -204,9 +204,6 @@ class MissionController extends AbstractController
 
         return $this->redirectToRoute('offres.mes_offres');
     }
-
-   
-
 
 
 }
