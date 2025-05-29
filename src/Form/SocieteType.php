@@ -97,18 +97,6 @@ class SocieteType extends AbstractType
                     new Assert\NotBlank()
                 ]
             ])
-            // ->add('siret', TextType::class, [
-            //     'required' => true,
-            //     'attr' => [
-            //         'class' => 'form-control',
-            //         'minLength' => '14',
-            //         'maxLength' => '14',
-            //     ],
-            //     'label' => 'Numéro de siret',
-            //     'label_attr' => [
-            //         'class' => 'form-label'
-            //     ],
-            // ]) 
             ->add('isNewsletter', CheckboxType::class, [
                 'required' => false,
                 'empty_data' => '',
@@ -155,6 +143,18 @@ class SocieteType extends AbstractType
                     'class' => 'form-label mt-4'
                 ]
             ])
+            // ->add('siret', TextType::class, [
+                //     'required' => true,
+                //     'attr' => [
+                //         'class' => 'form-control',
+                //         'minLength' => '14',
+                //         'maxLength' => '14',
+                //     ],
+                //     'label' => 'Numéro de siret',
+                //     'label_attr' => [
+                //         'class' => 'form-label'
+                //     ],
+                // ]) 
         ;
     }
 

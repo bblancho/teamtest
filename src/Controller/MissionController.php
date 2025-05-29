@@ -83,7 +83,7 @@ class MissionController extends AbstractController
         }
 
         return $this->render('pages/missions/new.html.twig', [
-            'form' => $form->createView()
+            'form' => $form
         ]);
     }
 
@@ -126,7 +126,7 @@ class MissionController extends AbstractController
 
         return $this->render('pages/missions/edit.html.twig', [
             'offre' => $offre ,
-            'form' => $form->createView()
+            'form' => $form
         ]);
     }
 

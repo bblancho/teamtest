@@ -207,6 +207,15 @@ class RegistrationSocieteFormType extends AbstractType
                 ],
                 'invalid_message' => 'Les mots de passe doivent être identique.',
             ])
+            ->add('agreeTerms', CheckboxType::class, [
+                'priority' => 1,
+                'mapped' => false,
+                'constraints' => [
+                    new IsTrue([
+                        'message' => 'Vous devez accepter les termes.',
+                    ]),
+                ],
+            ])
         ;
     }
 

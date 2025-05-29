@@ -46,9 +46,6 @@ class UserType extends AbstractType
                 'label_attr' => [
                     'class' => 'form-label  mt-4'
                 ],
-                'constraints' => [
-                    new Assert\Length(['min' => 2, 'max' => 50])
-                ]
             ])
             ->add('cp', TextType::class, [
                 'attr' => [
@@ -61,9 +58,6 @@ class UserType extends AbstractType
                 'label_attr' => [
                     'class' => 'form-label  mt-4'
                 ],
-                'constraints' => [
-                    new Assert\Length(['min' => 5, 'max' => 5])
-                ]
             ])
             ->add('ville', TextType::class, [
                 'attr' => [
@@ -76,9 +70,6 @@ class UserType extends AbstractType
                 'label_attr' => [
                     'class' => 'form-label  mt-4'
                 ],
-                'constraints' => [
-                    new Assert\Length(['min' => 2, 'max' => 50])
-                ]
             ])
             ->add('phone', TextType::class, [
                 'attr' => [
@@ -91,9 +82,6 @@ class UserType extends AbstractType
                 'label_attr' => [
                     'class' => 'form-label  mt-4'
                 ],
-                'constraints' => [
-                    new Assert\Length(['min' => 2, 'max' => 10])
-                ]
             ])
             ->add('description', TextareaType::class, [
                 'attr' => [
@@ -105,30 +93,6 @@ class UserType extends AbstractType
                 'label_attr' => [
                     'class' => 'form-label mt-4'
                 ],
-                'constraints' => [
-                    new Assert\NotBlank()
-                ]
-            ])
-            ->add('siret', TextType::class, [
-                'attr' => [
-                    'class' => 'form-control',
-                    'minLength' => '2',
-                    'maxLength' => '20',
-                ],
-                'required' => false,
-                'label' => 'Numéro de siret',
-                'label_attr' => [
-                    'class' => 'form-label  mt-4'
-                ],
-                'constraints' => [
-                    new Assert\Length(['min' => 2, 'max' => 20])
-                ]
-            ])
-            ->add('submit', SubmitType::class, [
-                'attr' => [
-                    'class' => 'btn btn-primary mt-4'
-                ],
-                'label' => 'Valider',
             ])
         ;
     }

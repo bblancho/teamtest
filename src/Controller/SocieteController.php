@@ -69,7 +69,7 @@ class SocieteController extends AbstractController
         }
 
         return $this->render('pages/societe/edit.html.twig', [
-            'form' => $form->createView(),
+            'form' => $form,
             'user' => $user
         ]);
     }
@@ -128,7 +128,7 @@ class SocieteController extends AbstractController
         }
 
         return $this->render('pages/edit-password.html.twig', [
-            'form' => $form->createView()
+            'form' => $form
         ]);
     }
 
