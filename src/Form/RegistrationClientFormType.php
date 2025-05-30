@@ -27,18 +27,22 @@ class RegistrationClientFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nom', TextType::class, [
-                'required' => true,
-                'attr' => [
-                    'class' => 'form-control',
-                    'minLength' => '2',
-                    'maxLength' => '50',
-                ],
-                'label' => 'Nom / Prénom',
-                'label_attr' => [
-                    'class' => 'form-label  mt-4'
+            ->add(
+                'nom',
+                TextType::class,
+                [
+                    'required' => true,
+                    'attr' => [
+                        'class' => 'form-control',
+                        'minLength' => '2',
+                        'maxLength' => '50',
+                    ],
+                    'label' => 'Nom / Prénom',
+                    'label_attr' => [
+                        'class' => 'form-label  mt-4'
+                    ]
                 ]
-            ])
+            )
             ->add('email', EmailType::class, [
                 'required' => true,
                 'attr' => [

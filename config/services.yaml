@@ -7,6 +7,9 @@ parameters:
 
 services:
     # default configuration for services in *this* file
+    App\Security\UserChecker:
+        tags:
+            - { name: 'security.user_checker', firewall: main }
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.

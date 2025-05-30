@@ -5,6 +5,11 @@
 {% block body %}
 	<div class="album py-5 connexion">
 		<div class="container col-md-4">
+			{% if error %}
+				<div class="alert alert-danger">
+					{{ error.messageKey|trans(error.messageData, 'security') }}
+				</div>
+			{% endif %}
 
 			<h1 class="text-center"> CONNEXION </h1>
 
@@ -39,7 +44,7 @@
 					</div>
 
 					<p>
-						<a class=" " href="#">
+						<a class=" " href="{{ path('app_forgot_password_request') }}">
 							Mot de passe oublié ?
 						</a> |  Pas encore membre ?
 
