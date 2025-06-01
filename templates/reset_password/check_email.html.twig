@@ -4,6 +4,7 @@
 
 {% block body %}
    <div class="container py-5 connexion">
+       {# TODO check le delai d'expiration du token il affiche 0 minute alors que c'est 1h de base #}
        <p class="alert alert-success">
            Si un compte correspondant à votre e-mail existe, un e-mail vient d'être envoyé contenant un lien que vous pouvez utiliser pour réinitialiser votre mot de passe.
            Ce lien expirera dans {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
