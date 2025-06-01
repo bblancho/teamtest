@@ -108,6 +108,7 @@ class AppFixtures extends Fixture
                 ->setContraintes($this->faker->text(150))
                 ->setProfil($this->faker->text(200))
                 ->setExperience(mt_rand(1, 7))
+                ->setRefMission('')
             ;
 
             $manager->persist($job);
