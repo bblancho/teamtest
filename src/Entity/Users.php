@@ -51,13 +51,13 @@ abstract class Users implements UserInterface, PasswordAuthenticatedUserInterfac
     #[Assert\NotBlank(
         message:"Veuillez renseigner votre nom."
     )]
-    #[Assert\Length(
-        min: 2,
-        max: 50,
-        minMessage: "Le nom doit faire au minimum {{ limit }} caractères.",
-        maxMessage: "Le nom doit faire au maximum {{ limit }} caractères."
-    )]
-    #[Assert\Regex("/^[a-z0-9]+(?:-[a-z0-9]+)*$/", message: "Le nom est incorrect.")]
+//    #[Assert\Length(
+//        min: 2,
+//        max: 50,
+//        minMessage: "Le nom doit faire au minimum {{ limit }} caractères.",
+//        maxMessage: "Le nom doit faire au maximum {{ limit }} caractères."
+//    )]
+//    #[Assert\Regex("/^[a-z0-9]+(?:-[a-z0-9]+)*$/", message: "Le nom est incorrect.")]
     private string $nom = " " ; 
 
     #[ORM\Column]
