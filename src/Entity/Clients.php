@@ -24,19 +24,8 @@ class Clients extends Users
     #[ORM\Column(nullable: true)]
     private ?bool $dispo = null;
 
-    #[Vich\UploadableField(mapping: 'clients', fileNameProperty: 'cvName')]
-    #[Assert\File(
-        mimeTypes:["image/jpeg", "image/jpg", "image/png"],
-        mimeTypesMessage: "Ce type de document {{ type }} n'est pas accepté.",
-        maxSize: "2M",
-        maxSizeMessage:" La taille maximum acceptée est de ({{ size }} {{ suffix }}. ",
-        extensions: [ 
-            'png',
-            'jpeg',
-            'jpg',
-        ],
-    )]
-    private ?File $cvFile = null;
+    #[ORM\Column(nullable: true)]
+    private ?string $cvFile = null;
 
     #[ORM\Column( length: 255, nullable: true)]
     private ?string $cvName = null;
@@ -45,14 +34,11 @@ class Clients extends Users
     private ?\DateTimeImmutable $dateDispoAt = null;
     
     #[ORM\Column(length: 255)]
-    #[Assert\Length( 
-        exactly: 9,
-        exactMessage: "Le numéro de siren doit faire {{ limit }} caractères."
-    )]
-    #[Assert\NotBlank(
-        message: "Le champ siren est obligatoire.",
-    )] 
-    #[Assert\Regex("/^[0-9]+*$/", message: "Le siren est doit faire 9 caractères.")]
+//    #[Assert\NotBlank(
+//        message: "Le champ siren est obligatoire.",
+//    )]
+//    #[Assert\Length(exactly: 9, exactMessage: "Le numéro de siren doit faire {{ limit }} caractères.")]
+//    #[Assert\Regex("/^\d+$/", message: "Le siren doit contenir uniquement des chiffres.")]
     private string $siren ;
 
     /**
@@ -104,26 +90,20 @@ class Clients extends Users
     }
 
     /**
-     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
-     * of 'UploadedFile' is injected into this setter to trigger the update. If this
-     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
-     * must be able to accept an instance of 'File' as the bundle will inject one here
-     * during Doctrine hydration.
-     *
-     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile|null $cvFile
+     * @param string|null $cvFile
+     * @return $this
      */
-    public function setCvFile(?File $cvFile = null): void
+    public function setCvFile(?string $cvFile = null): self
     {
         $this->cvFile = $cvFile;
 
-        // if (null !== $cvFile) {
-            // It is required that at least one field changes if you are using doctrine
-            // otherwise the event listeners won't be called and the file is lost
-        //     $this->updatedAt = new \DateTimeImmutable();
-        // }
+        return $this;
     }
 
-    public function getCvFile(): ?File
+    /**
+     * @return string|null
+     */
+    public function getCvFile(): ?string
     {
         return $this->cvFile;
     }
