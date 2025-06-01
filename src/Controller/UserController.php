@@ -3,30 +3,27 @@
 namespace App\Controller;
 
 use App\Entity\Candidatures;
-use App\Entity\Users;
-use App\Form\UserType;
 use App\Entity\Clients;
-use App\Entity\Offres;
+use App\Entity\Users;
 use App\Form\ClientType;
 use App\Form\UserPasswordType;
-use App\Repository\OffresRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\CandidaturesRepository;
+use App\Repository\OffresRepository;
+use App\Service\FileUploadService;
+use App\Service\UserService;
+use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\ExpressionLanguage\Expression;
-use Symfony\Component\Routing\Requirement\Requirement;
-// use Symfony\Component\Validator\Constraints\Expression;
-use Symfony\Component\Security\Http\Attribute\IsGranted;
-use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\ExpressionLanguage\Expression;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-use function Symfony\Component\Clock\now;
+// use Symfony\Component\Validator\Constraints\Expression;
 
 #[Route("/compte", 'user.')]
 class UserController extends AbstractController
@@ -45,6 +42,9 @@ class UserController extends AbstractController
     public function edit(
         Request $request,
         EntityManagerInterface $manager,
+        FileUploadService $fileUploadService,
+        ParameterBagInterface $parameterBag,
+        UserService $userService,
     ): Response {
         
         /** @var Clients $user */
@@ -54,21 +54,36 @@ class UserController extends AbstractController
         
         $form->handleRequest($request) ;
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if (
+            $form->isSubmitted()
+            && $form->isValid()
+        ) {
 
             /** @var Clients $user */
             $user = $form->getData() ;
 
-            $user->setNom($form["nom"]->getData());
-            $user->setAdresse($form["adresse"]->getData());
-            $user->setCp($form["cp"]->getData());
-            $user->setVille($form["ville"]->getData());
-            $user->setPhone($form["phone"]->getData());
-            $user->setTjm($form["tjm"]->getData());
-            // $user->setDispo($form["dispo"]->getData());
-            $user->setIsNewsletter($form["isNewsletter"]->getData());
+            $formData = [
+                'nom' => $form["nom"]->getData(),
+                'adresse' => $form["adresse"]->getData(),
+                'cp' => $form["cp"]->getData(),
+                'ville' => $form["ville"]->getData(),
+                'phone' => $form["phone"]->getData(),
+                'tjm' => $form["tjm"]->getData(),
+                'isNewsletter' => $form["isNewsletter"]->getData(),
+            ];
 
-            $manager->flush() ;
+            $cvFile = $form["cvFile"]->getData();
+
+            $cvFileDirectory = $parameterBag->get('cv.upload_directory');
+            $cvFileName = null;
+
+            if (null !== $cvFile) {
+                $cvFileName = $fileUploadService->renameUploadedFile($cvFile, $cvFileDirectory);
+                $user->setCvFile($cvFileName);
+                $user->setCvName($cvFile->getClientOriginalName());
+            }
+
+            $userService->updateUserFromForm($user, $formData, $cvFileName);
 
             $this->addFlash(
                 'success',
