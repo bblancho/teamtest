@@ -52,7 +52,10 @@ class Clients extends Users
     #[Assert\NotBlank(
         message: "Le champ siren est obligatoire.",
     )] 
-    #[Assert\Regex("/^[0-9]+*$/", message: "Le siren est doit faire 9 caractères.")]
+    #[Assert\Regex(
+        pattern: '/\d/',
+        message: 'Le numéro de siren doit contenir que des chiffres.',
+    )]
     private string $siren ;
 
     /**

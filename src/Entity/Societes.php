@@ -30,9 +30,8 @@ class Societes extends Users
         maxMessage: "Le nom doit faire au maximum {{ limit }} caractères."
     )]
     #[Assert\Regex(
-        pattern: '/\d/',
-        match: false,
-        message: 'Votre nom contient un chiffre.',
+        pattern: '/^[a-z]+$/i',
+        message: 'Votre nom contient un chiffre.'
     )]
     private ?string $nomContact = null;
 
@@ -77,7 +76,10 @@ class Societes extends Users
         exactly: 14,
         exactMessage: "Le numéro de siret doit faire {{ limit }} caractères."
     )]
-    #[Assert\Regex("/^[0-9]+*$/", message: "Le sirentest doit faire 14 caractères.")]
+    #[Assert\Regex(
+        pattern: '/\d/',
+        message: 'Le numéro de siret doit contenir que des chiffres.',
+    )]
     private string $siret = " ";
 
     /**
