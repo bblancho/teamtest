@@ -29,7 +29,11 @@ class Societes extends Users
         minMessage: "Le nom doit faire minimum {{ limit }} caractères.",
         maxMessage: "Le nom doit faire au maximum {{ limit }} caractères."
     )]
-    #[Assert\Regex("/^[a-z]+(?:-[A-Z]+)*$/", message: "Le nom est incorrect.")]
+    #[Assert\Regex(
+        pattern: '/\d/',
+        match: false,
+        message: 'Votre nom contient un chiffre.',
+    )]
     private ?string $nomContact = null;
 
     #[ORM\Column(length: 50, nullable: true)]
