@@ -34,11 +34,13 @@ class Clients extends Users
     private ?\DateTimeImmutable $dateDispoAt = null;
     
     #[ORM\Column(length: 255)]
-//    #[Assert\NotBlank(
-//        message: "Le champ siren est obligatoire.",
-//    )]
-//    #[Assert\Length(exactly: 9, exactMessage: "Le numéro de siren doit faire {{ limit }} caractères.")]
-//    #[Assert\Regex("/^\d+$/", message: "Le siren doit contenir uniquement des chiffres.")]
+    #[Assert\Length( 
+        exactly: 9,
+        exactMessage: "Le numéro de siren doit faire {{ limit }} caractères."
+    )]
+    #[Assert\NotBlank(
+        message: "Le champ siren est obligatoire.",
+    )] 
     private string $siren ;
 
     /**

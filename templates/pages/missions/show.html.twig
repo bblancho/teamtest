@@ -155,10 +155,11 @@
 									{{ mission.lieuMission }}
 								</span>
 
+								
 								{% if not is_granted('ROLE_SOCIETE') %}
 
 									{% if aDejaPostule == true %}
-										<span class="text-xl font-semibold text-success"> Vous avez postulé à cette offre le {{candidature.createdAt|date('d/m/Y')}} </span>
+										<span class="text-xl font-semibold text-success"> Vous avez postulé à cette offre. </span>
 									{% else %}
 										<a class="btn btn-primary" href="{{ path('user.postuler', { id: mission.id, slug: mission.slug}) }}">
 											Postuler

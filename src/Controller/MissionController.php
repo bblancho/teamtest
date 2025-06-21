@@ -44,6 +44,8 @@ class MissionController extends AbstractController
         $canListAll = $security->isGranted(OffresVoter::OFFRE_LIST_ALL) ;
         $missions   = $offresRepository->paginateOffres($page , $canListAll ? null : $userId) ;
 
+        //dd($missions) ;
+
         return $this->render('pages/missions/mes_missions.html.twig', compact( "missions") );
     }
 
@@ -66,7 +68,7 @@ class MissionController extends AbstractController
         $form = $this->createForm(OffreType::class, $mission);
         $form->handleRequest($request);
 
-        if ( $form->isSubmitted() && $form->isValid() ) {
+        if (  $form->isSubmitted() && $form->isValid()  ) {
 
             $mission->setSocietes( $this->getUser() );
             $mission->setSlug($form["nom"]->getData().$form["refMission"]->getData());
@@ -204,6 +206,9 @@ class MissionController extends AbstractController
 
         return $this->redirectToRoute('offres.mes_offres');
     }
+
+   
+
 
 
 }
