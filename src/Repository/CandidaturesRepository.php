@@ -44,6 +44,19 @@ class CandidaturesRepository extends ServiceEntityRepository
         ;
     }
 
+    public function nbCandidatures(Offres $offre)
+    {
+        return $this->createQueryBuilder(alias: 'c')
+            ->select('count(c.id)')
+            ->where('c.offres = :idOffre')
+            ->setParameter('idOffre', $offre)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+
+    
+
     //    public function findOneBySomeField($value): ?Candidatures
     //    {
     //        return $this->createQueryBuilder('c')

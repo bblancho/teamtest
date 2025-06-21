@@ -65,11 +65,12 @@ class HomeController extends AbstractController
 
         $freeLance = $this->getUser() ;
 
+        // Actuellement on ne rentre jamais dedans si on est pas conneccté
         if( $this->isGranted('ROLE_CLIENT') )
         {
            // On vérifie si le user a déjà postulé
             $candidature = $candidaturesRepository->aDejaPostule($freeLance, $mission);
-    
+            // dd($candidature) ;
             if( $candidature != null ){
                 $aDejaPostule = true ;
             }else{

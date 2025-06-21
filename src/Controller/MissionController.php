@@ -44,6 +44,8 @@ class MissionController extends AbstractController
         $canListAll = $security->isGranted(OffresVoter::OFFRE_LIST_ALL) ;
         $missions   = $offresRepository->paginateOffres($page , $canListAll ? null : $userId) ;
 
+        //dd($missions) ;
+
         return $this->render('pages/missions/mes_missions.html.twig', compact( "missions") );
     }
 

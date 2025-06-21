@@ -195,6 +195,16 @@ class UserController extends AbstractController
             $manager->persist($candidature);
             $manager->flush();
 
+            // je récupere l'ensemble des candidatures pour l'offre à laquelle on a postulé
+            $nbCandidatures = $candidaturesRepository->nbCandidatures($mission) ;
+           // dd($nbCandidatures) ;
+
+            // je rajoute la +1 au champs nb candidature de l'entité offre
+            // $mission->setAddCandidature($nbCandidatures)
+            // je sauvegarde ma modificaation
+            // $manager->persist($mission);
+
+
             $this->addFlash(
                 'success',
                 "Merci pour votre candidature, sans réponse de notre part sous un délai de 2 semaines,
