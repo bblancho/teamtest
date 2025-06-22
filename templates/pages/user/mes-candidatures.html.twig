@@ -48,17 +48,16 @@
 																<p class="card-text">
 																	{{ candidature.offres.description | u.truncate(200, '...') }}
 																</p> 
-															</div>
+															</div></br>
 															<div class="d-flex justify-content-between align-items-center">
 																<div class="btn-group">
 																	<button type="button" class="btn btn-sm btn-outline-secondary">
 																		<a class="nav-link" href="{{ path('app_show_offre', {id: candidature.offres.id, slug: candidature.offres.slug}) }}">voir l'offre
 																		</a>
 																	</button>
-																</div></br>
+																</div>
 																<small class="text-body-secondary">Publié il y a 3 jours </small>
 															</div> <br/>
-															
 														</div>
 
 														<div class="col-md-3 info_mission lien_mission">

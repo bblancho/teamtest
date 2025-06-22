@@ -46,7 +46,7 @@ h1.jumbotron-heading{
 }
 
 .text-center {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
 }
 
 .form-label{
@@ -239,7 +239,6 @@ h2.text-xl {
 h2.font-semibold{
     font-weight: 600;
 }
-
 
 .entreprise{
     width: 50%;

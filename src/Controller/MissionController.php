@@ -70,8 +70,9 @@ class MissionController extends AbstractController
 
         if (  $form->isSubmitted() && $form->isValid()  ) {
 
-            $mission->setSocietes( $this->getUser() );
-            $mission->setSlug($form["nom"]->getData().$form["refMission"]->getData());
+            $mission->setSocietes( $this->getUser() ) ;
+            $mission->setNbCandidatures(0) ;
+            $mission->setSlug($form["nom"]->getData().$form["refMission"]->getData()) ;
 
             $manager->persist($mission);
             $manager->flush();
@@ -206,9 +207,6 @@ class MissionController extends AbstractController
 
         return $this->redirectToRoute('offres.mes_offres');
     }
-
-   
-
 
 
 }

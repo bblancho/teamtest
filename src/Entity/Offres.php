@@ -111,6 +111,9 @@ class Offres
     #[ORM\OneToMany(targetEntity: Candidatures::class, mappedBy: 'offres')]
     private Collection $candidatures;
 
+    #[ORM\Column(nullable: true)]
+    private int $nb_candidatures = 0 ;
+
     /**
      * Constructor
      */
@@ -337,6 +340,18 @@ class Offres
                 $candidature->setOffres(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getNbCandidatures(): int
+    {
+        return $this->nb_candidatures;
+    }
+
+    public function setNbCandidatures(int $nb_candidatures): static
+    {
+        $this->nb_candidatures = $nb_candidatures;
 
         return $this;
     }
