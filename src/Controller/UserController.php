@@ -256,7 +256,9 @@ class UserController extends AbstractController
             10
         );
 
-        //$aposute = $candidatureRepository->userAsPostule($idClient);
+        $nbCandidatures = $candidatureRepository->nbCandidatures($idClient);
+
+        dd($nbCandidatures) ;
 
         return $this->render('pages/user/mes-candidatures.html.twig', compact('candidatures'));
     }
