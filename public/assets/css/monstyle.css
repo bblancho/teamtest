@@ -42,6 +42,11 @@ input[type=search] {
 
 h1.jumbotron-heading{
     text-transform: uppercase;
+    font-size: 1.8rem;
+}
+
+.text-center {
+    font-size: 1.5rem;
 }
 
 .form-label{
@@ -271,6 +276,7 @@ h2.font-semibold{
 /***** page des offres  ***/
 h4.titre_offre {
     border-bottom: 1px solid;
+    font-size: 1.2rem;
 }
 
 a.lien_offre:hover{

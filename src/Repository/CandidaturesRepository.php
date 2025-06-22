@@ -21,7 +21,7 @@ class CandidaturesRepository extends ServiceEntityRepository
     /**
     * @return Candidatures[] Returns an array of Candidatures objects
     */
-    public function findByUser($user): array
+    public function candidaturesUser($user): array
     {
         return $this->createQueryBuilder(alias: 'c')
             ->andWhere('c.clients = :idClient')
@@ -52,10 +52,7 @@ class CandidaturesRepository extends ServiceEntityRepository
             ->setParameter('idOffre', $offre)
             ->getQuery()
             ->getSingleScalarResult();
-    }
-
-
-    
+    } 
 
     //    public function findOneBySomeField($value): ?Candidatures
     //    {

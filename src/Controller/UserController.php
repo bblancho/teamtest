@@ -212,7 +212,7 @@ class UserController extends AbstractController
 
             // je récupere l'ensemble des candidatures pour l'offre à laquelle on a postulé
             $nbCandidatures = $candidaturesRepository->nbCandidatures($mission) ;
-           // dd($nbCandidatures) ;
+            dd($nbCandidatures) ;
 
             // je rajoute la +1 au champs nb candidature de l'entité offre
             // $mission->setAddCandidature($nbCandidatures)
@@ -246,19 +246,12 @@ class UserController extends AbstractController
 
         /** @var Clients $user */
         $user = $this->getUser();
-        $idClient = $user->getId();
-
-        //dd( "id = " . $idClient ) ;
 
         $candidatures =  $paginator->paginate(
-            $candidatureRepository->findByUser($idClient),
+            $candidatureRepository->candidaturesUser( $user->getId() ),
             $request->query->getInt('page', 1),
             10
         );
-
-        $nbCandidatures = $candidatureRepository->nbCandidatures($idClient);
-
-        dd($nbCandidatures) ;
 
         return $this->render('pages/user/mes-candidatures.html.twig', compact('candidatures'));
     }

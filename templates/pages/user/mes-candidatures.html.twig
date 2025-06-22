@@ -43,14 +43,8 @@
 																{{ candidature.offres.nom | upper }}
 																</a>
 															</h4>
-															<h5>
-																{# Nom du client : {{ candidature.offres.nom | capitalize  }} #}
-															</h5>
-
+															
 															<div class="d-flex">
-																<p class='logo_client'>
-																	<img src="https://photo.maxifoot.fr/rennes-doue-2.jpg"  alt="image"/>
-																</p>	
 																<p class="card-text">
 																	{{ candidature.offres.description | u.truncate(200, '...') }}
 																</p> 
@@ -61,7 +55,7 @@
 																		<a class="nav-link" href="{{ path('app_show_offre', {id: candidature.offres.id, slug: candidature.offres.slug}) }}">voir l'offre
 																		</a>
 																	</button>
-																</div>
+																</div></br>
 																<small class="text-body-secondary">Publié il y a 3 jours </small>
 															</div> <br/>
 															
