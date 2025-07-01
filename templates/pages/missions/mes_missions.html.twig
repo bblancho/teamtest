@@ -46,7 +46,7 @@
 									<td>
 										{{ mission.tarif }} €
 									</td>	
-									<td> </td>
+									<td> {{ mission.nbCandidatures }} </td>
 									<td>{{ mission.isActive ? 'oui' : 'non'}}  </td>
 									
 									{% if is_granted("offre_view", mission)  %}

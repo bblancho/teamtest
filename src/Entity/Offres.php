@@ -105,14 +105,15 @@ class Offres
     #[ORM\JoinColumn(nullable: false)]
     private  $societes;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $nbCandidatures = null;
+
     /**
      * @var Collection<int, Candidatures>
      */
     #[ORM\OneToMany(targetEntity: Candidatures::class, mappedBy: 'offres')]
     private Collection $candidatures;
 
-    #[ORM\Column(nullable: true)]
-    private int $nb_candidatures = 0 ;
 
     /**
      * Constructor
@@ -346,12 +347,12 @@ class Offres
 
     public function getNbCandidatures(): int
     {
-        return $this->nb_candidatures;
+        return $this->nbCandidatures;
     }
 
-    public function setNbCandidatures(int $nb_candidatures): static
+    public function setNbCandidatures(int $nbCandidatures): static
     {
-        $this->nb_candidatures = $nb_candidatures;
+        $this->nbCandidatures = $nbCandidatures;
 
         return $this;
     }
