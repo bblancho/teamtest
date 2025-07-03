@@ -132,37 +132,4 @@ class SocieteController extends AbstractController
         ]);
     }
 
-    /**
-     * This controller allow us to edit user's profile
-     *
-     * @param Users $choosenUser
-     * @param Request $request
-     * @param EntityManagerInterface $manager
-     * @return Response
-     */
-    #[IsGranted('ROLE_USER')]
-    #[Route('/candidature/offre-{id}-{slug}', name: 'user.candidature', methods: ['GET'], requirements: ['id' => Requirement::DIGITS, 'slug' => Requirement::ASCII_SLUG])]
-    public function candidature(
-        OffresRepository $offresRepository, 
-        int $id, 
-        string $slug ,
-        EntityManagerInterface $manager
-    ): Response {
-        
-        $mission    = $offresRepository->find($id);
-        $freeLance  = $this->getUser() ;
-
-        if( $mission->getSlug() != $slug ){
-            return $this->redirectToRoute('offre.show', ['slug' => $mission->getSlug() , 'id' => $mission->getId()]) ;
-        }
-
-        // On vérifie que le user n'ai pas déjà postulé
-            // On fait la redirection sur la page show
-        // On crée notre objet Candidature
-        // On le sauvegarde
-        // On fait la redirection sur la page show + message
-
-        return $this->redirectToRoute('offre.show', ['slug' => $mission->getSlug() , 'id' => $mission->getId()]) ;
-    }
-
 }

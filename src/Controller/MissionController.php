@@ -5,11 +5,12 @@ namespace App\Controller;
 use App\Entity\Offres;
 use App\Form\OffreType;
 use App\Entity\Societes;
-use Symfony\Bundle\SecurityBundle\Security;
 use App\Security\Voter\OffresVoter;
 use App\Repository\OffresRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\CandidaturesRepository;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -131,6 +132,33 @@ class MissionController extends AbstractController
             'offre' => $offre ,
             'form' => $form
         ]);
+    }
+
+    /**
+     * This controller allow us to edit user's profile
+     *
+     * @param Users $choosenUser
+     * @param Request $request
+     * @param EntityManagerInterface $manager
+     * @return Response
+     */
+    #[IsGranted('ROLE_USER')]
+    #[Route('/candidature/offre-{id}-{slug}', name: 'candidaturesOffre', methods: ['GET'], requirements: ['id' => Requirement::DIGITS, 'slug' => Requirement::ASCII_SLUG])]
+    public function listeCandidaturesOffre(
+        CandidaturesRepository $candidaturesRepository, 
+        Request $request,
+        Offres $mission,
+        string $slug ,
+    ): Response {
+        $page = $request->query->getInt('page', 1) ;
+
+        $candidatures  = $candidaturesRepository->paginateOffreCandidatures($page, $mission);
+        
+        if( $mission->getSlug() != $slug ){
+            return $this->redirectToRoute('offre.show', ['slug' => $mission->getSlug() , 'id' => $mission->getId()]) ;
+        }
+
+        return $this->render('pages/missions/candidatures_offre.twig', compact("mission", "candidatures") );
     }
 
     /**

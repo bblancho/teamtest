@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Candidature d'une offre {% endblock %}
+
+{% block body %}
+	<div class="container mt-4">
+		
+		{% if not candidatures.items is same as([]) %}
+
+			<h1> Candidature pour la mission : {{ mission.nom }} </h1>
+
+			<div class="count mt-4 mb-4"> Il y a
+				{{ candidatures.getTotalItemCount }}
+				candidature(s) pour cette mission.
+			</div>
+
+			<table class="table table-striped table-bordered">
+				<thead class="thead-dark">
+					<tr>
+						<th scope="col">Ref mission</th>
+						<th scope="col">Intitulé</th>
+						<th scope="col">Démarrage</th>
+						<th scope="col">Lieu</th>
+						<th scope="col">Budget</th>
+						<th scope="col">Seniorité</th>
+						<th scope="col">Durée</th>
+						<th scope="col">Publié</th>
+						<th scope="col" colspan="3">Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for candidature in candidatures %}
+						<tr>
+							<th scope="row">{{ candidature.clients.id  }}</th>
+							<td>
+								<a href="" class="btn btn-info">Afficher le cv</a>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+
+			<div class="navigation d-flex justify-content-center mt-4">
+				{{ knp_pagination_render(candidatures) }}
+			</div>
+
+		{% else %}
+			<h4>Aucune candidature trouvée !</h4>
+		{% endif %}
+	</div>
+{% endblock %}

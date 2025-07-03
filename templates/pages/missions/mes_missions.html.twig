@@ -46,7 +46,7 @@
 									<td>
 										{{ mission.tarif }} €
 									</td>	
-									<td> {{ mission.nbCandidatures }} </td>
+									<td><a  href="{{ path('offres.candidaturesOffre', {id: mission.id, slug: mission.slug}) }}" > Affiches les {{ mission.nbCandidatures }} cv </a> </td>
 									<td>{{ mission.isActive ? 'oui' : 'non'}}  </td>
 									
 									{% if is_granted("offre_view", mission)  %}
