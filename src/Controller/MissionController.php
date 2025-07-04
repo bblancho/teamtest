@@ -158,6 +158,8 @@ class MissionController extends AbstractController
             return $this->redirectToRoute('offre.show', ['slug' => $mission->getSlug() , 'id' => $mission->getId()]) ;
         }
 
+        // dd($candidatures) ;
+
         return $this->render('pages/missions/candidatures_offre.twig', compact("mission", "candidatures") );
     }
 

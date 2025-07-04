@@ -4,10 +4,6 @@ body {}
     max-width: 1140px;
 }
 
-.navbar-brand{
-    /* margin-right: 0%; */
-}
-
 .navbar {
     text-transform: uppercase;
 }

@@ -1,18 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} Candidature d'une offre {% endblock %}
+{% block title %} Candidatures validées {% endblock %}
 
 {% block body %}
 	<div class="container mt-4">
 		
 		{% if not candidatures.items is same as([]) %}
 
-			<h1> Candidature pour la mission : {{ mission.nom }} </h1>
-
-			<div class="count mt-4 mb-4"> Il y a
-				{{ candidatures.getTotalItemCount }}
-				candidature(s) pour cette mission.
-			</div>
+			<h1> Candidatures validées pour la mission : {{ mission.nom }} </h1>
 
 			<table class="table table-striped table-bordered">
 				<thead class="thead-dark">
@@ -21,8 +16,7 @@
 						<th scope="col">Poste</th>
 						<th scope="col">TJM</th>
 						<th scope="col">CV</th>
-						<th scope="col">Statut</th>
-						<th scope="col" colspan="3">Actions</th>
+						<th scope="col">email</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -31,14 +25,10 @@
 							<th scope="row"><a href="{{ path('app_show_offre', {id: mission.id, slug: mission.slug}) }}" > {{mission.nom}} </a></th>
 							<td scope="row">{{ candidature.clients.id  }}</td>
 							<td scope="row">{{ candidature.clients.tjm }} € </td>
-							<td scope="row"> <a  href=""> Voir le cv </a> </td>
-							<td scope="row">
-								{{ candidature.isRetenue == 1 ? "<span class='badge bg-success'> Retenue </span>" : candidature.isRetenue is null ? "<span class='badge bg-secondary'> Non traitée </span>"  : "<span class='badge bg-danger'> Refusée </span>" }}
-							</td>
+							<td scope="row"> <a  href=""> cv </a> </td>
+							<td scope="row"> état </td>
 							<td>
-								<a  href="" class="btn btn-success"> Retenue </a>
-							
-								<a  href="" class="btn btn-danger"> Refuser </a>
+								test@gmail
 							</td>
 						</tr>
 					{% endfor %}

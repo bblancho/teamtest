@@ -46,15 +46,21 @@
 															
 															<div class="d-flex">
 																<p class="card-text">
-																	{{ candidature.offres.description | u.truncate(200, '...') }}
+																	<a class="nav-link" href="{{ path('app_show_offre', {id: candidature.offres.id, slug: candidature.offres.slug}) }}"> 
+																		{{ candidature.offres.description | u.truncate(200, '...') }} 
+																		<button type="button" class="btn btn-sm btn-outline-secondary mt-2">
+																			voir l'offre
+																		</button> 
+																	</a>
 																</p> 
 															</div></br>
 															<div class="d-flex justify-content-between align-items-center">
 																<div class="btn-group">
-																	<button type="button" class="btn btn-sm btn-outline-secondary">
+																	<button type="button" class="btn btn-sm btn-outline-secondary mt-2">
 																		<a class="nav-link" href="{{ path('app_show_offre', {id: candidature.offres.id, slug: candidature.offres.slug}) }}">voir l'offre
 																		</a>
-																	</button>
+																	</button> 
+																	{{ candidature.isRetenue == 1 ? "<button class='btn btn-sm btn-success'> Retenue </button>" : candidature.isRetenue is null ? "<button class='btn btn-sm btn-secondary'> Non traitée </button>"  : "<button class='btn btn-sm btn-danger'> Refusée </button>" }}
 																</div>
 																<small class="text-body-secondary">Publié il y a 3 jours </small>
 															</div> <br/>
