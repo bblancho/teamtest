@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Offres;
 use App\Form\OffreType;
 use App\Entity\Societes;
+use App\Entity\Candidatures;
 use App\Security\Voter\OffresVoter;
 use App\Repository\OffresRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -161,6 +162,48 @@ class MissionController extends AbstractController
         // dd($candidatures) ;
 
         return $this->render('pages/missions/candidatures_offre.twig', compact("mission", "candidatures") );
+    }
+
+    /**
+     * This method allows us to delete an mission
+     *
+     * @param EntityManagerInterface $manager
+     * @param Offres $offre
+     * @return Response
+     */
+    #[Route('/gestion-candidature/{id}/{etat}', name: 'gestion.candidature', methods: ['GET'])]
+    public function gestionCandidature(
+        EntityManagerInterface $manager,
+        CandidaturesRepository $candidaturesRepository, 
+        Request $request,
+        int $id, 
+        bool $etat
+    ): Response {
+
+        $candidature = $candidaturesRepository->find($id);
+
+        dd($request->request->all());
+
+        if (!$candidature) {
+            throw $this->createNotFoundException(
+                'Aucune candidature trouvée pour cet id '.$id
+            );
+        }
+
+        $candidature = $candidaturesRepository->gestionCandidature($candidature, $etat);
+        $candidature
+                ->setRetenue('New product name!')
+                ->setConsulte(true)
+        ;
+        
+        $manager->flush();
+
+        $this->addFlash(
+            'success',
+            'La candidature a été traitée avec succès !'
+        );
+
+        return $this->redirectToRoute('offres.candidaturesOffre', ["id" => $candidature , "etat" => true ]);
     }
 
     /**

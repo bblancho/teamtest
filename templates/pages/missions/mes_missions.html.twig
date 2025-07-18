@@ -31,25 +31,25 @@
 								<th scope="col">Lieu</th>
 								<th scope="col">TJM</th>
 								<th scope="col"> CV </th>
-								<th scope="col"> CV retenues </th>
-								<th scope="col">Publié</th>
+								<th scope="col"> CV retenus </th>
+								<th scope="col">Visible</th>
 								<th scope="col" colspan="4">Actions</th>
 							</tr>
 						</thead>
 						<tbody>
 							{% for mission in missions %}
 								<tr>
-									{# <th>{{ mission.id }}</th> #}
-									<th scope="row">{{ mission.refMission }}</th>
+									<th scope="row">{{ mission.id }}</th>
 									<td> <a href="{{ path('app_show_offre', {id: mission.id, slug: mission.slug}) }}" > {{mission.nom}} </a> </td>
 									<td>{{ mission.startDateAT|date('d/m/Y') }}</td>
 									<td>{{ mission.lieuMission }}</td>
 									<td>
 										{{ mission.tarif }} €
 									</td>	
-									<td><a  href="{{ path('offres.candidaturesOffre', {id: mission.id, slug: mission.slug}) }}" > Candidats {{ mission.nbCandidatures }} cv </a> </td>
-									<td><a  href="{{ path('offres.candidaturesOffre', {id: mission.id, slug: mission.slug}) }}" > Ma sélection {{ mission.nbCandidatures }} cv </a> </td>
-									<td>{{ mission.isActive ? 'oui' : 'non'}}  </td>
+									<td><a  href="{{ path('offres.candidaturesOffre', {id: mission.id, slug: mission.slug}) }}" > {{ mission.nbCandidatures }} Candidatures  </a> </td>
+									<td><a  href="{{ path('offres.candidaturesOffre', {id: mission.id, slug: mission.slug}) }}" >{{ mission.nbCandidatures }} cv sélectionés  </a> </td>
+									
+									<td>{{ mission.isActive ? "<span class='badge bg-success'> OUI </span>" : "<span class='badge bg-secondary'> NON </span>" }}  </td>
 									
 									{% if is_granted("offre_view", mission)  %}
 										<td>
@@ -71,7 +71,7 @@
 										<td>
 											<form method="post" action="{{ path('offres.delete', { id: mission.id }) }}" onsubmit="return confirm('Êtes-vous sur de vouloir supprimer cette mission ?');" >
 												<input type="hidden" name="_method" value="DELETE">
-												<button type="submit" class="btn btn-danger btn-sm"> Supprimer </button>
+												<button type="submit" class="btn btn-warning btn-sm"> Archiver </button>
 											</form>
 										</td>
 									{% endif %}
