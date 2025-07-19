@@ -69,6 +69,9 @@ class Offres
     #[ORM\Column]
     private ?bool $isActive = false;
 
+    #[ORM\Column]
+    private ?bool $isArchive = false;
+
     #[ORM\Column(nullable: true)]
     #[Assert\Positive(message: "La valeur saisie {{ value }} n'est pas valide.",)]
     private ?int $experience = null;
@@ -227,6 +230,18 @@ class Offres
     public function setIsActive(bool $isActive): static
     {
         $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    public function isArchive(): ?bool
+    {
+        return $this->isArchive;
+    }
+
+    public function setIsArchive(bool $isArchive): static
+    {
+        $this->isArchive = $isArchive;
 
         return $this;
     }

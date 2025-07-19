@@ -159,8 +159,6 @@ class MissionController extends AbstractController
             return $this->redirectToRoute('offre.show', ['slug' => $mission->getSlug() , 'id' => $mission->getId()]) ;
         }
 
-        // dd($candidatures) ;
-
         return $this->render('pages/missions/candidatures_offre.twig', compact("mission", "candidatures") );
     }
 
@@ -246,6 +244,42 @@ class MissionController extends AbstractController
         Offres $offre
     ): Response {   
 
+        $manager->flush();
+
+        $this->addFlash(
+            'success',
+            'Votre mission a été publiée avec succès !'
+        );
+
+        return $this->redirectToRoute('offres.mes_offres');
+    }
+
+    /**
+     * This method allows us to delete an mission
+     *
+     * @param EntityManagerInterface $manager
+     * @param Offres $offre
+     * @return Response
+     */
+    #[IsGranted('ROLE_USER')]
+    #[Route('/{id}/archiver',  name: 'archives', requirements: ['id' => Requirement::DIGITS], methods: ['GET'] )]
+    #[IsGranted(OffresVoter::OFFRE_EDIT, subject: 'offre')]
+    public function archiver(
+        EntityManagerInterface $manager,
+        OffresRepository $OffresRepository,
+        Request $request,
+        int $id, 
+    ): Response {   
+
+        $offre = $OffresRepository->find($id);
+
+        if (!$offre) {
+            throw $this->createNotFoundException(
+                'Aucune offre trouvée pour cet id '.$id
+            );
+        }
+
+        // Faire la mise à jour du champ is_archive
         $manager->flush();
 
         $this->addFlash(
