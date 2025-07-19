@@ -27,7 +27,7 @@
 								</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link {{ app.current_route == 'offres.archives' ? 'active' : '' }}" href="{{ path('offres.mes_offres') }}">Missions archivés
+								<a class="nav-link {{ app.current_route == 'offres.mes_offres_archives' ? 'active' : '' }}" href="{{ path('offres.mes_offres_archives') }}">Missions archivés
 								</a> 
 							</li> 
 						{% elseif app.user.typeUser == "clients"%}
@@ -46,10 +46,6 @@
 						</li>
 					{% endif %}
 
-					<li class="nav-item">
-						<a class="nav-link {{ app.current_route == 'contact' ? 'active' : '' }}" href="{{ path('app_index') }}">Contact
-						</a>
-					</li>
 				</ul>
 
 				<div class="d-flex">

@@ -24,6 +24,28 @@ class OffresRepository extends ServiceEntityRepository
 
         if($userId){
             $builder = $builder->andWhere('o.societes = :user')
+            ->andWhere('o.isArchive = false')
+            ->setParameter('user', $userId) ;
+        }
+
+        return  $this->paginator->paginate(
+            $builder ,
+            $page ,
+            10 ,
+            [   //securité sur le trie
+                'distinct' => false , 
+                'sortFieldAllowList' => ['o.id'] //securité sur le trie, on choisit sur quel champs on accorde le trie
+            ]
+        );
+    }
+
+    public function paginateOffresArchives(int $page, ?int $userId): PaginationInterface
+    {
+        $builder =  $this->createQueryBuilder('o') ;
+
+        if($userId){
+            $builder = $builder->andWhere('o.societes = :user')
+            ->andWhere('o.isArchive = true')
             ->setParameter('user', $userId) ;
         }
 

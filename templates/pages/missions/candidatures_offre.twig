@@ -7,7 +7,11 @@
 		
 		{% if not candidatures.items is same as([]) %}
 
-			<h1> Candidature pour la mission : {{ mission.nom }} </h1>
+			<section class="jumbotron text-center bg-light pt-4 pb-4">
+				<div class="container">
+					<h1 class="jumbotron-heading"> Candidature pour la mission : {{ mission.nom }} </h1>
+				</div>
+			</section>
 
 			<div class="count mt-4 mb-4"> Il y a
 				{{ candidatures.getTotalItemCount }}

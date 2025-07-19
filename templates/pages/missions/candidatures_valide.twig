@@ -6,8 +6,12 @@
 	<div class="container mt-4">
 		
 		{% if not candidatures.items is same as([]) %}
-
-			<h1> Candidatures validées pour la mission : {{ mission.nom }} </h1>
+		
+			<section class="jumbotron text-center bg-light pt-4 pb-4">
+				<div class="container">
+					<h1 class="jumbotron-heading"> CCandidatures validées pour la mission : {{ mission.nom }} </h1>
+				</div>
+			</section>
 
 			<table class="table table-striped table-bordered">
 				<thead class="thead-dark">
