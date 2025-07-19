@@ -80,7 +80,7 @@ class Offres
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $contraintes = null;
 
-    #[ORM\Column(length: 100)]
+    #[ORM\Column(type: Types::TEXT, nullable: true, length: 100)]
     #[Assert\NotBlank( message: "Ce champ est obligatoire.",)]
     #[Assert\Length(
         min: 2,
@@ -88,7 +88,7 @@ class Offres
         minMessage: "La réfèrence doit faire minimum {{ limit }} caractères.",
         maxMessage: "Le réfèrence doit faire au maximum {{ limit }} caractères."
     )]
-    private string $refMission = '';
+    private ?string $refMission = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     #[Assert\NotNull()]

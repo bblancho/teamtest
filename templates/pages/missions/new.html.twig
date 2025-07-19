@@ -19,88 +19,45 @@
 					<div class="row mb-2">
 						<div class="col-md-6">
 							<div class="form-group">
-								{{ form_label(form.nom) }}
-								{{ form_widget(form.nom) }}
-								<div class="form-error">
-									{{ form_errors(form.nom) }}
-								</div>
+								{{ form_row(form.nom) }}
 							</div>
+							{# <div class="form-group">
+								{{ form_row(form.refMission) }}
+							</div> #}
 							<div class="form-group">
-								{{ form_label(form.refMission) }}
-								{{ form_widget(form.refMission) }}
-								<div class="form-error">
-									{{ form_errors(form.refMission) }}
-								</div>
+								{{ form_row(form.description) }}
 							</div>
+							
 							<div class="form-group">
-								{{ form_label(form.description) }}
-								{{ form_widget(form.description) }}
-								<div class="form-error">
-									{{ form_errors(form.description) }}
-								</div>
+								<div class="row  ">
+									<div class="col-md-4">{{ form_row(form.lieuMission) }}</div> 
+									<div class="col-md-4">{{ form_row(form.tarif) }}</div> 
+									<div class="col-md-4">{{ form_row(form.duree) }}</div> 
+								</div> 
 							</div>
-							<div class="form-group mt-3">
-								{{ form_label(form.startDateAT) }}
-								{{ form_widget(form.startDateAT) }}
-								<div class="form-error">
-									{{ form_errors(form.startDateAT) }}
-								</div>
-							</div> 
+
 							<div class="form-group">
-								{{ form_label(form.lieuMission) }}
-								{{ form_widget(form.lieuMission) }}
-								<div class="form-error">
-									{{ form_errors(form.lieuMission) }}
-								</div>
-							</div>
-							<div class="form-group">
-								{{ form_label(form.tarif) }}
-								{{ form_widget(form.tarif) }}
-								<div class="form-error">
-									{{ form_errors(form.tarif) }}
-								</div>
+								<div class="row  ">
+									<div class="col-md-6">{{ form_row(form.startDateAT) }}</div> 
+									<div class="col-md-6">{{ form_row(form.experience) }}</div> 
+								</div> 
 							</div>
 						</div>
 
 						<div class="col-md-6">
-
 							<div class="form-group">
-								{{ form_label(form.experience) }}
-								{{ form_widget(form.experience) }}
-								<div class="form-error">
-									{{ form_errors(form.experience) }}
-								</div>
+								{{ form_row(form.profil) }}
 							</div>
 
+							{# <div class="form-group">
+								{{ form_row(form.duree) }}
+							</div>  #}
 							<div class="form-group">
-								{{ form_label(form.profil) }}
-								{{ form_widget(form.profil) }}
-								<div class="form-error">
-									{{ form_errors(form.profil) }}
-								</div>
-							</div>
-
-							<div class="form-group">
-								{{ form_label(form.duree) }}
-								{{ form_widget(form.duree) }}
-								<div class="form-error">
-									{{ form_errors(form.duree) }}
-								</div>
-							</div> 
-							<div class="form-group">
-								{{ form_label(form.contraintes) }}
-								{{ form_widget(form.contraintes) }}
-								<div class="form-error">
-									{{ form_errors(form.contraintes) }}
-								</div>
+								{{ form_row(form.contraintes) }}
 							</div>
 
 							<div class="form-group mt-3">
-								{{ form_label(form.isActive) }}
-								{{ form_widget(form.isActive) }}
-								<div class="form-error">
-									{{ form_errors(form.isActive) }}
-								</div>
+								{{ form_row(form.isActive) }}
 							</div>
 							
 							<div class="form-group">
@@ -108,7 +65,7 @@
 							</div>
 						</div>
 
-						<button class="btn btn-primary mt-4" type="submit">Créer la mission</button>
+						<button class="btn btn-primary mt-4" type="submit">Valider</button>
 					</div>
 				{{ form_end(form) }}
 			</div>

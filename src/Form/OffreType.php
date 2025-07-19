@@ -46,17 +46,17 @@ class OffreType extends AbstractType
             ->add('slug', HiddenType::class, [
                 'empty_data' => '',
             ])
-            ->add('refMission', TextType::class, [
-                'attr' => [
-                    'class' => 'form-control',
-                    'minLength' => '2',
-                    'maxLength' => '50',
-                ],
-                'label' => 'Ref annonce :',
-                'label_attr' => [
-                    'class' => 'form-label'
-                ],
-            ])
+            // ->add('refMission', TextType::class, [
+            //     'attr' => [
+            //         'class' => 'form-control',
+            //         'minLength' => '2',
+            //         'maxLength' => '50',
+            //     ],
+            //     'label' => 'Ref annonce :',
+            //     'label_attr' => [
+            //         'class' => 'form-label'
+            //     ],
+            // ])
             ->add('description', TextareaType::class, [
                 'attr' => [
                     'class' => 'form-control',
@@ -101,7 +101,7 @@ class OffreType extends AbstractType
                     'min' => 1,
                     'max' => 24
                 ],
-                'label' => 'Durée de la mission en mois :',
+                'label' => 'Durée en mois :',
                 'label_attr' => [
                     'class' => 'form-label mt-4'
                 ],
