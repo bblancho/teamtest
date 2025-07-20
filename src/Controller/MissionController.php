@@ -235,21 +235,17 @@ class MissionController extends AbstractController
          * This method allows us to delete an mission
          *
          * @param EntityManagerInterface $manager
-         * @param Offres $offre
+         * @param CandidaturesRepository $candidaturesRepository
          * @return Response
          */
-        #[Route('/gestion-candidature/{id}/{etat}', name: 'gestion.candidature', methods: ['GET'])]
-        public function gestionCandidature(
+        #[Route('/{id}/candidature-acceptee', name: 'candidature.acceptee', methods: ['GET'])]
+        public function candidatureAccepte(
             EntityManagerInterface $manager,
             CandidaturesRepository $candidaturesRepository, 
-            Request $request,
-            int $id, 
-            bool $etat
+            int $id
         ): Response {
 
             $candidature = $candidaturesRepository->find($id);
-
-            dd($request->request->all());
 
             if (!$candidature) {
                 throw $this->createNotFoundException(
@@ -257,21 +253,61 @@ class MissionController extends AbstractController
                 );
             }
 
-            $candidature = $candidaturesRepository->gestionCandidature($candidature, $etat);
             $candidature
-                    ->setRetenue('New product name!')
-                    ->setConsulte(true)
+                ->setRetenue(true) 
+                ->setConsulte(true)
             ;
-            
+
+            // Envoie du mail au candidat
+
             $manager->flush();
 
             $this->addFlash(
                 'success',
-                'La candidature a été traitée avec succès !'
+                'La candidature a été traitée avec succès .'
             );
 
-            return $this->redirectToRoute('offres.candidaturesOffre', ["id" => $candidature , "etat" => true ]);
+            return $this->redirectToRoute('offres.candidaturesOffre', ['id' => $candidature->getId(), 'slug' => $candidature->getSlug() ]);
         }
+
+    /**
+     * This method allows us to delete an mission
+     *
+     * @param EntityManagerInterface $manager
+     * @param CandidaturesRepository $candidaturesRepository
+     * @return Response
+     */
+    #[Route('/candidature/{id}/refusee', 'candidature.refusee', methods: ['GET'])]
+    public function candidatureRefuse(
+        EntityManagerInterface $manager,
+        CandidaturesRepository $candidaturesRepository, 
+        int $id,
+    ): Response {
+
+        $candidature = $candidaturesRepository->find($id);
+
+        if (!$candidature) {
+            throw $this->createNotFoundException(
+                'Aucune candidature trouvée pour cet id '.$id
+            );
+        }
+
+        $candidature
+            ->setRetenue(false) 
+            ->setConsulte(true)
+        ;
+
+        $manager->flush();
+
+        $mission = $candidature->getOffres();
+
+        $this->addFlash(
+            'success',
+            'La candidature a été traitée avec succès .'
+        );
+
+        return $this->redirectToRoute('offres.candidaturesOffre', ['id' => $mission->getId(), 'slug' => $mission->getSlug() ]);
+    }
 
     
     /*********************************  Archives **************************************/

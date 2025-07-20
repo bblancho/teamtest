@@ -68,7 +68,7 @@
 										<td>
 											<form method="post" action="{{ path('offres.delete', { id: mission.id }) }}" onsubmit="return confirm('Êtes-vous sur de vouloir supprimer cette mission ?');" >
 												<input type="hidden" name="_method" value="DELETE">
-												<button type="submit" class="btn btn-warning btn-sm"> Archiver </button>
+												<button type="submit" class="btn btn-danger btn-sm"> Supprimer </button>
 											</form> 
 										</td>
 									{% endif %}

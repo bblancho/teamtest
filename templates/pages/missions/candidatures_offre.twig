@@ -3,55 +3,57 @@
 {% block title %} Candidature d'une offre {% endblock %}
 
 {% block body %}
-	<div class="container mt-4">
-		
-		{% if not candidatures.items is same as([]) %}
+	<main role="main">
+		<section class="jumbotron text-center bg-light pt-4 pb-4">
+					<div class="container">
+						<h1 class="jumbotron-heading"> Candidature pour la mission : {{ mission.nom }} </h1>
+					</div>
+		</section>
 
-			<section class="jumbotron text-center bg-light pt-4 pb-4">
-				<div class="container">
-					<h1 class="jumbotron-heading"> Candidature pour la mission : {{ mission.nom }} </h1>
+		<div class="container mt-4">
+			
+			{% if not candidatures.items is same as([]) %}
+
+				<div class="count mt-4 mb-4"> Il y a
+					{{ candidatures.getTotalItemCount }}
+					candidature(s) pour cette mission.
 				</div>
-			</section>
 
-			<div class="count mt-4 mb-4"> Il y a
-				{{ candidatures.getTotalItemCount }}
-				candidature(s) pour cette mission.
-			</div>
-
-			<table class="table table-striped table-bordered">
-				<thead class="thead-dark">
-					<tr>
-						<th scope="col">Nom</th>
-						<th scope="col">TJM</th>
-						<th scope="col">CV</th>
-						<th scope="col">Statut</th>
-						<th scope="col" colspan="3">Actions</th>
-					</tr>
-				</thead>
-				<tbody>
-					{% for candidature in candidatures %}
+				<table class="table table-striped table-bordered">
+					<thead class="thead-dark">
 						<tr>
-							<th scope="row">{{ candidature.clients.nom  }} / ID: {{ candidature.clients.id  }} </a></th>
-							<td scope="row">{{ candidature.clients.tjm }} € </td>
-							<td scope="row"> <a  href=""> Voir le cv </a> </td>
-							<td scope="row">
-								{{ candidature.isRetenue == 1 ? "<span class='badge bg-success'> Retenue </span>" : candidature.isRetenue is null ? "<span class='badge bg-secondary'> Non traitée </span>"  : "<span class='badge bg-danger'> Refusée </span>" }}
-							</td>
-							<td>
-								<a  href="{{ path('offres.gestion.candidature', {id: candidature.id, etat: "1"}) }}" class="btn btn-success"> Retenir </a>
-								<a  href="{{ path('offres.gestion.candidature', {id: candidature.id, etat: "0"}) }}" class="btn btn-danger"> Refuser </a>
-							</td>
+							<th scope="col">Nom</th>
+							<th scope="col">TJM</th>
+							<th scope="col">CV</th>
+							<th scope="col">Statut</th>
+							<th scope="col" colspan="3">Actions</th>
 						</tr>
-					{% endfor %}
-				</tbody>
-			</table>
+					</thead>
+					<tbody>
+						{% for candidature in candidatures %}
+							<tr>
+								<th scope="row">{{ candidature.clients.nom  }} / ID: {{ candidature.clients.id  }} </a></th>
+								<td scope="row">{{ candidature.clients.tjm }} € </td>
+								<td scope="row"> <a  href=""> Voir le cv </a> </td>
+								<td scope="row">
+									{{ candidature.isRetenue == 1 ? "<span class='badge bg-success'> Retenue </span>" : candidature.isRetenue is null ? "<span class='badge bg-secondary'> Non traitée </span>"  : "<span class='badge bg-danger'> Refusée </span>" }}
+								</td>
+								<td>
+									<a  href="{{ path('offres.candidature.acceptee', {id: candidature.id}) }}" class="btn btn-success"> Retenir </a>
+									<a  href="{{ path('offres.candidature.refusee', {id: candidature.id}) }}" class="btn btn-danger"> Refuser </a>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
 
-			<div class="navigation d-flex justify-content-center mt-4">
-				{{ knp_pagination_render(candidatures) }}
-			</div>
+				<div class="navigation d-flex justify-content-center mt-4">
+					{{ knp_pagination_render(candidatures) }}
+				</div>
 
-		{% else %}
-			<h4>Aucune candidature trouvée !</h4>
-		{% endif %}
-	</div>
+			{% else %}
+				<h4>Aucune candidature trouvée !</h4>
+			{% endif %}
+		</div>
+	</main>
 {% endblock %}
