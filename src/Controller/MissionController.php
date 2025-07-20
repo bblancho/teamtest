@@ -4,20 +4,21 @@ namespace App\Controller;
 
 use App\Entity\Offres;
 use App\Form\OffreType;
-use App\Entity\Societes;
-use App\Entity\Candidatures;
-use App\Security\Voter\OffresVoter;
-use App\Repository\OffresRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\CandidaturesRepository;
-use Knp\Component\Pager\PaginatorInterface;
+use App\Repository\OffresRepository;
+use App\Security\Voter\OffresVoter;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Requirement\Requirement;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route("/offres", 'offres.')]
 class MissionController extends AbstractController
@@ -231,18 +232,20 @@ class MissionController extends AbstractController
             return $this->render('pages/missions/candidatures_offre.twig', compact("mission", "candidatures") );
         }
 
-        /**
-         * This method allows us to delete an mission
-         *
-         * @param EntityManagerInterface $manager
-         * @param CandidaturesRepository $candidaturesRepository
-         * @return Response
-         */
+    /**
+     * This method allows us to delete an mission
+     *
+     * @param EntityManagerInterface $manager
+     * @param CandidaturesRepository $candidaturesRepository
+     * @return Response
+     * @throws TransportExceptionInterface
+     */
         #[Route('/{id}/candidature-acceptee', name: 'candidature.acceptee', methods: ['GET'])]
         public function candidatureAccepte(
             EntityManagerInterface $manager,
             CandidaturesRepository $candidaturesRepository, 
-            int $id
+            int $id,
+            MailerInterface $mailer
         ): Response {
 
             $candidature = $candidaturesRepository->find($id);
@@ -259,15 +262,29 @@ class MissionController extends AbstractController
             ;
 
             // Envoie du mail au candidat
+            $client = $candidature->getClients();
+            $email = (new TemplatedEmail())
+                ->from(new Address('team2i@gmail.com', 'Team2i'))
+                ->to((string) $client->getEmail())
+                ->subject('Acceptation de candidature')
+                ->htmlTemplate('emails/acceptation.html.twig')
+                ->context([
+                    'client' => $client,
+                    'offre' => $candidature->getOffres(),
+                ])
+            ;
+
+            $mailer->send($email);
 
             $manager->flush();
 
             $this->addFlash(
                 'success',
-                'La candidature a été traitée avec succès .'
+                'La candidature a été traitée avec succès. Vous recevrez un email de confirmation'
             );
 
-            return $this->redirectToRoute('offres.candidaturesOffre', ['id' => $candidature->getId(), 'slug' => $candidature->getSlug() ]);
+            $slug = $candidature->getSlug() ?: 'candidature';
+            return $this->redirectToRoute('offres.candidaturesOffre', ['id' => $candidature->getId(), 'slug' => $slug ]);
         }
 
     /**
