@@ -30,7 +30,7 @@
 								<th scope="col"> CV </th>
 								<th scope="col"> CV retenus </th>
 								<th scope="col">Visible</th>
-								<th scope="col" colspan="4">Actions</th>
+								<th scope="col" colspan="3">Actions</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -60,7 +60,7 @@
 
 									{% if is_granted("offre_edit", mission)  %}
 										<td>
-											<a href="{{ path('offres.edit', { id: mission.id }) }}" class="btn btn-info">Modifier</a>
+											<a href="{{ path('offres.activer_offre', { id: mission.id }) }}" class="btn btn-success  btn-sm">Activer</a>
 										</td>
 									{% endif %}
 
@@ -69,7 +69,7 @@
 											<form method="post" action="{{ path('offres.delete', { id: mission.id }) }}" onsubmit="return confirm('Êtes-vous sur de vouloir supprimer cette mission ?');" >
 												<input type="hidden" name="_method" value="DELETE">
 												<button type="submit" class="btn btn-warning btn-sm"> Archiver </button>
-											</form>
+											</form> 
 										</td>
 									{% endif %}
 								</tr>

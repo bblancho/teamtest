@@ -63,7 +63,7 @@
 
 									{% if is_granted("offre_edit", mission)  %}
 										<td>
-											<a href="{{ path('offres.edit', { id: mission.id }) }}" class="btn btn-info">Modifier</a>
+											<a href="{{ path('offres.edit', { id: mission.id }) }}" class="btn btn-info btn-sm">Modifier</a>
 										</td>
 									{% endif %}
 
@@ -73,7 +73,7 @@
 												<input type="hidden" name="_method" value="DELETE">
 												<button type="submit" class="btn btn-warning btn-sm"> Archiver </button>
 											</form> #}
-											<a  href="{{ path('offres.archives', {id: mission.id}) }}" class="btn btn-warning btn-sm"> Archiver </a>
+											<a  href="{{ path('offres.archiver_offre', {id: mission.id}) }}" class="btn btn-warning btn-sm"> Archiver </a>
 										</td>
 									{% endif %}
 								</tr>

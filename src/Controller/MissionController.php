@@ -22,6 +22,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[Route("/offres", 'offres.')]
 class MissionController extends AbstractController
 {   
+    /*********************************  Crud Mission **************************************/
+
     /**
      * This controller list all mission for the current Company
      * 
@@ -49,35 +51,6 @@ class MissionController extends AbstractController
         // dd($missions) ;
 
         return $this->render('pages/missions/mes_missions.html.twig', compact( "missions") );
-    }
-
-    /**
-     * This controller list all mission for the current Company
-     * 
-     * @param OffresRepository $offresRepository
-     * @param Request $request
-     * @param Security $security
-     * 
-     * @return Response
-     */
-    #[Route('/societe/mes-offres-archives', name: 'mes_offres_archives', methods: ['GET'])]
-    #[IsGranted(OffresVoter::OFFRE_LIST)]
-    public function mesOffresArchives(
-        OffresRepository $offresRepository,
-        Request $request,
-        Security $security
-    ): Response {
-
-        $page   = $request->query->getInt('page', 1) ;
-        $userId =  $security->getUser()->getId() ;
-
-        // On limite l'affichage aux missions de la société
-        $canListAll = $security->isGranted(OffresVoter::OFFRE_LIST_ALL) ;
-        $missions   = $offresRepository->paginateOffresArchives($page , $canListAll ? null : $userId) ;
-
-        $name = $request->get('_route'); // This will return the name.
-
-        return $this->render('pages/missions/archives_missions.html.twig', compact( "missions") );
     }
 
     /**
@@ -165,72 +138,43 @@ class MissionController extends AbstractController
     }
 
     /**
-     * This controller allow us to edit user's profile
-     *
-     * @param Users $choosenUser
-     * @param Request $request
-     * @param EntityManagerInterface $manager
-     * @return Response
-     */
-    #[IsGranted('ROLE_USER')]
-    #[Route('/candidature/offre-{id}-{slug}', name: 'candidaturesOffre', methods: ['GET'], requirements: ['id' => Requirement::DIGITS, 'slug' => Requirement::ASCII_SLUG])]
-    public function listeCandidaturesOffre(
-        CandidaturesRepository $candidaturesRepository, 
-        Request $request,
-        Offres $mission,
-        string $slug ,
-    ): Response {
-        $page = $request->query->getInt('page', 1) ;
-
-        $candidatures  = $candidaturesRepository->paginateOffreCandidatures($page, $mission);
-        
-        if( $mission->getSlug() != $slug ){
-            return $this->redirectToRoute('offre.show', ['slug' => $mission->getSlug() , 'id' => $mission->getId()]) ;
-        }
-
-        return $this->render('pages/missions/candidatures_offre.twig', compact("mission", "candidatures") );
-    }
-
-    /**
      * This method allows us to delete an mission
      *
      * @param EntityManagerInterface $manager
      * @param Offres $offre
      * @return Response
      */
-    #[Route('/gestion-candidature/{id}/{etat}', name: 'gestion.candidature', methods: ['GET'])]
-    public function gestionCandidature(
+    #[IsGranted('ROLE_USER')]
+    #[Route('/{id}/activer',  name: 'activer_offre', requirements: ['id' => Requirement::DIGITS], methods: ['GET'] )]
+    #[IsGranted(OffresVoter::OFFRE_EDIT, subject: 'offre')]
+    public function activerOffre(
         EntityManagerInterface $manager,
-        CandidaturesRepository $candidaturesRepository, 
-        Request $request,
-        int $id, 
-        bool $etat
-    ): Response {
+        OffresRepository $offresRepository,
+        Offres $offre
+    ): Response {   
 
-        $candidature = $candidaturesRepository->find($id);
+        $offre  = $offresRepository->find($offre);
+        $id     = $offre->getId();
 
-        dd($request->request->all());
+            if (!$offre) {
+                throw $this->createNotFoundException(
+                    'Aucune offre trouvée pour cet id '.$id
+                );
+            }
 
-        if (!$candidature) {
-            throw $this->createNotFoundException(
-                'Aucune candidature trouvée pour cet id '.$id
-            );
-        }
-
-        $candidature = $candidaturesRepository->gestionCandidature($candidature, $etat);
-        $candidature
-                ->setRetenue('New product name!')
-                ->setConsulte(true)
+        $offre
+            ->setIsArchive(false)
+            ->setIsActive(false)
         ;
-        
+    
         $manager->flush();
 
         $this->addFlash(
             'success',
-            'La candidature a été traitée avec succès !'
+            'Votre mission a été activée.'
         );
 
-        return $this->redirectToRoute('offres.candidaturesOffre', ["id" => $candidature , "etat" => true ]);
+        return $this->redirectToRoute('offres.mes_offres');
     }
 
     /**
@@ -258,94 +202,148 @@ class MissionController extends AbstractController
         return $this->redirectToRoute('offres.mes_offres');
     }
 
-    /**
-     * This method allows us to delete an mission
-     *
-     * @param EntityManagerInterface $manager
-     * @param Offres $offre
-     * @return Response
-     */
-    #[IsGranted('ROLE_USER')]
-    #[Route('/{id}/activer',  name: 'activer', requirements: ['id' => Requirement::DIGITS], methods: ['GET'] )]
-    #[IsGranted(OffresVoter::OFFRE_EDIT, subject: 'offre')]
-    public function activer(
-        EntityManagerInterface $manager,
-        Offres $offre
-    ): Response {   
+    /*********************************  Candidatures **************************************/
 
-        $manager->flush();
+        /**
+         * This controller allow us to edit user's profile
+         *
+         * @param Users $choosenUser
+         * @param Request $request
+         * @param EntityManagerInterface $manager
+         * @return Response
+         */
+        #[IsGranted('ROLE_USER')]
+        #[Route('/candidature/offre-{id}-{slug}', name: 'candidaturesOffre', methods: ['GET'], requirements: ['id' => Requirement::DIGITS, 'slug' => Requirement::ASCII_SLUG])]
+        public function listeCandidaturesOffre(
+            CandidaturesRepository $candidaturesRepository, 
+            Request $request,
+            Offres $mission,
+            string $slug ,
+        ): Response {
+            $page = $request->query->getInt('page', 1) ;
 
-        $this->addFlash(
-            'success',
-            'Votre mission a été publiée avec succès !'
-        );
+            $candidatures  = $candidaturesRepository->paginateOffreCandidatures($page, $mission);
+            
+            if( $mission->getSlug() != $slug ){
+                return $this->redirectToRoute('offre.show', ['slug' => $mission->getSlug() , 'id' => $mission->getId()]) ;
+            }
 
-        return $this->redirectToRoute('offres.mes_offres');
-    }
-
-    /**
-     * This method allows us to delete an mission
-     *
-     * @param EntityManagerInterface $manager
-     * @param Offres $offre
-     * @return Response
-     */
-    #[IsGranted('ROLE_USER')]
-    #[Route('/{id}/offre-archive',  name: 'archives', methods: ['GET'] )]
-    #[IsGranted(OffresVoter::OFFRE_EDIT, subject: 'offre')]
-    public function archiver(
-        EntityManagerInterface $manager,
-        OffresRepository $OffresRepository,
-        Offres $offre 
-    ): Response {   
-
-        $offre = $OffresRepository->find($offre);
-        $id = $offre->getId();
-
-        if (!$offre) {
-            throw $this->createNotFoundException(
-                'Aucune offre trouvée pour cet id '.$id
-            );
+            return $this->render('pages/missions/candidatures_offre.twig', compact("mission", "candidatures") );
         }
 
-        $offre->setIsArchive(true)
-            ->setIsActive(false)
-        ;
+        /**
+         * This method allows us to delete an mission
+         *
+         * @param EntityManagerInterface $manager
+         * @param Offres $offre
+         * @return Response
+         */
+        #[Route('/gestion-candidature/{id}/{etat}', name: 'gestion.candidature', methods: ['GET'])]
+        public function gestionCandidature(
+            EntityManagerInterface $manager,
+            CandidaturesRepository $candidaturesRepository, 
+            Request $request,
+            int $id, 
+            bool $etat
+        ): Response {
 
-        $manager->flush();
+            $candidature = $candidaturesRepository->find($id);
 
-        $this->addFlash(
-            'success',
-            'Votre mission a été archivée avec succès.'
-        );
+            dd($request->request->all());
 
-        return $this->redirectToRoute('offres.mes_offres');
-    }
+            if (!$candidature) {
+                throw $this->createNotFoundException(
+                    'Aucune candidature trouvée pour cet id '.$id
+                );
+            }
 
-    /**
-     * This method allows us to delete an ingredient
-     *
-     * @param EntityManagerInterface $manager
-     * @param Offres $offre
-     * @return Response
-     */
-    #[IsGranted('ROLE_USER')]
-    #[Route('/{id}/desactiver',  name: 'desactiver', requirements: ['id' => Requirement::DIGITS], methods: ['GET'] )]
-    #[IsGranted(OffresVoter::OFFRE_EDIT, subject: 'offre')]
-    public function desactiver(
-        EntityManagerInterface $manager,
-        Offres $offre
-    ): Response {
+            $candidature = $candidaturesRepository->gestionCandidature($candidature, $etat);
+            $candidature
+                    ->setRetenue('New product name!')
+                    ->setConsulte(true)
+            ;
+            
+            $manager->flush();
 
-        $manager->flush();
+            $this->addFlash(
+                'success',
+                'La candidature a été traitée avec succès !'
+            );
 
-        $this->addFlash(
-            'success',
-            'Votre mission a été désactivée avec succès !'
-        );
+            return $this->redirectToRoute('offres.candidaturesOffre', ["id" => $candidature , "etat" => true ]);
+        }
 
-        return $this->redirectToRoute('offres.mes_offres');
-    }
+    
+    /*********************************  Archives **************************************/
 
+        /**
+         * This controller list all mission archives for the current Company
+         * 
+         * @param OffresRepository $offresRepository
+         * @param Request $request
+         * @param Security $security
+         * 
+         * @return Response
+         */
+        #[Route('/societe/mes-offres-archives', name: 'mes_offres_archives', methods: ['GET'])]
+        #[IsGranted(OffresVoter::OFFRE_LIST)]
+        public function mesOffresArchives(
+            OffresRepository $offresRepository,
+            Request $request,
+            Security $security
+        ): Response {
 
+            $page   = $request->query->getInt('page', 1) ;
+            $userId =  $security->getUser()->getId() ;
+
+            // On limite l'affichage aux missions de la société
+            $canListAll = $security->isGranted(OffresVoter::OFFRE_LIST_ALL) ;
+            $missions   = $offresRepository->paginateOffresArchives($page , $canListAll ? null : $userId) ;
+
+            $name = $request->get('_route'); // This will return the name.
+
+            return $this->render('pages/missions/archives_missions.html.twig', compact( "missions") );
+        }
+
+        /**
+         * This method allows us to archive an mission
+         *
+         * @param EntityManagerInterface $manager
+         * @param Offres $offre
+         * @return Response
+         */
+        #[IsGranted('ROLE_USER')]
+        #[Route('/{id}/archiver-offre',  name: 'archiver_offre', methods: ['GET'] )]
+        #[IsGranted(OffresVoter::OFFRE_EDIT, subject: 'offre')]
+        public function archiver(
+            EntityManagerInterface $manager,
+            OffresRepository $offresRepository,
+            Offres $offre 
+        ): Response {   
+
+            $offre  = $offresRepository->find($offre);
+            $id     = $offre->getId();
+
+            if (!$offre) {
+                throw $this->createNotFoundException(
+                    'Aucune offre trouvée pour cet id '.$id
+                );
+            }
+
+            $offre
+                ->setIsArchive(true)
+                ->setIsActive(false)
+            ;
+
+            $manager->flush();
+
+            $this->addFlash(
+                'success',
+                'Votre mission a été archivée avec succès.'
+            );
+
+            return $this->redirectToRoute('offres.mes_offres');
+        }
+
+    
 }
