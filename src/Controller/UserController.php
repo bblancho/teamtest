@@ -186,6 +186,7 @@ class UserController extends AbstractController
             return $this->redirectToRoute('offre.show', ['slug' => $mission->getSlug() , 'id' => $mission->getId()]) ;
         }
 
+        $slug = $mission->getSlug();
         $freeLance = $this->getUser() ;
 
         // On vérifie si le user a déjà postulé
@@ -204,6 +205,7 @@ class UserController extends AbstractController
             $candidature->setOffres($mission)
                 ->setClients($freeLance)
                 ->setConsulte(false)
+                ->setSlug($slug)
                 ->setCreatedAt(new \DateTimeImmutable())
             ;
 

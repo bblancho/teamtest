@@ -111,12 +111,10 @@ class Candidatures
         return $this->slug;
     }
 
-    /**
-     * @param string|null $slug
-     * @return void
-     */
-    public function setSlug(?string $slug): void
+    public function setSlug(?string $slug): static
     {
         $this->slug = $slug;
+
+        return $this;
     }
 }

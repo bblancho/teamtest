@@ -23,7 +23,8 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[Route("/offres", 'offres.')]
 class MissionController extends AbstractController
 {   
-    /*********************************  Crud Mission **************************************/
+
+/*********************************  Crud Mission **************************************/
 
     /**
      * This controller list all mission for the current Company
@@ -203,34 +204,34 @@ class MissionController extends AbstractController
         return $this->redirectToRoute('offres.mes_offres');
     }
 
-    /*********************************  Candidatures **************************************/
+/*********************************  Candidatures **************************************/
 
-        /**
-         * This controller allow us to edit user's profile
-         *
-         * @param Users $choosenUser
-         * @param Request $request
-         * @param EntityManagerInterface $manager
-         * @return Response
-         */
-        #[IsGranted('ROLE_USER')]
-        #[Route('/candidature/offre-{id}-{slug}', name: 'candidaturesOffre', methods: ['GET'], requirements: ['id' => Requirement::DIGITS, 'slug' => Requirement::ASCII_SLUG])]
-        public function listeCandidaturesOffre(
-            CandidaturesRepository $candidaturesRepository, 
-            Request $request,
-            Offres $mission,
-            string $slug ,
-        ): Response {
-            $page = $request->query->getInt('page', 1) ;
+    /**
+     * This controller allow us to edit user's profile
+     *
+     * @param Users $choosenUser
+     * @param Request $request
+     * @param EntityManagerInterface $manager
+     * @return Response
+     */
+    #[IsGranted('ROLE_USER')]
+    #[Route('/candidature/offre-{id}-{slug}', name: 'candidaturesOffre', methods: ['GET'], requirements: ['id' => Requirement::DIGITS, 'slug' => Requirement::ASCII_SLUG])]
+    public function listeCandidaturesOffre(
+        CandidaturesRepository $candidaturesRepository, 
+        Request $request,
+        Offres $mission,
+        string $slug ,
+    ): Response {
+        $page = $request->query->getInt('page', 1) ;
 
-            $candidatures  = $candidaturesRepository->paginateOffreCandidatures($page, $mission);
-            
-            if( $mission->getSlug() != $slug ){
-                return $this->redirectToRoute('offre.show', ['slug' => $mission->getSlug() , 'id' => $mission->getId()]) ;
-            }
-
-            return $this->render('pages/missions/candidatures_offre.twig', compact("mission", "candidatures") );
+        $candidatures  = $candidaturesRepository->paginateOffreCandidatures($page, $mission);
+        
+        if( $mission->getSlug() != $slug ){
+            return $this->redirectToRoute('offre.show', ['slug' => $mission->getSlug() , 'id' => $mission->getId()]) ;
         }
+
+        return $this->render('pages/missions/candidatures_offre.twig', compact("mission", "candidatures") );
+    }
 
     /**
      * This method allows us to delete an mission
@@ -261,7 +262,7 @@ class MissionController extends AbstractController
                 ->setConsulte(true)
             ;
 
-            // Envoie du mail au candidat
+            Envoie du mail au candidat
             $client = $candidature->getClients();
             $email = (new TemplatedEmail())
                 ->from(new Address('team2i@gmail.com', 'Team2i'))
