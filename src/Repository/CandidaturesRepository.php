@@ -35,13 +35,18 @@ class CandidaturesRepository extends ServiceEntityRepository
         ;
     }
 
-    public function paginateOffreCandidatures(int $page, Offres $offre): PaginationInterface
+    public function paginateOffreCandidatures(int $page, Offres $offre, ?bool $etat): PaginationInterface
     {
         $builder =  $this->createQueryBuilder('c') ;
 
         if($offre){
             $builder = $builder->andWhere('c.offres= :idOffre')
             ->setParameter('idOffre', $offre) ;
+        }
+
+        if($etat){
+            $builder = $builder->andWhere('c.isRetenue= :etat')
+            ->setParameter('etat', $etat) ;
         }
 
         return  $this->paginator->paginate(
@@ -54,6 +59,7 @@ class CandidaturesRepository extends ServiceEntityRepository
             ]
         );
     }
+    
 
     public function aDejaPostule(Clients $user, Offres $offre)
     {

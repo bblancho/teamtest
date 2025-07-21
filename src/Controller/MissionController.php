@@ -222,11 +222,39 @@ class MissionController extends AbstractController
         ): Response {
             $page = $request->query->getInt('page', 1) ;
 
-            $candidatures  = $candidaturesRepository->paginateOffreCandidatures($page, $mission);
+            $candidatures  = $candidaturesRepository->paginateOffreCandidatures($page, $mission, null);
             
             if( $mission->getSlug() != $slug ){
                 return $this->redirectToRoute('offre.show', ['slug' => $mission->getSlug() , 'id' => $mission->getId()]) ;
             }
+
+            return $this->render('pages/missions/candidatures_offre.twig', compact("mission", "candidatures") );
+        }
+
+        /**
+         * This controller allow us to edit user's profile
+         *
+         * @param Users $choosenUser
+         * @param Request $request
+         * @param EntityManagerInterface $manager
+         * @return Response
+         */
+        #[IsGranted('ROLE_USER')]
+        #[Route('/candidature/valide/offre-{id}-{slug}', name: 'candidatures_offre_valide', methods: ['GET'], requirements: ['id' => Requirement::DIGITS, 'slug' => Requirement::ASCII_SLUG])]
+        public function listeCandidaturesOffreAcceptees(
+            CandidaturesRepository $candidaturesRepository, 
+            Request $request,
+            Offres $mission,
+            string $slug ,
+        ): Response {
+            $page = $request->query->getInt('page', 1) ;
+
+            $candidatures  = $candidaturesRepository->paginateOffreCandidatures($page, $mission, true);
+            
+            if( $mission->getSlug() != $slug ){
+                return $this->redirectToRoute('offre.show', ['slug' => $mission->getSlug() , 'id' => $mission->getId()]) ;
+            }
+            dd($candidatures) ;
 
             return $this->render('pages/missions/candidatures_offre.twig', compact("mission", "candidatures") );
         }
@@ -267,7 +295,7 @@ class MissionController extends AbstractController
                 'La candidature a été traitée avec succès .'
             );
 
-            return $this->redirectToRoute('offres.candidaturesOffre', ['id' => $candidature->getId(), 'slug' => $candidature->getSlug() ]);
+            return $this->render('pages/missions/candidatures_offre.twig', compact("mission", "candidatures") );
         }
 
     /**
