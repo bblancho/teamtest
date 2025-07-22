@@ -1,0 +1,10 @@
+<div class="container">
+    <h1>Bonjour</h1>
+
+    <p>Bonjour {{ client.getNom() | replace({'.': ' '}) | title }},</p>
+
+    <p>Nous avons le plaisir de vous informer que votre candidature a été retenue pour le poste de {{ offre.getNom() }}.</p>
+
+    <p>Cordialement.</p>
+    <p>Team 2i.</p>
+</div>

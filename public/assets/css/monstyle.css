@@ -49,6 +49,15 @@ h1.jumbotron-heading{
     margin-top: 1px !important;
 }
 
+.btn{
+    text-transform: uppercase;
+}
+.btn:hover {
+    color: var(--bs-btn-hover-color);
+    background-color: #24a828;
+    border-color: none;
+}
+
 
 /************************ Footer *************************/
 

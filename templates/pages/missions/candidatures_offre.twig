@@ -34,7 +34,15 @@
 							<tr>
 								<th scope="row">{{ candidature.clients.nom  }} / ID: {{ candidature.clients.id  }} </a></th>
 								<td scope="row">{{ candidature.clients.tjm }} € </td>
-								<td scope="row"> <a  href=""> Voir le cv </a> </td>
+								{% if candidature.clients.cv_file is defined and candidature.clients.cv_file is not null  %}
+									<td scope="row">
+										<a href="{{ asset('upload/' ~ candidature.clients.cv_file) }}" target="_blank">Voir le CV</a>
+									</td>
+								{% else %}
+									<td scope="row">
+										<span class="text-muted">CV non disponible</span>
+									</td>
+								{% endif %}
 								<td scope="row">
 									{{ candidature.isRetenue == 1 ? "<span class='badge bg-success'> Retenue </span>" : candidature.isRetenue is null ? "<span class='badge bg-secondary'> Non traitée </span>"  : "<span class='badge bg-danger'> Refusée </span>" }}
 								</td>

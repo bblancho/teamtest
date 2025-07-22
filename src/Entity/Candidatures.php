@@ -35,6 +35,9 @@ class Candidatures
     #[ORM\Column(nullable: true)]
     private ?bool $isRetenue = null;
 
+    #[ORM\Column(length: 60)]
+    private ?string $slug = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -96,6 +99,21 @@ class Candidatures
     public function setRetenue(?bool $isRetenue): static
     {
         $this->isRetenue = $isRetenue;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(?string $slug): static
+    {
+        $this->slug = $slug;
 
         return $this;
     }

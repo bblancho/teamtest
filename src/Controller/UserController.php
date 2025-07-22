@@ -204,6 +204,7 @@ class UserController extends AbstractController
             $candidature->setOffres($mission)
                 ->setClients($freeLance)
                 ->setConsulte(false)
+                ->setSlug($mission->getSlug())
                 ->setCreatedAt(new \DateTimeImmutable())
             ;
 
