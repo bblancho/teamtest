@@ -5,9 +5,9 @@
 {% block body %}
 	<main role="main">
 		<section class="jumbotron text-center bg-light pt-4 pb-4">
-					<div class="container">
-						<h1 class="jumbotron-heading"> Candidature pour la mission : {{ mission.nom }} </h1>
-					</div>
+			<div class="container">
+				<h1 class="jumbotron-heading"> Liste des candidatures pour la mission : {{ mission.nom }} </h1>
+			</div>
 		</section>
 
 		<div class="container mt-4">
@@ -32,8 +32,8 @@
 					<tbody>
 						{% for candidature in candidatures %}
 							<tr>
-								<th scope="row">{{ candidature.clients.nom  }} / ID: {{ candidature.clients.id  }} </a></th>
-								<td scope="row">{{ candidature.clients.tjm }} € </td>
+								<th scope="row"> {{ candidature.clients.nom  }} </a></th>
+								<td scope="row"> {{ candidature.clients.tjm }} € </td>
 								{% if candidature.clients.cv_file is defined and candidature.clients.cv_file is not null  %}
 									<td scope="row">
 										<a href="{{ asset('upload/' ~ candidature.clients.cv_file) }}" target="_blank">Voir le CV</a>
@@ -47,8 +47,8 @@
 									{{ candidature.isRetenue == 1 ? "<span class='badge bg-success'> Retenue </span>" : candidature.isRetenue is null ? "<span class='badge bg-secondary'> Non traitée </span>"  : "<span class='badge bg-danger'> Refusée </span>" }}
 								</td>
 								<td>
-									<a  href="{{ path('offres.candidature.acceptee', {id: candidature.id}) }}" class="btn btn-success"> Retenir </a>
-									<a  href="{{ path('offres.candidature.refusee', {id: candidature.id}) }}" class="btn btn-danger"> Refuser </a>
+									<a  href="{{ path('offres.valider.candidature', {id: candidature.id}) }}" class="btn btn-success"> Retenir </a>
+									<a  href="{{ path('offres.refuser.candidature', {id: candidature.id}) }}" class="btn btn-danger"> Refuser </a>
 								</td>
 							</tr>
 						{% endfor %}

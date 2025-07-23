@@ -35,7 +35,7 @@ class CandidaturesRepository extends ServiceEntityRepository
         ;
     }
 
-    public function paginateOffreCandidatures(int $page, Offres $offre, ?bool $etat): PaginationInterface
+    public function paginateOffreCandidatures(int $page, Offres $offre): PaginationInterface
     {
         $builder =  $this->createQueryBuilder('c') ;
 
@@ -44,9 +44,26 @@ class CandidaturesRepository extends ServiceEntityRepository
             ->setParameter('idOffre', $offre) ;
         }
 
-        if($etat){
-            $builder = $builder->andWhere('c.isRetenue= :etat')
-            ->setParameter('etat', $etat) ;
+        return  $this->paginator->paginate(
+            $builder ,
+            $page ,
+            10 ,
+            [   //securité sur le trie
+                'distinct' => false , 
+                'sortFieldAllowList' => ['c.id'] //securité sur le trie, on choisit sur quel champs on accorde le trie
+            ]
+        );
+    }
+
+    public function paginateOffreCandidaturesValidee(int $page, Offres $offre): PaginationInterface
+    {
+        $builder =  $this->createQueryBuilder('c') ;
+
+        if($offre){
+            $builder = $builder
+            ->andWhere('c.offres= :idOffre')
+            ->andWhere('c.isRetenue = true')
+            ->setParameter('idOffre', $offre) ;
         }
 
         return  $this->paginator->paginate(

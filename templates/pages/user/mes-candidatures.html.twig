@@ -52,7 +52,7 @@
 															<div class="btn-group">
 																{{ candidature.isRetenue == 1 ? "<span class='badge bg-success'> Retenue </span>" : candidature.isRetenue is null ? "<span class='badge bg-secondary'> Non traitée </span>"  : "<span class='badge bg-danger'> Refusée </span>" }}
 															</div>
-															<small class="text-body-secondary">Date de candidature: {{ candidature.createdAT|date('d/m/Y') }} </small>
+															<span class="text-xl font-semibold text-success"> Date de candidature: {{ candidature.createdAT|date('d/m/Y') }} </span>
 														</div> <br/>
 													</div>
 

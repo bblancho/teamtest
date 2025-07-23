@@ -50,8 +50,6 @@ class MissionController extends AbstractController
         $canListAll = $security->isGranted(OffresVoter::OFFRE_LIST_ALL) ;
         $missions   = $offresRepository->paginateOffres($page , $canListAll ? null : $userId) ;
 
-        // dd($missions) ;
-
         return $this->render('pages/missions/mes_missions.html.twig', compact( "missions") );
     }
 
@@ -207,11 +205,10 @@ class MissionController extends AbstractController
 /*********************************  Candidatures **************************************/
 
     /**
-     * This controller allow us to edit user's profile
+     * Cette fonction affiche la liste des candidatures d'une offre
      *
      * @param Users $choosenUser
      * @param Request $request
-     * @param EntityManagerInterface $manager
      * @return Response
      */
     #[IsGranted('ROLE_USER')]
@@ -224,25 +221,51 @@ class MissionController extends AbstractController
     ): Response {
         $page = $request->query->getInt('page', 1) ;
 
-            $candidatures  = $candidaturesRepository->paginateOffreCandidatures($page, $mission);
-            
-            if( $mission->getSlug() != $slug ){
-                return $this->redirectToRoute('offre.show', ['slug' => $mission->getSlug() , 'id' => $mission->getId()]) ;
-            }
-
-            return $this->render('pages/missions/candidatures_offre.twig', compact("mission", "candidatures") );
+        $candidatures  = $candidaturesRepository->paginateOffreCandidatures($page, $mission, null);
+        
+        if( $mission->getSlug() != $slug ){
+            return $this->redirectToRoute('offre.show', ['slug' => $mission->getSlug() , 'id' => $mission->getId()]) ;
         }
 
+        return $this->render('pages/missions/candidatures_offre.twig', compact("mission", "candidatures") );
+    }
+
     /**
-     * This method allows us to delete an mission
+     * Cette fonction affiche la liste des candidatures acceptées pour une offre
+     *
+     * @param Users $choosenUser
+     * @param Request $request
+     * @return Response
+     */
+    #[IsGranted('ROLE_USER')]
+    #[Route('/candidature/offre-{id}-{slug}/validee', name: 'candidatures_offre_validees', methods: ['GET'], requirements: ['id' => Requirement::DIGITS, 'slug' => Requirement::ASCII_SLUG])]
+    public function listeCandidaturesOffreValidees(
+        CandidaturesRepository $candidaturesRepository, 
+        Request $request,
+        Offres $mission,
+        string $slug ,
+    ): Response {
+        $page = $request->query->getInt('page', 1) ;
+
+        $candidatures  = $candidaturesRepository->paginateOffreCandidaturesValidee($page, $mission);
+        
+        if( $mission->getSlug() != $slug ){
+            return $this->redirectToRoute('offre.show', ['slug' => $mission->getSlug() , 'id' => $mission->getId()]) ;
+        }
+    
+        return $this->render('pages/missions/candidatures_valide.twig', compact("mission", "candidatures") );
+    }
+
+    /**
+     * Cette fonction valide une candiature et envoie un mail au free-lance
      *
      * @param EntityManagerInterface $manager
      * @param CandidaturesRepository $candidaturesRepository
      * @return Response
      * @throws TransportExceptionInterface
      */
-        #[Route('/{id}/candidature-acceptee', name: 'candidature.acceptee', methods: ['GET'])]
-        public function candidatureAccepte(
+        #[Route('/{id}/valider-candidature', name: 'valider.candidature', methods: ['GET'])]
+        public function validerCandidature(
             EntityManagerInterface $manager,
             CandidaturesRepository $candidaturesRepository, 
             int $id,
@@ -263,29 +286,31 @@ class MissionController extends AbstractController
             ;
 
             // Envoie du mail au candidat
-            $client = $candidature->getClients();
-            $email = (new TemplatedEmail())
-                ->from(new Address('team2i@gmail.com', 'Team2i'))
-                ->to((string) $client->getEmail())
-                ->subject('Acceptation de candidature')
-                ->htmlTemplate('emails/acceptation.html.twig')
-                ->context([
-                    'client' => $client,
-                    'offre' => $candidature->getOffres(),
-                ])
-            ;
+                $client = $candidature->getClients();
+                
+                $email = (new TemplatedEmail())
+                    ->from(new Address('team2i@gmail.com', 'Team2i'))
+                    ->to((string) $client->getEmail())
+                    ->subject('Acceptation de candidature')
+                    ->htmlTemplate('emails/acceptation.html.twig')
+                    ->context([
+                        'client' => $client,
+                        'offre' => $candidature->getOffres(),
+                    ])
+                ;
 
-            $mailer->send($email);
+                $mailer->send($email);
 
             $manager->flush();
 
             $this->addFlash(
                 'success',
-                'La candidature a été traitée avec succès. Vous recevrez un email de confirmation'
+                'La candidature a été traitée avec succès. Vous recevrez un email de confirmation.'
             );
 
-            $slug = $candidature->getSlug() ?: 'candidature';
-            return $this->redirectToRoute('offres.candidaturesOffre', ['id' => $candidature->getId(), 'slug' => $slug ]);
+            $mission = $candidature->getOffres();
+
+            return $this->redirectToRoute('offres.candidaturesOffre', ['id' => $mission->getId(), 'slug' => $mission->getSlug() ]);
         }
 
     /**
@@ -295,8 +320,8 @@ class MissionController extends AbstractController
      * @param CandidaturesRepository $candidaturesRepository
      * @return Response
      */
-    #[Route('/candidature/{id}/refusee', 'candidature.refusee', methods: ['GET'])]
-    public function candidatureRefuse(
+    #[Route('/candidature/{id}/refusee', 'refuser.candidature', methods: ['GET'])]
+    public function refuserCandidature(
         EntityManagerInterface $manager,
         CandidaturesRepository $candidaturesRepository, 
         int $id,

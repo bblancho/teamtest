@@ -21,14 +21,12 @@
 					<table class="table table-striped table-bordered">
 						<thead class="thead-dark">
 							<tr>
-								{# <th scope="col">{{ knp_pagination_sortable(missions, 'ID', 'o.id') }}</th> #}
 								<th scope="col">Ref mission</th>
 								<th scope="col">Intitulé</th>
 								<th scope="col">Démarrage</th>
 								<th scope="col">Lieu</th>
 								<th scope="col">TJM</th>
 								<th scope="col"> CV </th>
-								<th scope="col"> CV retenus </th>
 								<th scope="col">Visible</th>
 								<th scope="col" colspan="3">Actions</th>
 							</tr>
@@ -44,7 +42,6 @@
 										{{ mission.tarif }} €
 									</td>	
 									<td><a  href="{{ path('offres.candidaturesOffre', {id: mission.id, slug: mission.slug}) }}" > {{ mission.nbCandidatures }} Candidatures  </a> </td>
-									<td><a  href="{{ path('offres.candidaturesOffre', {id: mission.id, slug: mission.slug}) }}" >{{ mission.nbCandidatures }} cv sélectionés  </a> </td>
 									
 									<td>{{ mission.isActive ? "<span class='badge bg-success'> OUI </span>" : "<span class='badge bg-secondary'> NON </span>" }}  </td>
 									
