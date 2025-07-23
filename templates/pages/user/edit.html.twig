@@ -52,9 +52,20 @@
 										{{ form_row(form.cvFile) }}
 									</div>
 
-									<div class="form-group form-check">
+									{% if user.cvName is defined and user.cvName is not null %}
+										<div class="form-group mt-4">
+											<a href="{{ asset('upload/' ~ user.cvName) }}" target="_blank">Afficher mon cv</a>
+										</div>
+									{% else %}
+										<div scope="form-group mt-4">
+											<p class="text-muted">Aucun cv téléchargé</p>
+										</div>
+									{% endif %}
+
+									<div class="form-group form-check mt-4">
 										{{ form_row(form.isNewsletter) }}
 									</div>
+									
 								</div>
 
 								<button class="btn btn-lg btn-primary btn-block mb-5" type="submit">

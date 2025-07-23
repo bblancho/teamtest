@@ -46,6 +46,10 @@ class UserService
         $user->setTjm($formData['tjm']);
         $user->setIsNewsletter($formData['isNewsletter']);
 
+        if($cvFileName != null){
+            $user->setCvName($cvFileName);
+        }
+
         $this->entityManager->persist($user);
         $this->entityManager->flush();
     }
