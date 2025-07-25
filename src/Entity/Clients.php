@@ -28,6 +28,7 @@ class Clients extends Users
         maxSize: '2048k',
         extensions: ['pdf'],
         extensionsMessage: 'Veuillez télécharger un fichier PDF valide.',
+        maxSizeMessage: "Le fichier doit faire au maximum ({{ size }} {{ suffix }}).",
     )]
     #[ORM\Column(nullable: true)]
     // private ?string $cvFile = null;

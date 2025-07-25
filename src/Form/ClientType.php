@@ -10,8 +10,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class ClientType extends AbstractType
@@ -137,7 +137,17 @@ class ClientType extends AbstractType
                     'label_attr' => [
                         'class' => 'form-label'
                     ],
-                ]
+                    'constraints' => [
+                        new File([
+                            'maxSize' => '2048',
+                            'mimeTypes' => [
+                                'application/pdf',
+                                'application/x-pdf',
+                            ],
+                            'mimeTypesMessage' => 'Veuillez télécharger un fichier PDF valide.',
+                        ])
+                    ]
+                ],
             )
             ->add(
                 'isNewsletter',

@@ -54,7 +54,8 @@
 
 									{% if user.cvName is defined and user.cvName is not null %}
 										<div class="form-group mt-4">
-											<a href="{{ asset('upload/' ~ user.cvName) }}" target="_blank">Afficher mon cv</a>
+											<a href="{{ asset('upload/cv/' ~ user.cvName) }}" target="_blank">Afficher mon cv</a>
+											
 										</div>
 									{% else %}
 										<div scope="form-group mt-4">
