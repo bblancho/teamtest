@@ -24,8 +24,14 @@ class Clients extends Users
     #[ORM\Column(nullable: true)]
     private ?bool $dispo = null;
 
+    #[Assert\File(
+        maxSize: '2048k',
+        extensions: ['pdf'],
+        extensionsMessage: 'Veuillez télécharger un fichier PDF valide.',
+    )]
     #[ORM\Column(nullable: true)]
-    private ?string $cvFile = null;
+    // private ?string $cvFile = null;
+    private ?File $cvFile = null;
 
     #[ORM\Column( length: 255, nullable: true)]
     private ?string $cvName = null;
@@ -91,24 +97,19 @@ class Clients extends Users
         return $this;
     }
 
-    /**
-     * @param string|null $cvFile
-     * @return $this
-     */
-    public function setCvFile(?string $cvFile = null): self
+    /******* Les fichiers */
+    public function setCvFile(?File $cvFile = null): self
     {
         $this->cvFile = $cvFile;
 
         return $this;
     }
-
-    /**
-     * @return string|null
-     */
-    public function getCvFile(): ?string
+    
+    public function getCvFile(): File
     {
         return $this->cvFile;
     }
+    /******* Fin fichiers */
 
     public function setCvName(?string $cvName): void
     {
