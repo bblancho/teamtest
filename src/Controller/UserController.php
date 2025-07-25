@@ -31,9 +31,9 @@ class UserController extends AbstractController
     /**
      * This controller allow us to edit user profile
      *
-     * @param Clients $user
      * @param Request $request
-     * @param EntityManagerInterface $manager
+     * @param UserService $userService
+     * @param FileUploadService $fileUploadService
      * 
      * @return Response
      */
@@ -41,7 +41,6 @@ class UserController extends AbstractController
     #[Route('/edition-profil', name: 'edit', methods: ['GET', 'POST'] )]
     public function edit(
         Request $request,
-        EntityManagerInterface $manager,
         FileUploadService $fileUploadService,
         ParameterBagInterface $parameterBag,
         UserService $userService,
@@ -74,6 +73,7 @@ class UserController extends AbstractController
 
             $cvFile = $form["cvFile"]->getData();
 
+            // config/services.yaml on va chercher le repertoire ou stocker les images
             $cvFileDirectory = $parameterBag->get('cv.upload_directory');
             $cvFileName = null;
 
@@ -83,6 +83,7 @@ class UserController extends AbstractController
                 // $user->setCvName($cvFile->getClientOriginalName());
             }
 
+            // On utilise le service UserService pour enregister le User
             $userService->updateUserFromForm($user, $formData, $cvFileName);
 
             $this->addFlash(

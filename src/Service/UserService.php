@@ -11,8 +11,7 @@ class UserService
 {
     protected EntityManagerInterface $entityManager;
     protected Security $security;
-     // Avoid calling getUser() in the constructor: auth may not
-    // be complete yet. Instead, store the entire Security object.
+
     public function __construct(
         Security $security,
         EntityManagerInterface $entityManager,
