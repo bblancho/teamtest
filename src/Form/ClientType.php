@@ -139,7 +139,7 @@ class ClientType extends AbstractType
                     ],
                     'constraints' => [
                         new File([
-                            'maxSize' => '2048',
+                            'maxSize' => '2048k',
                             'mimeTypes' => [
                                 'application/pdf',
                                 'application/x-pdf',
