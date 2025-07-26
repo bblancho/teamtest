@@ -36,7 +36,7 @@
 								<td scope="row"> {{ candidature.clients.tjm }} € </td>
 								{% if candidature.clients.cvName is defined and candidature.clients.cvName is not null  %}
 									<td scope="row">
-										<a href="{{ asset('upload/' ~ candidature.clients.cvName) }}" target="_blank">Afficher le CV</a>
+										<a href="{{ asset('upload/cv/' ~ candidature.clients.cvName) }}" target="_blank">Afficher le CV</a>
 									</td>
 								{% else %}
 									<td scope="row">
