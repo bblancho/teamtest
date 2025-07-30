@@ -156,11 +156,11 @@ class MissionController extends AbstractController
         $offre  = $offresRepository->find($offre);
         $id     = $offre->getId();
 
-            if (!$offre) {
-                throw $this->createNotFoundException(
-                    'Aucune offre trouvée pour cet id '.$id
-                );
-            }
+        if (!$offre) {
+            throw $this->createNotFoundException(
+                'Aucune offre trouvée pour cet id '.$id
+            );
+        }
 
         $offre
             ->setIsArchive(false)

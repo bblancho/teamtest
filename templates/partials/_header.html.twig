@@ -39,14 +39,13 @@
 					{% endif %}
 
 					{% if is_granted('ROLE_ADMIN') %}
-						<li class="nav-item">
-							<a class="nav-link {{ app.current_route == 'societe.create' ? 'active' : '' }}" href="{{ path('societe.create') }}">Créer une société
-							</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link {{ app.current_route == 'app_index' ? 'active' : '' }}" href="{{ path('app_index') }}">Administration
-								<span class="visually-hidden">(current)</span>
-							</a>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Admin</a>
+							<div class="dropdown-menu">
+								<a class="dropdown-item {{ app.current_route == 'societe.create' ? 'active' : '' }}" href="{{ path('societe.create') }}">Créer une société</a>
+								<a class="dropdown-item {{ app.current_route == 'societe.app_index' ? 'active' : '' }}" href="{{ path('societe.app_index') }}">Lister les sociétés</a>
+								{# <a class="dropdown-item {{ app.current_route == 'societe.edit' ? 'active' : '' }}" href="{{ path('societe.edit') }}">Mes free-lances</a>#}
+							</div> 
 						</li>
 					{% endif %}
 

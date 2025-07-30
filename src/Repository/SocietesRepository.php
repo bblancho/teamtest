@@ -5,15 +5,36 @@ namespace App\Repository;
 use App\Entity\Societes;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @extends ServiceEntityRepository<Societes>
  */
 class SocietesRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, private PaginatorInterface $paginator)
     {
         parent::__construct($registry, Societes::class);
+    }
+    
+    public function paginateSocietes(int $page): PaginationInterface
+    {
+        $builder =  $this->createQueryBuilder('s') ;
+
+        $builder = $builder
+            ->andWhere('s.isVerified = true')
+        ;
+        
+        return  $this->paginator->paginate(
+            $builder ,
+            $page ,
+            10 ,
+            [   //securité sur le trie
+                'distinct' => false , 
+                'sortFieldAllowList' => ['o.id'] //securité sur le trie, on choisit sur quel champs on accorde le trie
+            ]
+        );
     }
 
     //    /**

@@ -24,7 +24,6 @@ class HomeController extends AbstractController
      * 
      * @param OffresRepository $offresRepository
      * @param Request $request
-     * @param Security $security
      * 
      * @return Response
      */
@@ -32,7 +31,6 @@ class HomeController extends AbstractController
     public function index(
         OffresRepository $offresRepository,
         Request $request,
-        Security $security
     ): Response {
 
         $page = $request->query->getInt('page', 1) ;

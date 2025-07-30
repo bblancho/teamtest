@@ -2,12 +2,16 @@
 
 namespace App\Controller;
 
+use App\Entity\Offres;
+use App\Form\OffreType;
 use App\Entity\Societes;
 use App\Form\SocieteType;
 use App\Form\UserPasswordType;
-use App\Repository\OffresRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use App\Form\CreateSocieteFormType;
+use App\Security\Voter\OffresVoter;
+use App\Repository\OffresRepository;
+use App\Repository\SocietesRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,10 +28,33 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 #[Route("/societe", 'societe.')]
 class SocieteController extends AbstractController
 {
+
+    /**
+     * @param SocietesRepository $societesRepository
+     * @param Request $request
+     * 
+     * @return Response
+     */
+    #[Route('/gestion', name: 'app_index')]
+    #[IsGranted('ROLE_ADMIN')]
+    public function index(
+        SocietesRepository $societesRepository,
+        Request $request,
+    ): Response {
+
+        $page = $request->query->getInt('page', 1) ;
+        $userId =  null ;
+
+        $societes   = $societesRepository->paginateSocietes($page) ;
+
+        return $this->render('template/admin/societes/index.html.twig', compact( "societes") );
+    }
+
     /**
      * This controller allow us to register.
      */
     #[Route('/creation', 'create', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function createSociete(
         Request $request,
         UserPasswordHasherInterface $passwordHasher,
@@ -67,6 +94,58 @@ class SocieteController extends AbstractController
                 'registrationForm' => $form,
             ]
         );
+    }
+
+    /**
+     * This method allow us to create an mission
+     *
+     * @param Request $request
+     * @param EntityManagerInterface $manager
+     * @return Response
+     */
+    #[Route('/creation-offre/{societe}', name: 'create.offre', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]
+    public function createOffre(
+        Request $request,
+        Societes $societe,
+        SocietesRepository $societesRepository,
+        EntityManagerInterface $manager
+    ): Response {
+
+        $societe = $societesRepository->find($societe);
+        $id      = $societe->getId();
+
+        if (!$societe) {
+            throw $this->createNotFoundException(
+                'Aucune société trouvée pour cet id '.$id
+            );
+        }
+
+        $mission = new Offres();
+
+        $form = $this->createForm(OffreType::class, $mission);
+        $form->handleRequest($request);
+
+        if (  $form->isSubmitted() && $form->isValid()  ) {
+
+            $mission->setSocietes( $societe ) ;
+            $mission->setNbCandidatures(0) ;
+            $mission->setSlug($form["nom"]->getData().$form["refMission"]->getData()) ;
+
+            $manager->persist($mission);
+            $manager->flush();
+
+            $this->addFlash(
+                'success',
+                'Votre mission a été créé avec succès !'
+            );
+
+            return $this->redirectToRoute('app_index');
+        }
+
+        return $this->render('pages/missions/new.html.twig', [
+            'form' => $form
+        ]);
     }
     
     /**
@@ -178,5 +257,7 @@ class SocieteController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
+
 
 }
