@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title "Créer une société" %}
+
+{% block body %}
+	<div class="album py-5 connexion">
+		<div class="container">
+			<h1> Créer une société </h1>
+
+			{{ form_start(registrationForm) }}
+
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							{{ form_row(registrationForm.nom) }}
+						</div>
+						<div class="form-group">
+							{{ form_row(registrationForm.secteurActivite) }}
+						</div>
+						
+						<div class="form-group">
+							{{ form_row(registrationForm.email) }}
+						</div>
+
+						<div class="form-group">
+							{{ form_row(registrationForm.adresse) }}
+						</div>
+
+						<div class="form-group">
+							{{ form_row(registrationForm.cp) }}
+						</div>
+
+						<div class="form-group">
+							{{ form_row(registrationForm.description) }}
+						</div>
+					</div>
+
+					<div class="col-md-6">
+						<div class="form-group">
+							{{ form_row(registrationForm.ville) }}
+						</div>
+
+						<div class="form-group">
+							{{ form_row(registrationForm.phone) }}
+						</div>
+
+						<div class="form-group">
+							{{ form_row(registrationForm.siret) }}
+						</div>
+
+						<div class="form-group">
+							{{ form_row(registrationForm.nomContact) }}
+						</div>
+
+						<div class="form-group">
+							{{ form_row(registrationForm.numContact) }}
+						</div>
+					</div>
+				</div>
+
+				<button class="btn btn-primary mt-3 mb-2" type="submit"> Créer une société </button> 
+
+			{{ form_end(registrationForm) }}
+
+		</div>
+	</div>
+
+{% endblock %}

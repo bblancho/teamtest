@@ -7,6 +7,7 @@ use App\Form\SocieteType;
 use App\Form\UserPasswordType;
 use App\Repository\OffresRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Form\CreateSocieteFormType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,8 +20,54 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
+
+#[Route("/societe", 'societe.')]
 class SocieteController extends AbstractController
 {
+    /**
+     * This controller allow us to register.
+     */
+    #[Route('/creation', 'create', methods: ['GET', 'POST'])]
+    public function createSociete(
+        Request $request,
+        UserPasswordHasherInterface $passwordHasher,
+        EntityManagerInterface $entityManager,
+    ): Response
+    {
+        $societe = new Societes();
+        
+        $form = $this->createForm(CreateSocieteFormType::class, $societe);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // encode the plain password
+            $hashedPassword = $passwordHasher->hashPassword(
+                $societe,
+                "Azerty24@"
+            );
+
+            $societe->setRoles(['ROLE_USER','ROLE_SOCIETE']);
+            $societe->setTypeUser('societes');
+            $societe->setPassword($hashedPassword);
+            $societe->setIsVerified(true);
+
+            $entityManager->persist($societe);
+            $entityManager->flush();
+
+            $this->addFlash(
+                'success',
+                'La société a bien été créée.'
+            );
+            return $this->redirectToRoute('app_index');
+        }
+
+        return $this->render(
+            'pages/societe/registerSociete.html.twig',
+            [
+                'registrationForm' => $form,
+            ]
+        );
+    }
     
     /**
      * This controller allow us to edit user's profile
@@ -31,7 +78,7 @@ class SocieteController extends AbstractController
      * @return Response
      */
     #[IsGranted('ROLE_USER')]
-    #[Route('/societe/edition/', name: 'societe.edit', methods: ['GET', 'POST'])]
+    #[Route('/edition', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(
         Request $request,
         EntityManagerInterface $manager,
@@ -83,7 +130,7 @@ class SocieteController extends AbstractController
      * @return Response
      */
     #[IsGranted('ROLE_USER')]
-    #[Route('/societe/edition-mot-de-passe', 'societe.edit.password', methods: ['GET', 'POST'])]
+    #[Route('/edition-mot-de-passe', 'edit.password', methods: ['GET', 'POST'])]
     public function editPassword(
         Request $request,
         EntityManagerInterface $manager,
