@@ -11,9 +11,9 @@ use App\Repository\CandidaturesRepository;
 use App\Repository\OffresRepository;
 use App\Service\FileUploadService;
 use App\Service\UserService;
+use Symfony\Bundle\SecurityBundle\Security;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\ExpressionLanguage\Expression;
@@ -161,9 +161,10 @@ class UserController extends AbstractController
     /**
      * This controller allow us to edit user's profile
      *
-     * @param Users $choosenUser
-     * @param Request $request
      * @param EntityManagerInterface $manager
+     * @param OffresRepository $offresRepository, 
+     * @param  CandidaturesRepository $candidaturesRepository, 
+     * 
      * @return Response
      */
     #[IsGranted(new Expression('is_granted("ROLE_USER") or is_granted("ROLE_ADMIN")'))]
@@ -177,6 +178,7 @@ class UserController extends AbstractController
     ): Response {
 
         $mission = $offresRepository->find($id);
+        $freeLance = $this->getUser() ;
 
         if($this->isGranted('ROLE_SOCIETE'))
         {
@@ -187,8 +189,6 @@ class UserController extends AbstractController
             return $this->redirectToRoute('offre.show', ['slug' => $mission->getSlug() , 'id' => $mission->getId()]) ;
         }
 
-        $freeLance = $this->getUser() ;
-
         // On vérifie si le user a déjà postulé
         $candidature = $candidaturesRepository->aDejaPostule($freeLance, $mission);
 
@@ -198,7 +198,6 @@ class UserController extends AbstractController
                 'Vous avez déjà postulé à cette offre.'
             );
         }else{
-            $freeLance = $this->getUser() ;
 
             $candidature = new Candidatures() ;
     
@@ -233,27 +232,30 @@ class UserController extends AbstractController
     }
 
     /**
-     * This controller allow us to edit user's profile
-     *
+     * This controller list all mission for the current Company
+     * 
+     * @param CandidaturesRepository $candidatureRepository
+     * @param Request $request
+     * @param Security $security
+     * 
      * @return Response
      */
     #[IsGranted('ROLE_USER')]
     #[Route('/mes-candidatures', name: 'mesCandidatures', methods: ['GET'])]
     public function mesCandidatures(
         CandidaturesRepository $candidatureRepository,
-        PaginatorInterface $paginator,
+        Security $security,
         Request $request
     ): Response {
 
         /** @var Clients $user */
-        $user = $this->getUser();
+        $user   = $this->getUser();
+        $userId = $user->getId() ;
 
-        $candidatures =  $paginator->paginate(
-            $candidatureRepository->candidaturesUser( $user->getId() ),
-            $request->query->getInt('page', 1),
-            10
-        );
+        $page = $request->query->getInt('page', 1) ;
 
+        $candidatures = $candidatureRepository->paginateCandidtatures($page, $userId) ;
+    
         return $this->render('pages/user/mes-candidatures.html.twig', compact('candidatures'));
     }
 

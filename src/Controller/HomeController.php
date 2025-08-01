@@ -36,7 +36,7 @@ class HomeController extends AbstractController
         $page = $request->query->getInt('page', 1) ;
         $userId =  null ;
 
-        $missions   = $offresRepository->paginateOffres($page , $userId) ;
+        $missions = $offresRepository->paginateOffres($page , $userId) ;
 
         return $this->render('pages/missions/index.html.twig', compact( "missions") );
     }
@@ -47,7 +47,7 @@ class HomeController extends AbstractController
      * @param OffresRepository $offresRepository
      * @return Response
      */
-    #[Route('/client/{slug}-{id}', name: 'app_show_offre', methods: ['GET'], requirements: ['id' => '\d+' , 'slug' => '[a-z0-9-]+'] )]
+    #[Route('/{slug}-{id}', name: 'app_show_offre', methods: ['GET'], requirements: ['id' => '\d+' , 'slug' => '[a-z0-9-]+'] )]
     public function show(
         OffresRepository $offresRepository, 
         CandidaturesRepository $candidaturesRepository, 

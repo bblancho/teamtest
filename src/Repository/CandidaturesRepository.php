@@ -23,16 +23,28 @@ class CandidaturesRepository extends ServiceEntityRepository
     /**
     * @return Candidatures[] Returns an array of Candidatures objects
     */
-    public function candidaturesUser($user): array
+    public function paginateCandidtatures(int $page, int $userId): PaginationInterface
     {
-        return $this->createQueryBuilder(alias: 'c')
+        $builder =  $this->createQueryBuilder(alias: 'c') ;
+
+        $builder = $builder
             ->andWhere('c.clients = :idClient')
-            ->setParameter('idClient', $user)
+            ->setParameter('idClient', $userId)
             ->orderBy('c.id', 'DESC')
             ->setMaxResults(50)
             ->getQuery()
             ->getResult()
         ;
+
+        return  $this->paginator->paginate(
+            $builder ,
+            $page ,
+            10 ,
+            [   //securité sur le trie
+                'distinct' => false , 
+                'sortFieldAllowList' => ['c.id'] //securité sur le trie, on choisit sur quel champs on accorde le trie
+            ]
+        );
     }
 
     public function paginateOffreCandidatures(int $page, Offres $offre): PaginationInterface

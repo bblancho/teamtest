@@ -24,7 +24,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class MissionController extends AbstractController
 {   
 
-/*********************************  Crud Mission **************************************/
+/********************************* Crud Mission **************************************/
 
     /**
      * This controller list all mission for the current Company
@@ -202,7 +202,7 @@ class MissionController extends AbstractController
         return $this->redirectToRoute('offres.mes_offres');
     }
 
-/*********************************  Candidatures **************************************/
+/********************************* Gestion des Candidatures **************************************/
 
     /**
      * Cette fonction affiche la liste des candidatures d'une offre
@@ -353,7 +353,7 @@ class MissionController extends AbstractController
     }
 
     
-    /*********************************  Archives **************************************/
+/********************************* Gestion des Archives **************************************/
 
         /**
          * This controller list all mission archives for the current Company

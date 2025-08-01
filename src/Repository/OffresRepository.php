@@ -26,9 +26,11 @@ class OffresRepository extends ServiceEntityRepository
         ;
 
         if($userId){
-            $builder = $builder->andWhere('o.societes = :user')
-            ->andWhere('o.isArchive = false')
-            ->setParameter('user', $userId) ;
+            $builder = 
+                $builder->andWhere('o.societes = :user')
+                ->andWhere('o.isArchive = false')
+                ->setParameter('user', $userId) 
+            ;
         }
 
         return  $this->paginator->paginate(
