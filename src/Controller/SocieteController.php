@@ -259,5 +259,4 @@ class SocieteController extends AbstractController
     }
 
 
-
 }

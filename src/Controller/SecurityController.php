@@ -219,7 +219,6 @@ class SecurityController extends AbstractController
             'Votre compte a bien été créé. Un lien vous a été envoyé, veuillez confirmer votre e-mail.'
         );
     }
-
-
+    
     
 }

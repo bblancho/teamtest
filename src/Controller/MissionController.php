@@ -424,5 +424,5 @@ class MissionController extends AbstractController
             return $this->redirectToRoute('offres.mes_offres');
         }
 
-    
+        
 }
