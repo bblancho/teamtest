@@ -38,7 +38,7 @@ class AdminController extends AbstractController
      * 
      * @return Response
      */
-    #[Route('/gestion', name: 'app_admin')]
+    #[Route('/', name: 'app_admin')]
     #[IsGranted('ROLE_ADMIN')]
     public function index(
         SocietesRepository $societesRepository,
@@ -47,10 +47,9 @@ class AdminController extends AbstractController
 
         $page = $request->query->getInt('page', 1) ;
         $userId =  null ;
+        // Créer 3 blocs Sociétés, Free-lance, Offres
 
-        $societes   = $societesRepository->paginateSocietes($page) ;
-
-        return $this->render('template/admin/societes/index.html.twig', compact( "societes") );
+        return $this->render('admin/admin.html.twig' );
     }
 
     /**

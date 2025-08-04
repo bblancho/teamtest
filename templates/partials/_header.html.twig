@@ -40,11 +40,12 @@
 
 					{% if is_granted('ROLE_ADMIN') %}
 						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Admin</a>
+							<a class="nav-link dropdown-toggle" {{ app.current_route == 'admin.app_admin' ? 'active' : '' }}" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Admin</a>
 							<div class="dropdown-menu">
-								<a class="dropdown-item {{ app.current_route == 'societe.create' ? 'active' : '' }}" href="{{ path('societe.create') }}">Créer une société</a>
-								<a class="dropdown-item {{ app.current_route == 'societe.app_index' ? 'active' : '' }}" href="{{ path('societe.app_index') }}">Lister les sociétés</a>
-								{# <a class="dropdown-item {{ app.current_route == 'societe.edit' ? 'active' : '' }}" href="{{ path('societe.edit') }}">Mes free-lances</a>#}
+								<a class="dropdown-item {{ app.current_route == 'admin.app_admin' ? 'active' : '' }}" href="{{ path('admin.app_admin') }}">Accueil</a>
+								<a class="dropdown-item {{ app.current_route == 'admin.app_admin' ? 'active' : '' }}" href="{{ path('admin.app_admin') }}">Lister les sociétés</a>
+								<a class="dropdown-item {{ app.current_route == 'admin.create_Societe' ? 'active' : '' }}" href="{{ path('admin.create_Societe') }}">Créer une société</a>
+								{# <a class="dropdown-item {{ app.current_route == 'admin.societe.edit' ? 'active' : '' }}" href="{{ path('societe.edit') }}">Mes free-lances</a>#}
 							</div> 
 						</li>
 					{% endif %}
