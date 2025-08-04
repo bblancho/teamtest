@@ -12,6 +12,7 @@ use App\Form\ClientType;
 use App\Form\UserPasswordType;
 use App\Form\CreateSocieteFormType;
 use App\Repository\OffresRepository;
+use App\Repository\ClientsRepository;
 use App\Repository\SocietesRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\CandidaturesRepository;
@@ -32,7 +33,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class AdminController extends AbstractController
 {
 
-        /**
+    /**
      * @param SocietesRepository $societesRepository
      * @param Request $request
      * 
@@ -40,14 +41,51 @@ class AdminController extends AbstractController
      */
     #[Route('/', name: 'app_admin')]
     #[IsGranted('ROLE_ADMIN')]
-    public function index(
+    public function index(): Response 
+    {
+        return $this->render('admin/admin.html.twig' );
+    }
+
+    /**
+     * @param SocietesRepository $societesRepository
+     * @param Request $request
+     * 
+     * @return Response
+     */
+    #[Route('/societes', name: 'app_admin_societes')]
+    #[IsGranted('ROLE_ADMIN')]
+    public function indexSociete(
         SocietesRepository $societesRepository,
         Request $request,
     ): Response {
 
         $page = $request->query->getInt('page', 1) ;
-        $userId =  null ;
-        // Créer 3 blocs Sociétés, Free-lance, Offres
+
+        $societes = $societesRepository->paginateSocietes($page) ;
+
+        dd($societes) ;
+
+        return $this->render('admin/societes/index.html.twig' );
+    }
+
+    /**
+     * @param SocietesRepository $societesRepository
+     * @param Request $request
+     * 
+     * @return Response
+     */
+    #[Route('/free-lance', name: 'app_admin_freelance')]
+    #[IsGranted('ROLE_ADMIN')]
+    public function indexFreelance(
+        ClientsRepository $clientsRepository,
+        Request $request,
+    ): Response {
+
+        $page = $request->query->getInt('page', 1) ;
+
+        $freelances = $clientsRepository->paginateFreelances($page) ;
+
+        dd($freelances) ;
 
         return $this->render('admin/admin.html.twig' );
     }

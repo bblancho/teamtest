@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Entity\Clients;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -11,9 +13,28 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ClientsRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, private PaginatorInterface $paginator)
     {
         parent::__construct($registry, Clients::class);
+    }
+
+    public function paginateFreelances(int $page): PaginationInterface
+    {
+        $builder =  $this->createQueryBuilder('c') ;
+
+        // $builder = $builder
+        //     ->andWhere('s.isVerified = true')
+        // ;
+        
+        return  $this->paginator->paginate(
+            $builder ,
+            $page ,
+            10 ,
+            [   //securité sur le trie
+                'distinct' => false , 
+                'sortFieldAllowList' => ['c.id'] //securité sur le trie, on choisit sur quel champs on accorde le trie
+            ]
+        );
     }
 
     //    /**

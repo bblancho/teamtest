@@ -43,9 +43,9 @@
 							<a class="nav-link dropdown-toggle" {{ app.current_route == 'admin.app_admin' ? 'active' : '' }}" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Admin</a>
 							<div class="dropdown-menu">
 								<a class="dropdown-item {{ app.current_route == 'admin.app_admin' ? 'active' : '' }}" href="{{ path('admin.app_admin') }}">Accueil</a>
-								<a class="dropdown-item {{ app.current_route == 'admin.app_admin' ? 'active' : '' }}" href="{{ path('admin.app_admin') }}">Lister les sociétés</a>
+								<a class="dropdown-item {{ app.current_route == 'admin.app_admin_societes' ? 'active' : '' }}" href="{{ path('admin.app_admin_societes') }}">Nos sociétés</a>
 								<a class="dropdown-item {{ app.current_route == 'admin.create_Societe' ? 'active' : '' }}" href="{{ path('admin.create_Societe') }}">Créer une société</a>
-								{# <a class="dropdown-item {{ app.current_route == 'admin.societe.edit' ? 'active' : '' }}" href="{{ path('societe.edit') }}">Mes free-lances</a>#}
+								<a class="dropdown-item {{ app.current_route == 'admin.app_admin_freelance' ? 'active' : '' }}" href="{{ path('admin.app_admin_freelance') }}">Nos free-lances</a>
 							</div> 
 						</li>
 					{% endif %}

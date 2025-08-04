@@ -22,9 +22,9 @@ class SocietesRepository extends ServiceEntityRepository
     {
         $builder =  $this->createQueryBuilder('s') ;
 
-        $builder = $builder
-            ->andWhere('s.isVerified = true')
-        ;
+        // $builder = $builder
+        //     ->andWhere('s.isVerified = true')
+        // ;
         
         return  $this->paginator->paginate(
             $builder ,
@@ -32,7 +32,7 @@ class SocietesRepository extends ServiceEntityRepository
             10 ,
             [   //securité sur le trie
                 'distinct' => false , 
-                'sortFieldAllowList' => ['o.id'] //securité sur le trie, on choisit sur quel champs on accorde le trie
+                'sortFieldAllowList' => ['s.id'] //securité sur le trie, on choisit sur quel champs on accorde le trie
             ]
         );
     }
