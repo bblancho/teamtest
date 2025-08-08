@@ -101,7 +101,7 @@ class CandidaturesRepository extends ServiceEntityRepository
         ;
     }
 
-    public function nbCandidatures(Offres $offre)
+    public function nbCandidatures(Offres $offre): ?int
     {
         return $this->createQueryBuilder(alias: 'c')
             ->select('count(c.id)')
