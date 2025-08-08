@@ -46,8 +46,8 @@
 									<td>
 										{{ mission.tarif }} €
 									</td>	
-									<td><a  href="{{ path('offres.candidaturesOffre', {id: mission.id, slug: mission.slug}) }}" > {{ mission.nbCandidatures }} Candidatures  </a> </td>
-									<td><a  href="{{ path('offres.candidatures_offre_validees', {id: mission.id, slug: mission.slug}) }}" > Afficher les cv sélectionés  </a> </td>
+									<td><a  href="{{ path('offres.candidaturesOffre', {id: mission.id, slug: mission.slug}) }}" > {{ mission.nbCandidatures is not null ? mission.nbCandidatures : 0 }}  Candidature(s) </a> </td>
+									<td><a  href="{{ path('offres.candidatures_offre_validees', {id: mission.id, slug: mission.slug}) }}" > Voir  </a> </td>
 									
 									<td>{{ mission.isActive ? "<span class='badge bg-success'> OUI </span>" : "<span class='badge bg-secondary'> NON </span>" }}  </td>
 									

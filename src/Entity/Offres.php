@@ -360,7 +360,7 @@ class Offres
         return $this;
     }
 
-    public function getNbCandidatures(): int
+    public function getNbCandidatures(): ?int
     {
         return $this->nbCandidatures;
     }
