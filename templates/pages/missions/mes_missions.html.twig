@@ -30,8 +30,7 @@
 								<th scope="col">Démarrage</th>
 								<th scope="col">Lieu</th>
 								<th scope="col">TJM</th>
-								<th scope="col"> CV 1 </th>
-								<th scope="col"> CV 2</th>
+								<th scope="col"> CV </th>
 								<th scope="col"> CV retenus </th>
 								<th scope="col">Visible</th>
 								<th scope="col" colspan="4">Actions</th>
@@ -45,10 +44,9 @@
 									<td>{{ mission.startDateAT|date('d/m/Y') }}</td>
 									<td>{{ mission.lieuMission }}</td>
 									<td>
-										{{ mission.tarif }} €
+										<span> {{ mission.tarif }} € </span>
 									</td>	
-									<td><a  href="{{ path('offres.candidaturesOffre', {id: mission.id, slug: mission.slug}) }}" >  {{ mission.nbCandidatures is not null ? mission.nbCandidatures : 0 }} Candidatures  </a> </td>
-									<td><a  href="{{ path('offres.candidaturesOffre', {id: mission.id, slug: mission.slug}) }}" > {{ mission.nbCandidatures }} Candidatures -- </a> </td>
+									<td><a  href="{{ path('offres.candidaturesOffre', {id: mission.id, slug: mission.slug}) }}" > {{ mission.nbCandidatures }} Cv </a> </td>
 									<td><a  href="{{ path('offres.candidatures_offre_validees', {id: mission.id, slug: mission.slug}) }}" > Voir  </a> </td>
 									
 									<td>{{ mission.isActive ? "<span class='badge bg-success'> OUI </span>" : "<span class='badge bg-secondary'> NON </span>" }}  </td>
