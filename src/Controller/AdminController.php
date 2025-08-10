@@ -63,8 +63,6 @@ class AdminController extends AbstractController
 
         $societes = $societesRepository->paginateSocietes($page) ;
 
-        dd($societes) ;
-
         return $this->render('admin/societes/index.html.twig' );
     }
 
