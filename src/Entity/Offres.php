@@ -6,6 +6,7 @@ use App\Entity\Skills;
 use App\Entity\Candidatures;
 use App\Entity\Societes;
 use Cocur\Slugify\Slugify;
+use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\OffresRepository;
@@ -27,20 +28,10 @@ class Offres
 
     #[ORM\Column(length: 100)]
     #[Assert\NotBlank( message: "Ce champ est obligatoire.",)]
-    #[Assert\Length(
-        min: 2,
-        max: 100,
-        minMessage: "Le nom doit faire minimum {{ limit }} caractères.",
-        maxMessage: "Le nom doit faire au maximum {{ limit }} caractères."
-    )]
     private string $nom  = '' ;
 
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank( message: "Ce champ est obligatoire.",)]
-    #[Assert\Length(
-        min: 5,
-        minMessage: "La description doit faire minimum {{ limit }} caractères.",
-    )]
     private string $description  = '' ;
 
     #[ORM\Column(length: 100)]
@@ -58,12 +49,6 @@ class Offres
 
     #[ORM\Column(length: 100)]
     #[Assert\NotBlank( message: "Ce champ est obligatoire.",)]
-    #[Assert\Length(
-        min: 2,
-        max: 50,
-        minMessage: "Le lieu de la mission doit faire minimum {{ limit }} caractères.",
-        maxMessage: "Le lieu de la mission doit faire au maximum {{ limit }} caractères."
-    )]
     private string $lieuMission = '';
 
     #[ORM\Column]
@@ -73,29 +58,20 @@ class Offres
     private ?bool $isArchive = false;
 
     #[ORM\Column(nullable: true)]
-    #[Assert\Positive(message: "La valeur saisie {{ value }} n'est pas valide.",)]
     private ?int $experience = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    #[Assert\NotBlank( message: "Ce champ est obligatoire.",)]
     private string $profil = " ";
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $contraintes = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true, length: 100)]
-    #[Assert\NotBlank( message: "Ce champ est obligatoire.",)]
-    #[Assert\Length(
-        min: 2,
-        max: 50,
-        minMessage: "La réfèrence doit faire minimum {{ limit }} caractères.",
-        maxMessage: "Le réfèrence doit faire au maximum {{ limit }} caractères."
-    )]
+    #[ORM\Column(type: Types::TEXT, length: 100, nullable: true)]
     private ?string $refMission = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     #[Assert\NotNull()]
-    private ?\DateTimeImmutable $startDateAT = null;
+    private ?DateTimeImmutable $startDateAT = null;
 
     /**
      * @var Collection<int, Skills>
