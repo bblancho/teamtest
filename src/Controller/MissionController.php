@@ -7,6 +7,7 @@ use App\Form\OffreType;
 use App\Repository\CandidaturesRepository;
 use App\Repository\OffresRepository;
 use App\Security\Voter\OffresVoter;
+use App\Service\OffreService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -57,41 +58,34 @@ class MissionController extends AbstractController
      * This method allow us to create an mission
      *
      * @param Request $request
-     * @param EntityManagerInterface $manager
+     * @param OffreService $offreService
      * @return Response
      */
     #[Route('/creation', name: 'create', methods: ['GET', 'POST'])]
     #[IsGranted(OffresVoter::OFFRE_CREATE)]
-    public function create(
-        Request $request,
-        EntityManagerInterface $manager
-    ): Response {
+    public function create(Request $request, OffreService $offreService): Response
+    {
+        $offre = new Offres();
 
-        $mission = new Offres();
-
-        $form = $this->createForm(OffreType::class, $mission);
+        $form = $this->createForm(OffreType::class, $offre);
         $form->handleRequest($request);
 
-        if (  $form->isSubmitted() && $form->isValid()  ) {
+        if ($form->isSubmitted() && $form->isValid()) {
+            $result = $offreService->createOffre($form, $this->getUser());
 
-            $mission->setSocietes( $this->getUser() ) ;
-            $mission->setNbCandidatures(0) ;
-            $mission->setSlug($form["nom"]->getData().$form["refMission"]->getData()) ;
+            if ($result !== null) {
+                $this->addFlash('success', 'Votre mission a été créée avec succès !');
 
-            $manager->persist($mission);
-            $manager->flush();
-
-            $this->addFlash(
-                'success',
-                'Votre mission a été créé avec succès !'
-            );
-
-            return $this->redirectToRoute('offres.mes_offres');
+                return $this->redirectToRoute('offres.mes_offres');
+            }
         }
 
-        return $this->render('pages/missions/new.html.twig', [
-            'form' => $form
-        ]);
+        return $this->render(
+            'pages/missions/new.html.twig',
+            [
+                'form' => $form->createView()
+            ]
+        );
     }
 
     /**
