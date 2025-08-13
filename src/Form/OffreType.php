@@ -51,22 +51,22 @@ class OffreType extends AbstractType
             ->add('slug', HiddenType::class, [
                 'empty_data' => '',
             ])
-             ->add(
-                 'refMission',
-                 TextType::class,
-                 [
-                     'required' => true,
-                     'attr' => [
-                         'class' => 'form-control',
-                         'minLength' => '2',
-                         'maxLength' => '50',
-                     ],
-                     'label' => 'Ref annonce :',
-                     'label_attr' => [
-                         'class' => 'form-label'
-                     ],
-                 ]
-             )
+            // ->add(
+            //     'refMission',
+            //     TextType::class,
+            //     [
+            //         'required' => true,
+            //         'attr' => [
+            //             'class' => 'form-control',
+            //             'minLength' => '2',
+            //             'maxLength' => '50',
+            //         ],
+            //         'label' => 'Ref annonce :',
+            //         'label_attr' => [
+            //             'class' => 'form-label'
+            //         ],
+            //     ]
+            // )
             ->add(
                 'description',
                 TextareaType::class,

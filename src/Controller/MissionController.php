@@ -48,9 +48,9 @@ class MissionController extends AbstractController
         $userId =  $security->getUser()->getId() ;
 
         // On limite l'affichage aux missions de la société
-        $canListAll = $security->isGranted(OffresVoter::OFFRE_LIST_ALL) ;
-        $missions   = $offresRepository->paginateOffres($page , $canListAll ? null : $userId) ;
-
+        $canListAll = $security->isGranted(OffresVoter::OFFRE_LIST) ;
+        $missions   = $offresRepository->paginateOffres($page , $canListAll ? $userId : null) ;
+        
         return $this->render('pages/missions/mes_missions.html.twig', compact( "missions") );
     }
 
@@ -83,7 +83,7 @@ class MissionController extends AbstractController
         return $this->render(
             'pages/missions/new.html.twig',
             [
-                'form' => $form->createView()
+                'form' => $form
             ]
         );
     }
@@ -158,7 +158,7 @@ class MissionController extends AbstractController
 
         $offre
             ->setIsArchive(false)
-            ->setIsActive(false)
+            ->setIsActive(true)
         ;
     
         $manager->flush();
@@ -370,8 +370,8 @@ class MissionController extends AbstractController
             $userId =  $security->getUser()->getId() ;
 
             // On limite l'affichage aux missions de la société
-            $canListAll = $security->isGranted(OffresVoter::OFFRE_LIST_ALL) ;
-            $missions   = $offresRepository->paginateOffresArchives($page , $canListAll ? null : $userId) ;
+            $canListAll = $security->isGranted(OffresVoter::OFFRE_LIST) ;
+            $missions   = $offresRepository->paginateOffresArchives($page , $canListAll ? $userId : null ) ;
 
             $name = $request->get('_route'); // This will return the name.
 
@@ -386,7 +386,7 @@ class MissionController extends AbstractController
          * @return Response
          */
         #[IsGranted('ROLE_USER')]
-        #[Route('/{id}/archiver-offre',  name: 'archiver_offre', methods: ['GET'] )]
+        #[Route('/{id}/archiver-offre',  name: 'archiver_offre', requirements: ['id' => Requirement::DIGITS], methods: ['GET'] )]
         #[IsGranted(OffresVoter::OFFRE_EDIT, subject: 'offre')]
         public function archiver(
             EntityManagerInterface $manager,
@@ -413,6 +413,46 @@ class MissionController extends AbstractController
             $this->addFlash(
                 'success',
                 'Votre mission a été archivée avec succès.'
+            );
+
+            return $this->redirectToRoute('offres.mes_offres');
+        }
+
+        /**
+         * This method allows us to archive an mission
+         *
+         * @param EntityManagerInterface $manager
+         * @param Offres $offre
+         * @return Response
+         */
+        #[IsGranted('ROLE_USER')]
+        #[Route('/desarchiver-offre/{id}',  name: 'desarchiver_offre',requirements: ['id' => Requirement::DIGITS], methods: ['GET'] )]
+        #[IsGranted(OffresVoter::OFFRE_EDIT, subject: 'offre')]
+        public function desarchiver(
+            EntityManagerInterface $manager,
+            OffresRepository $offresRepository,
+            Offres $offre 
+        ): Response {   
+
+            $offre  = $offresRepository->find($offre);
+            $id     = $offre->getId();
+
+            if (!$offre) {
+                throw $this->createNotFoundException(
+                    'Aucune offre trouvée pour cet id '.$id
+                );
+            }
+
+            $offre
+                ->setIsArchive(false)
+                ->setIsActive(false)
+            ;
+
+            $manager->flush();
+
+            $this->addFlash(
+                'success',
+                'Votre mission a été desarchivée avec succès.'
             );
 
             return $this->redirectToRoute('offres.mes_offres');

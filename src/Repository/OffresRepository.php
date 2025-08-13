@@ -22,13 +22,14 @@ class OffresRepository extends ServiceEntityRepository
     {
         $builder =  
             $this->createQueryBuilder('o') 
-            ->andWhere('o.isActive = true')
+            // ->andWhere('o.isActive = true')
+            ->andWhere('o.isArchive = false')
         ;
 
         if($userId){
             $builder = 
-                $builder->andWhere('o.societes = :user')
-                ->andWhere('o.isArchive = false')
+                $builder
+                ->andWhere('o.societes = :user')
                 ->setParameter('user', $userId) 
             ;
         }
@@ -49,9 +50,11 @@ class OffresRepository extends ServiceEntityRepository
         $builder =  $this->createQueryBuilder('o') ;
 
         if($userId){
-            $builder = $builder->andWhere('o.societes = :user')
-            ->andWhere('o.isArchive = true')
-            ->setParameter('user', $userId) ;
+            $builder = 
+                $builder->andWhere('o.societes = :user')
+                ->setParameter('user', $userId) 
+                ->andWhere('o.isArchive = true')
+            ;
         }
 
         return  $this->paginator->paginate(

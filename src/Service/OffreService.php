@@ -54,9 +54,9 @@ class OffreService
             $form->get('profil')->addError(new FormError('Veuillez renseigner le profil recherché.'));
         }
 
-        if (null === $offre->getRefMission() || trim($offre->getRefMission()) === '') {
-            $form->get('refMission')->addError(new FormError('Veuillez renseigner la référence.'));
-        }
+        // if (null === $offre->getRefMission() || trim($offre->getRefMission()) === '') {
+        //     $form->get('refMission')->addError(new FormError('Veuillez renseigner la référence.'));
+        // }
 
         if (!is_numeric($offre->getTarif()) || $offre->getTarif() <= 0) {
             $form->get('tarif')->addError(new FormError('Le tarif doit être un nombre positif.'));
@@ -73,6 +73,7 @@ class OffreService
         $offre
             ->setSocietes($societe)
             ->setNbCandidatures(0)
+            ->setIsArchive(false)
             ->setSlug($offre->getNom() . $offre->getRefMission())
         ;
 

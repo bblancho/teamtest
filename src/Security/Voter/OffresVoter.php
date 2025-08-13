@@ -61,9 +61,10 @@ class OffresVoter extends Voter
                 return $this->canEdit($offre, $user) ;
                 break;
 
-            case self::OFFRE_LIST:
+            
             case self::OFFRE_CREATE:
             case self::OFFRE_VIEW:
+            case self::OFFRE_LIST:
                 return true ;
                 break;
         }

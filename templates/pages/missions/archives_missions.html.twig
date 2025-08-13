@@ -27,15 +27,14 @@
 								<th scope="col">Lieu</th>
 								<th scope="col">TJM</th>
 								<th scope="col"> CV </th>
-								<th scope="col">Visible</th>
-								<th scope="col" colspan="3">Actions</th>
+								<th scope="col" colspan="4">Actions</th>
 							</tr>
 						</thead>
 						<tbody>
 							{% for mission in missions %}
 								<tr>
 									<th scope="row">{{ mission.id }}</th>
-									<td> <a href="{{ path('app_show_offre', {id: mission.id, slug: mission.slug}) }}" > {{mission.nom}} </a> </td>
+									<td> <a href="{{ path('offres.edit', { id: mission.id }) }}" >{{mission.nom}}</a> </td>
 									<td>{{ mission.startDateAT|date('d/m/Y') }}</td>
 									<td>{{ mission.lieuMission }}</td>
 									<td>
@@ -43,21 +42,15 @@
 									</td>	                                                                                    
 									<td><a  href="{{ path('offres.candidaturesOffre', {id: mission.id, slug: mission.slug}) }}" >  {{ mission.nbCandidatures is not null ? mission.nbCandidatures : 0 }} Candidatures  </a> </td>
 									
-									<td>{{ mission.isActive ? "<span class='badge bg-success'> OUI </span>" : "<span class='badge bg-secondary'> NON </span>" }}  </td>
-									
-									{% if is_granted("offre_view", mission)  %}
-										<td>
-											<a  href="{{ path('app_show_offre', {id: mission.id, slug: mission.slug}) }}" class="btn btn-primary"> Afficher </a>
-										</td>
-									
-										<td>
-											<a  href="{{ path('app_show_offre', {id: mission.id, slug: mission.slug}) }}" class="btn btn-info"> Candidatures </a>
-										</td>
-									{% endif %}
-
 									{% if is_granted("offre_edit", mission)  %}
 										<td>
+											<a  href="{{ path('offres.desarchiver_offre', {id: mission.id}) }}" class="btn btn-primary btn-sm"> Désarchiver </a>
+										</td>
+										<td>
 											<a href="{{ path('offres.activer_offre', { id: mission.id }) }}" class="btn btn-success  btn-sm">Activer</a>
+										</td>
+										<td>
+											<a href="{{ path('offres.edit', { id: mission.id }) }}" class="btn btn-info btn-sm">Modifier</a>
 										</td>
 									{% endif %}
 
@@ -79,7 +72,7 @@
 					</div>
 
 				{% else %}
-					<h4> Aucune mission trouvée !</h4>
+					<h4> Aucune mission archivée !</h4>
 
 					<a href="{{ path('offres.create') }}" class="btn btn-primary">
 						Créer une mission

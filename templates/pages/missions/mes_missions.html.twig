@@ -50,18 +50,11 @@
 									<td><a  href="{{ path('offres.candidatures_offre_validees', {id: mission.id, slug: mission.slug}) }}" > Voir  </a> </td>
 									
 									<td>{{ mission.isActive ? "<span class='badge bg-success'> OUI </span>" : "<span class='badge bg-secondary'> NON </span>" }}  </td>
-									
-									{% if is_granted("offre_view", mission)  %}
-										<td>
-											<a  href="{{ path('app_show_offre', {id: mission.id, slug: mission.slug}) }}" class="btn btn-primary"> Afficher </a>
-										</td>
-									
-										<td>
-											<a  href="{{ path('app_show_offre', {id: mission.id, slug: mission.slug}) }}" class="btn btn-info"> Candidatures </a>
-										</td>
-									{% endif %}
 
 									{% if is_granted("offre_edit", mission)  %}
+										<td>
+											<a  href="{{ path('offres.activer_offre', {id: mission.id}) }}" class="btn btn-primary btn-sm"> Activer </a>
+										</td>
 										<td>
 											<a href="{{ path('offres.edit', { id: mission.id }) }}" class="btn btn-info btn-sm">Modifier</a>
 										</td>
