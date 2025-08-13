@@ -63,8 +63,10 @@ class MissionController extends AbstractController
      */
     #[Route('/creation', name: 'create', methods: ['GET', 'POST'])]
     #[IsGranted(OffresVoter::OFFRE_CREATE)]
-    public function create(Request $request, OffreService $offreService): Response
-    {
+    public function create(
+        Request $request, 
+        OffreService $offreService
+    ): Response{
         $offre = new Offres();
 
         $form = $this->createForm(OffreType::class, $offre);
