@@ -30,6 +30,7 @@ class OffresRepository extends ServiceEntityRepository
             $builder = 
                 $builder
                 ->andWhere('o.societes = :user')
+                ->orderBy('o.id', 'DESC')
                 ->setParameter('user', $userId) 
             ;
         }
@@ -53,6 +54,7 @@ class OffresRepository extends ServiceEntityRepository
             $builder = 
                 $builder->andWhere('o.societes = :user')
                 ->setParameter('user', $userId) 
+                ->orderBy('o.id', 'DESC')
                 ->andWhere('o.isArchive = true')
             ;
         }
