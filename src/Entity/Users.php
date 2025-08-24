@@ -13,11 +13,15 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 #[ORM\Table(name: "users")]
-#[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
 #[ORM\Entity(repositoryClass: UsersRepository::class)]
 #[ORM\InheritanceType("JOINED")] // ou "SINGLE_TABLE" Mise e place de l'héritage pour les tables clients / Sociétés
 #[ORM\DiscriminatorColumn(name: 'discr', type: 'string')] // heritage
 #[ORM\DiscriminatorMap(['societes' => Societes::class, 'clients' => Clients::class])]
+#[UniqueEntity(
+    fields: ['email'],
+    message: 'Cette adresse e mail est déjà utilisée.',
+    errorPath: 'email',
+)]
 abstract class Users implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
