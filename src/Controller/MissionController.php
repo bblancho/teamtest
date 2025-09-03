@@ -114,7 +114,7 @@ class MissionController extends AbstractController
         if ( $form->isSubmitted() && $form->isValid() ) {
             
             if( $hold_name !== $form["nom"]->getData()  ){
-                $offre->setSlug($form["nom"]->getData().$form["refMission"]->getData());
+                $offre->setSlug($form["nom"]->getData());
             }
 
             $manager->flush();
