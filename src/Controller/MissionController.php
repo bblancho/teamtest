@@ -143,7 +143,7 @@ class MissionController extends AbstractController
     #[IsGranted('ROLE_USER')]
     #[Route('/{id}/activer',  name: 'activer_offre', requirements: ['id' => Requirement::DIGITS], methods: ['GET'] )]
     #[IsGranted(OffresVoter::OFFRE_EDIT, subject: 'offre')]
-    public function activerOffre(
+    public function publierOffre(
         EntityManagerInterface $manager,
         OffresRepository $offresRepository,
         Offres $offre
@@ -168,6 +168,46 @@ class MissionController extends AbstractController
         $this->addFlash(
             'success',
             'Votre mission a été activée.'
+        );
+
+        return $this->redirectToRoute('offres.mes_offres');
+    }
+
+    /**
+     * This method allows us to archive an mission
+     *
+     * @param EntityManagerInterface $manager
+     * @param Offres $offre
+     * @return Response
+     */
+    #[IsGranted('ROLE_USER')]
+    #[Route('/{id}/archiver-offre',  name: 'depublier_offre', requirements: ['id' => Requirement::DIGITS], methods: ['GET'] )]
+    #[IsGranted(OffresVoter::OFFRE_EDIT, subject: 'offre')]
+    public function depublierOffre(
+        EntityManagerInterface $manager,
+        OffresRepository $offresRepository,
+        Offres $offre 
+    ): Response {   
+
+        $offre  = $offresRepository->find($offre);
+        $id     = $offre->getId();
+
+        if (!$offre) {
+            throw $this->createNotFoundException(
+                'Aucune offre trouvée pour cet id '.$id
+            );
+        }
+
+        $offre
+            ->setIsArchive(true)
+            ->setIsActive(false)
+        ;
+
+        $manager->flush();
+
+        $this->addFlash(
+            'success',
+            'Votre mission a été dépubliée avec succès.'
         );
 
         return $this->redirectToRoute('offres.mes_offres');
