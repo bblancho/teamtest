@@ -22,7 +22,7 @@ class OffresRepository extends ServiceEntityRepository
     {
         $builder =  
             $this->createQueryBuilder('o') 
-            // ->andWhere('o.isActive = true')
+            ->andWhere('o.isActive = true')
             ->andWhere('o.isArchive = false')
         ;
 
@@ -56,6 +56,7 @@ class OffresRepository extends ServiceEntityRepository
                 ->setParameter('user', $userId) 
                 ->orderBy('o.id', 'DESC')
                 ->andWhere('o.isArchive = true')
+                ->andWhere('o.isActive = false')
             ;
         }
 

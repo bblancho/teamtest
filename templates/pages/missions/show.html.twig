@@ -50,22 +50,8 @@
 							<div class="info-offre">
 								<h3> Profil recherché : </h3>
 							</div>
-							De formation Bac+2 à Bac +5 Ingénieur ou formation équivalente en informatique, vous justifiez d’une expérience similaire.<br/>
-
-							Vous êtes à l’aise dans l’environnement technique suivant :<br/>
-
-							Maîtriser les outils Selenium, Robotframework, Jenkins, SoaopUI, NeoLoad, Squash, SonarQube<br/>
-
-							Maîtriser la qualimétrie, les tests de performance et les tests de sécurité<br/>
-
-							Maîtriser les concepts de la livraison continue et du déploiement continu<br/>
-
-							Expérience : 5 ans minimum hors stage et alternance<br/>
-
-							Rémunération selon profil<br/>
-
-							Cet environnement technique vous parle et vous souhaitez vous investir sur des missions innovantes ? N’attendez plus et envoyez votre CV pour rejoindre nos équipes.<br/>
-						</div>
+								{{ mission.profil }}
+							</div>
 					</div><br/>
 
 					<div class="card shadow-sm">
@@ -74,27 +60,7 @@
 								<h3> Environnement de travail : </h3>
 							</div>
 
-							Télétravail Hybride
-							<br/>
-
-							Début de la mission : Immédiatement
-							<br/>
-
-							Lieu : Issy les Moulineaux
-							<br/>
-
-							Autres compétences/souhaitées :
-							<br/>
-
-							Modelio
-							<br/>
-
-							Excel
-							<br/>
-
-							Analyse des données avec Dremio, Microstrategy<br/>
-
-							Niveau en anglais : Bilingue
+							
 						</div>
 					</div><br/>
 				</div>
@@ -125,6 +91,7 @@
 									</svg>
 									{{ mission.startDateAT|date('d/m/Y') }}
 								</span>
+
 								<span>
 									Durée :
 									<svg width="15px" height="15px" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -139,9 +106,11 @@
 									{{ mission.duree }}
 									mois
 								</span>
+
 								<span>
 									TJM : {{ mission.tarif }} €/j
 								</span>
+
 								<span>
 									Lieu :
 									<svg width="15px" height="15px" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -155,7 +124,11 @@
 									{{ mission.lieuMission }}
 								</span>
 
-								
+								<span>
+									Expérience minimum :
+									{{ mission.experience }}
+								</span>
+
 								{% if not is_granted('ROLE_SOCIETE') %}
 
 									{% if aDejaPostule == true %}

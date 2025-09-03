@@ -6,7 +6,7 @@
 	<main role="main">
 		<section class="jumbotron text-center bg-light pt-4 pb-4">
 			<div class="container">
-				<h1 class="jumbotron-heading"> Missions acrhivés </h1>
+				<h1 class="jumbotron-heading"> Missions acrhivées </h1>
 			</div>
 		</section>
 
@@ -43,11 +43,11 @@
 									<td><a  href="{{ path('offres.candidaturesOffre', {id: mission.id, slug: mission.slug}) }}" >  {{ mission.nbCandidatures is not null ? mission.nbCandidatures : 0 }} Candidatures  </a> </td>
 									
 									{% if is_granted("offre_edit", mission)  %}
-										<td>
+										{# <td>
 											<a  href="{{ path('offres.desarchiver_offre', {id: mission.id}) }}" class="btn btn-primary btn-sm"> Désarchiver </a>
-										</td>
+										</td> #}
 										<td>
-											<a href="{{ path('offres.activer_offre', { id: mission.id }) }}" class="btn btn-success  btn-sm">Activer</a>
+											<a href="{{ path('offres.activer_offre', { id: mission.id }) }}" class="btn btn-success  btn-sm">Publier</a>
 										</td>
 										<td>
 											<a href="{{ path('offres.edit', { id: mission.id }) }}" class="btn btn-info btn-sm">Modifier</a>

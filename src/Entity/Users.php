@@ -19,7 +19,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 #[ORM\DiscriminatorMap(['societes' => Societes::class, 'clients' => Clients::class])]
 #[UniqueEntity(
     fields: ['email'],
-    message: 'Cette adresse e mail est déjà utilisée.',
+    message: 'Cette adresse e-mail est déjà utilisée.',
     errorPath: 'email',
 )]
 abstract class Users implements UserInterface, PasswordAuthenticatedUserInterface
