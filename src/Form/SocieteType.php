@@ -77,7 +77,7 @@ class SocieteType extends AbstractType
                     'minLength' => '2',
                     'maxLength' => '10',
                 ],
-                'label' => 'Télèphone',
+                'label' => 'Téléphone',
                 'label_attr' => [
                     'class' => 'form-label mt-4'
                 ],
@@ -126,7 +126,7 @@ class SocieteType extends AbstractType
                     'class' => 'form-control mb-2',
                     'minLength' => '2',
                 ],
-                'label' => 'Télèphone du contact:',
+                'label' => 'Téléphone du contact:',
                 'label_attr' => [
                     'class' => 'form-label mt-4'
                 ],

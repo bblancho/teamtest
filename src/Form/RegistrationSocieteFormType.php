@@ -105,7 +105,7 @@ class RegistrationSocieteFormType extends AbstractType
                     'maxLength' => '10',
                     'placeholder' => "0145859657",
                 ],
-                'label' => 'Télèphone',
+                'label' => 'Téléphone',
                 'label_attr' => [
                     'class' => 'form-label '
                 ]

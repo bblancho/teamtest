@@ -23,11 +23,11 @@
 								</a> 
 							</li> 
 							<li class="nav-item">
-								<a class="nav-link {{ app.current_route == 'offres.create' ? 'active' : '' }}" href="{{ path('offres.create') }}">Créer une offre
+								<a class="nav-link {{ app.current_route == 'offres.create' ? 'active' : '' }}" href="{{ path('offres.create') }}">Creer une offre
 								</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link {{ app.current_route == 'offres.mes_offres_archives' ? 'active' : '' }}" href="{{ path('offres.mes_offres_archives') }}">offres dépubliées
+								<a class="nav-link {{ app.current_route == 'offres.mes_offres_archives' ? 'active' : '' }}" href="{{ path('offres.mes_offres_archives') }}">offres depubliees
 								</a> 
 							</li> 
 						{% elseif app.user.typeUser == "clients"%}
@@ -43,8 +43,8 @@
 							<a class="nav-link dropdown-toggle" {{ app.current_route == 'admin.app_admin' ? 'active' : '' }}" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Admin</a>
 							<div class="dropdown-menu">
 								<a class="dropdown-item {{ app.current_route == 'admin.app_admin' ? 'active' : '' }}" href="{{ path('admin.app_admin') }}">Accueil</a>
-								<a class="dropdown-item {{ app.current_route == 'admin.app_admin_societes' ? 'active' : '' }}" href="{{ path('admin.app_admin_societes') }}">Nos sociétés</a>
-								<a class="dropdown-item {{ app.current_route == 'admin.create_Societe' ? 'active' : '' }}" href="{{ path('admin.create_Societe') }}">Créer une société</a>
+								<a class="dropdown-item {{ app.current_route == 'admin.app_admin_societes' ? 'active' : '' }}" href="{{ path('admin.app_admin_societes') }}">Nos socits</a>
+								<a class="dropdown-item {{ app.current_route == 'admin.create_Societe' ? 'active' : '' }}" href="{{ path('admin.create_Societe') }}">Crer une socit</a>
 								<a class="dropdown-item {{ app.current_route == 'admin.app_admin_freelance' ? 'active' : '' }}" href="{{ path('admin.app_admin_freelance') }}">Nos free-lances</a>
 							</div> 
 						</li>
