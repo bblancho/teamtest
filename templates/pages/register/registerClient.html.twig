@@ -7,7 +7,7 @@
 	<div class="album py-5 connexion">
 		<div class="container">
 		<h1>
-			Créer un compte free-lance
+			Creer un compte
 		</h1><br/>
 
 		{{ form_start(registrationForm) }}
@@ -46,6 +46,10 @@
 
 					<div class="form-group">
 						{{ form_row(registrationForm.siren) }}
+					</div>
+
+					<div class="form-group">
+						{{ form_row(registrationForm.cvFile) }}
 					</div>
 
 					<div class="form-group">

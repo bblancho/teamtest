@@ -19,8 +19,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 #[ORM\DiscriminatorMap(['societes' => Societes::class, 'clients' => Clients::class])]
 #[UniqueEntity(
     fields: ['email'],
-    message: 'Cette adresse e-mail est déjà utilisée.',
-    errorPath: 'email',
+    message: 'Cette adresse e-mail est déjà utilisée!!!!!.',
 )]
 abstract class Users implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -29,7 +28,7 @@ abstract class Users implements UserInterface, PasswordAuthenticatedUserInterfac
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 180)]
+    #[ORM\Column(name: 'email', type: 'string', length: 180, unique: true)]
     #[Assert\NotBlank(
         message:"Veuillez renseigner un e-mail."
     )]  // Interdit les valeurs vides, rajoute l'attribut required

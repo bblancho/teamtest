@@ -13,6 +13,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 
@@ -104,6 +105,31 @@ class RegistrationClientFormType extends AbstractType
                     'class' => 'form-label  mt-4'
                 ]
             ])
+            ->add(
+                'cvFile',
+                FileType::class,
+                [
+                    'required'  => true,
+                    'mapped'    => false,
+                    'attr' => [
+                        'class' => 'form-control',
+                    ],
+                    'label' =>' Déposer votre cv ',
+                    'label_attr' => [
+                        'class' => 'form-label'
+                    ],
+                    'constraints' => [
+                        new File([
+                            'maxSize' => '2048k',
+                            'mimeTypes' => [
+                                'application/pdf',
+                                'application/x-pdf',
+                            ],
+                            'mimeTypesMessage' => 'Veuillez télécharger un fichier PDF valide.',
+                        ])
+                    ]
+                ],
+            )
             ->add('siren', TextType::class, [
                 'required' => true,
                 'attr' => [

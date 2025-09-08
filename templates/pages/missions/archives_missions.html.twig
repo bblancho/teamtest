@@ -6,7 +6,7 @@
 	<main role="main">
 		<section class="jumbotron text-center bg-light pt-4 pb-4">
 			<div class="container">
-				<h1 class="jumbotron-heading"> Missions acrhivées </h1>
+				<h1 class="jumbotron-heading"> Missions acrhivees </h1>
 			</div>
 		</section>
 
@@ -72,9 +72,9 @@
 					</div>
 
 				{% else %}
-					<h4> Aucune mission archivée !</h4>
+					<h4 class=" my-3"> Aucune mission archivée !</h4>
 
-					<a href="{{ path('offres.create') }}" class="btn btn-primary">
+					<a href="{{ path('offres.create') }}" class="btn btn-primary mb-3">
 						Créer une mission
 					</a>
 				{% endif %}

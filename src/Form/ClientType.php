@@ -90,7 +90,7 @@ class ClientType extends AbstractType
                         'class' => 'form-control',
                         'exactly'   => '10',
                     ],
-                    'label' => 'Télèphone',
+                    'label' => 'Téléphone',
                     'label_attr' => [
                         'class' => 'form-label'
                     ],
