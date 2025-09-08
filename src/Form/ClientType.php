@@ -36,7 +36,8 @@ class ClientType extends AbstractType
                 ]
             )
             ->add(
-                'adresse', TextType::class,
+                'adresse', 
+                TextType::class,
                 [
                     'required' => false,
                     'attr' => [
@@ -51,7 +52,8 @@ class ClientType extends AbstractType
                 ]
             )
             ->add(
-                'cp', TextType::class,
+                'cp', 
+                TextType::class,
                 [
                     'required' => true,
                     'attr' => [
@@ -160,7 +162,7 @@ class ClientType extends AbstractType
                     ],
                     'label' => "S'inscrire à la newsletter ?",
                     'label_attr' => [
-                        'class' => 'form-check-label '
+                        'class' => 'form-check-label'
                     ],
                 ]
             )

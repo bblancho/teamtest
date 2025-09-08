@@ -80,10 +80,15 @@
 
 							<li class="nav-item">
 								<a class="nav-link {{ app.current_route == 'security.login' ? 'active' : '' }}" href="{{ path('security.login') }}">Connexion
+								</a> 
+							</li>
+
+							<li class="nav-item">
+								<a class="nav-link {{ app.current_route == 'security.registration-client' ? 'active' : '' }}" href="{{ path('security.registration-client') }}">Inscription
 								</a>
 							</li>
 
-							{% if app.current_route == 'security.registration.societe' or app.current_route == 'security.registration-client' %}
+							{# {% if app.current_route == 'security.registration.societe' or app.current_route == 'security.registration-client' %}
 								<li class="nav-item">
 									<a class="nav-link active" href="{{ path('security.registration') }}">Inscription
 									</a>
@@ -93,7 +98,7 @@
 									<a class="nav-link {{ app.current_route == 'security.registration' ? 'active' : '' }}" href="{{ path('security.registration') }}">Inscription
 									</a>
 								</li>
-							{% endif %}
+							{% endif %} #}
 
 						{% endif %}
 					</ul>
