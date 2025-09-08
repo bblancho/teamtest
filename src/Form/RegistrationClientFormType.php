@@ -147,7 +147,7 @@ class RegistrationClientFormType extends AbstractType
                     'attr' => [
                         'class' => 'form-control'
                     ],
-                    'label' => ' Mot de passe',
+                    'label' => ' Mot de passe Azerty24@',
                     'label_attr' => [
                         'class' => 'form-label  mt-4'
                     ],

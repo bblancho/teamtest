@@ -34,13 +34,13 @@ class Clients extends Users
     // private ?string $cvFile = null;
     private ?File $cvFile = null;
 
-    #[ORM\Column( length: 255, nullable: true)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $cvName = null;
 
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $dateDispoAt = null;
     
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
     #[Assert\Length( 
         exactly: 9,
         exactMessage: "Le numéro de siren doit faire {{ limit }} caractères."

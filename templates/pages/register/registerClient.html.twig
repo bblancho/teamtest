@@ -4,87 +4,97 @@
 {% endblock %}
 
 {% block body %}
-	<div class="album py-5 connexion">
-		<div class="container">
-		<h1>
-			Creer un compte
-		</h1><br/>
+	<main role="main">
 
-		{{ form_start(registrationForm) }}
+		<section class="jumbotron text-center bg-light pt-4 pb-4">
+			<div class="container">
+				<h1 class="jumbotron-heading"> Creer un compte</h1>
+			</div>
+		</section>
 
-			<div class="row">
-				<div class="col-md-6">
-					<div class="form-group">
-						{{ form_row(registrationForm.nom) }}
-					</div>
+		<div class="album bg-white mt-3">
 
-					<div class="form-group">
-						{{ form_row(registrationForm.email) }}
-					</div>
-
-					<div class="form-group">
-						{{ form_row(registrationForm.adresse) }}
-					</div>
-
-					<div class="form-group">
-						<div class="row mt-0">
-							<div class="col-md-4">	
-								{{ form_row(registrationForm.cp) }}
+			<div class="container">
+				{{ form_start(registrationForm) }}
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								{{ form_row(registrationForm.nom) }}
 							</div>
-							<div class="col-md-8">
-								{{ form_row(registrationForm.ville) }}
+
+							<div class="form-group">
+								{{ form_row(registrationForm.email) }}
+							</div>
+
+							<div class="form-group">
+								{{ form_row(registrationForm.adresse) }}
+							</div>
+
+							<div class="form-group">
+								<div class="row mt-0">
+									<div class="col-md-4">	
+										{{ form_row(registrationForm.cp) }}
+									</div>
+									<div class="col-md-8">
+										{{ form_row(registrationForm.ville) }}
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group">
+								{{ form_row(registrationForm.cvFile) }}
 							</div>
 						</div>
+
+						<div class="col-md-6">
+
+							<div class="form-group">
+								{{ form_row(registrationForm.phone) }}
+							</div>
+
+							<div class="form-group">
+								{{ form_row(registrationForm.siren) }}
+							</div>
+
+							<div class="form-group">
+								{{ form_row(registrationForm.password) }}
+
+								<p>
+									<small>
+										Votre mot de passe doit faire entre 8 et 20 caractères et contenir : </br>
+										Au moins une majuscule </br>
+										Au moins une minuscule </br>
+										Au moins un chiffre </br>
+										Et au moins un caractère spécial : #?!@$%^&*- .
+									</small>
+								</P>
+							</div>
+
+							<div class="form-group">
+								{{ form_row(registrationForm.agreeTerms) }}
+							</div>
+
+							<div class="centre ">
+								<button class="btn btn-primary mt-3 mb-2" type="submit">
+									Valider
+								</button>
+							</div>
+
+						</div>
 					</div>
-				</div>
+				{{ form_end(registrationForm) }}
 
-				<div class="col-md-6">
-
-					<div class="form-group">
-						{{ form_row(registrationForm.phone) }}
-					</div>
-
-					<div class="form-group">
-						{{ form_row(registrationForm.siren) }}
-					</div>
-
-					<div class="form-group">
-						{{ form_row(registrationForm.cvFile) }}
-					</div>
-
-					<div class="form-group">
-						{{ form_row(registrationForm.password) }}
-
-						<p>
-							<small>
-								Votre mot de passe doit faire entre 8 et 20 caractères et contenir : </br>
-								Au moins une majuscule </br>
-								Au moins une minuscule </br>
-								Au moins un chiffre </br>
-								Et moins un caractère spécial : #?!@$%^&*- .
-							</small>
-						</P>
-					</div>
+				<div>
+					<p>
+						Déjà inscrit ?  
+						<a href="{{ path('security.login') }}">
+							Se connecter
+						</a>
+					</p>
 				</div>
 			</div>
 
-			<div class="centre ">
-				<button class="btn btn-primary mt-3 mb-2" type="submit">
-					S'inscrire en tant que Free-lance
-				</button>
-			</div>
-
-		{{ form_end(registrationForm) }}
-
-		<div>
-			<p>
-				Déjà inscrit ?  
-				<a href="{{ path('security.login') }}">
-					Se connecter
-				</a>
-			</p>
 		</div>
-	</div>
-	</div>
-	
+
+	</main>
 {% endblock %}
