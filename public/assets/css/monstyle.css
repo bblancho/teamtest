@@ -328,14 +328,11 @@ small.nom_client{
 
 .info-offre{
     background-color: rgb(246, 243, 239);
-    padding: 1.5rem;
+    padding: 1rem;
 }
 
 .info-offre>h3{
-    color: rgb(0, 0, 0);
     font-family: welcome-font, sans-serif;
-    font-weight: 600;
-    font-size: 1.5rem;
-    line-height: 1rem;
+    font-size: 1.3rem;
     letter-spacing: -0.05625rem;
 }
