@@ -61,6 +61,7 @@ class MissionController extends AbstractController
      * @param OffreService $offreService
      * @return Response
      */
+    #[IsGranted('ROLE_SOCIETE')]
     #[Route('/creation', name: 'create', methods: ['GET', 'POST'])]
     #[IsGranted(OffresVoter::OFFRE_CREATE)]
     public function create(
@@ -140,7 +141,7 @@ class MissionController extends AbstractController
      * @param Offres $offre
      * @return Response
      */
-    #[IsGranted('ROLE_USER')]
+    #[IsGranted('ROLE_SOCIETE')]
     #[Route('/{id}/activer',  name: 'activer_offre', requirements: ['id' => Requirement::DIGITS], methods: ['GET'] )]
     #[IsGranted(OffresVoter::OFFRE_EDIT, subject: 'offre')]
     public function publierOffre(
@@ -180,7 +181,7 @@ class MissionController extends AbstractController
      * @param Offres $offre
      * @return Response
      */
-    #[IsGranted('ROLE_USER')]
+    #[IsGranted('ROLE_SOCIETE')]
     #[Route('/{id}/archiver-offre',  name: 'depublier_offre', requirements: ['id' => Requirement::DIGITS], methods: ['GET'] )]
     #[IsGranted(OffresVoter::OFFRE_EDIT, subject: 'offre')]
     public function depublierOffre(
@@ -220,6 +221,7 @@ class MissionController extends AbstractController
      * @param Offres $offre
      * @return Response
      */
+    #[IsGranted('ROLE_SOCIETE')]
     #[Route('/suppression/{id}', 'delete', methods: ['POST'])]
     #[IsGranted(OffresVoter::OFFRE_DELETE, subject: 'offre')]
     public function delete(
@@ -247,7 +249,7 @@ class MissionController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    #[IsGranted('ROLE_USER')]
+    #[IsGranted('ROLE_SOCIETE')]
     #[Route('/candidature/offre-{id}-{slug}', name: 'candidaturesOffre', methods: ['GET'], requirements: ['id' => Requirement::DIGITS, 'slug' => Requirement::ASCII_SLUG])]
     public function listeCandidaturesOffre(
         CandidaturesRepository $candidaturesRepository, 
@@ -273,7 +275,7 @@ class MissionController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    #[IsGranted('ROLE_USER')]
+    #[IsGranted('ROLE_SOCIETE')]
     #[Route('/candidature/offre-{id}-{slug}/validee', name: 'candidatures_offre_validees', methods: ['GET'], requirements: ['id' => Requirement::DIGITS, 'slug' => Requirement::ASCII_SLUG])]
     public function listeCandidaturesOffreValidees(
         CandidaturesRepository $candidaturesRepository, 
@@ -300,54 +302,55 @@ class MissionController extends AbstractController
      * @return Response
      * @throws TransportExceptionInterface
      */
-        #[Route('/{id}/valider-candidature', name: 'valider.candidature', methods: ['GET'])]
-        public function validerCandidature(
-            EntityManagerInterface $manager,
-            CandidaturesRepository $candidaturesRepository, 
-            int $id,
-            MailerInterface $mailer
-        ): Response {
+    #[IsGranted('ROLE_SOCIETE')]
+    #[Route('/{id}/valider-candidature', name: 'valider.candidature', methods: ['GET'])]
+    public function validerCandidature(
+        EntityManagerInterface $manager,
+        CandidaturesRepository $candidaturesRepository, 
+        int $id,
+        MailerInterface $mailer
+    ): Response {
 
-            $candidature = $candidaturesRepository->find($id);
+        $candidature = $candidaturesRepository->find($id);
 
-            if (!$candidature) {
-                throw $this->createNotFoundException(
-                    'Aucune candidature trouvée pour cet id '.$id
-                );
-            }
+        if (!$candidature) {
+            throw $this->createNotFoundException(
+                'Aucune candidature trouvée pour cet id '.$id
+            );
+        }
 
-            $candidature
-                ->setRetenue(true) 
-                ->setConsulte(true)
+        $candidature
+            ->setRetenue(true) 
+            ->setConsulte(true)
+        ;
+
+        // Envoie du mail au candidat
+            $client = $candidature->getClients();
+            
+            $email = (new TemplatedEmail())
+                ->from(new Address('team2i@gmail.com', 'Team2i'))
+                ->to((string) $client->getEmail())
+                ->subject('Acceptation de candidature')
+                ->htmlTemplate('emails/acceptation.html.twig')
+                ->context([
+                    'client' => $client,
+                    'offre' => $candidature->getOffres(),
+                ])
             ;
 
-            // Envoie du mail au candidat
-                $client = $candidature->getClients();
-                
-                $email = (new TemplatedEmail())
-                    ->from(new Address('team2i@gmail.com', 'Team2i'))
-                    ->to((string) $client->getEmail())
-                    ->subject('Acceptation de candidature')
-                    ->htmlTemplate('emails/acceptation.html.twig')
-                    ->context([
-                        'client' => $client,
-                        'offre' => $candidature->getOffres(),
-                    ])
-                ;
+            $mailer->send($email);
 
-                $mailer->send($email);
+        $manager->flush();
 
-            $manager->flush();
+        $this->addFlash(
+            'success',
+            'La candidature a été traitée avec succès. Vous recevrez un email de confirmation.'
+        );
 
-            $this->addFlash(
-                'success',
-                'La candidature a été traitée avec succès. Vous recevrez un email de confirmation.'
-            );
+        $mission = $candidature->getOffres();
 
-            $mission = $candidature->getOffres();
-
-            return $this->redirectToRoute('offres.candidaturesOffre', ['id' => $mission->getId(), 'slug' => $mission->getSlug() ]);
-        }
+        return $this->redirectToRoute('offres.candidaturesOffre', ['id' => $mission->getId(), 'slug' => $mission->getSlug() ]);
+    }
 
     /**
      * This method allows us to delete an mission
@@ -356,6 +359,7 @@ class MissionController extends AbstractController
      * @param CandidaturesRepository $candidaturesRepository
      * @return Response
      */
+    #[IsGranted('ROLE_SOCIETE')]
     #[Route('/candidature/{id}/refusee', 'refuser.candidature', methods: ['GET'])]
     public function refuserCandidature(
         EntityManagerInterface $manager,
@@ -386,6 +390,33 @@ class MissionController extends AbstractController
         );
 
         return $this->redirectToRoute('offres.candidaturesOffre', ['id' => $mission->getId(), 'slug' => $mission->getSlug() ]);
+    }
+
+    /**
+     * Affiche une mission
+     *
+     * @param OffresRepository $offresRepository
+     * @return Response
+     */
+    #[IsGranted('ROLE_SOCIETE')]
+    #[Route('/{slug}-{id}', name: 'voir.candidature', methods: ['GET'], requirements: ['id' => '\d+' , 'slug' => '[a-z0-9-]+'] )]
+    public function showCandidature(
+        CandidaturesRepository $candidaturesRepository, 
+        int $id, 
+        string $slug,
+    ): Response{
+
+        $candidature = $candidaturesRepository->find($id);
+
+        dd($candidature) ;
+
+        if( $candidature->getSlug() != $slug){
+            return $this->redirectToRoute('app_show_offre', ['slug' => $candidature->getSlug() , 'id' => $candidature->getId()]) ;
+        }
+
+        $freeLance = $this->getUser() ;
+
+        return $this->render('pages/user/mes-candidatures.html.twig', compact('candidatures'));
     }
 
     

@@ -2,26 +2,27 @@
 
 namespace App\Controller;
 
-use App\Entity\Candidatures;
-use App\Entity\Clients;
 use App\Entity\Users;
+use App\Entity\Clients;
 use App\Form\ClientType;
-use App\Form\UserPasswordType;
-use App\Repository\CandidaturesRepository;
-use App\Repository\OffresRepository;
-use App\Service\FileUploadService;
+use App\Form\MessageType;
+use App\Entity\Candidatures;
 use App\Service\UserService;
-use Symfony\Bundle\SecurityBundle\Security;
+use App\Form\UserPasswordType;
+use App\Service\FileUploadService;
+use App\Repository\OffresRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\CandidaturesRepository;
 use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Component\ExpressionLanguage\Expression;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 // use Symfony\Component\Validator\Constraints\Expression;
 
@@ -159,79 +160,6 @@ class UserController extends AbstractController
     }
 
     /**
-     * This controller allow us to edit user's profile
-     *
-     * @param EntityManagerInterface $manager
-     * @param OffresRepository $offresRepository, 
-     * @param  CandidaturesRepository $candidaturesRepository, 
-     * 
-     * @return Response
-     */
-    #[IsGranted(new Expression('is_granted("ROLE_USER") or is_granted("ROLE_ADMIN")'))]
-    #[Route('/{slug}-{id}/postuler', name: 'postuler', methods: ['GET'], requirements: ['id' => '\d+' , 'slug' => '[a-z0-9-]+'] )]
-    public function postuler(
-        OffresRepository $offresRepository, 
-        CandidaturesRepository $candidaturesRepository, 
-        int $id, 
-        string $slug ,
-        EntityManagerInterface $manager
-    ): Response {
-
-        $mission = $offresRepository->find($id);
-        $freeLance = $this->getUser() ;
-
-        if($this->isGranted('ROLE_SOCIETE'))
-        {
-            return $this->redirectToRoute('offre.mes_offres') ;
-        }
-
-        if( $mission->getSlug() != $slug){
-            return $this->redirectToRoute('offre.show', ['slug' => $mission->getSlug() , 'id' => $mission->getId()]) ;
-        }
-
-        // On vérifie si le user a déjà postulé
-        $candidature = $candidaturesRepository->aDejaPostule($freeLance, $mission);
-
-        if( $candidature != null ){
-            $this->addFlash(
-                'warning',
-                'Vous avez déjà postulé à cette offre.'
-            );
-        }else{
-
-            $candidature = new Candidatures() ;
-    
-            $candidature->setOffres($mission)
-                ->setClients($freeLance)
-                ->setConsulte(false)
-                ->setSlug($mission->getSlug())
-                ->setCreatedAt(new \DateTimeImmutable())
-            ;
-
-            $manager->persist($candidature);
-            
-            // je récupere l'ensemble des candidatures pour l'offre à laquelle on a postulé
-            $nbCandidatures = $candidaturesRepository->nbCandidatures($mission) ;
-            $nbCandidatures = $nbCandidatures + 1;
-
-            // je rajoute la +1 au champs nb candidature de l'entité offre
-            $mission->setNbCandidatures($nbCandidatures) ;
-            
-            $manager->persist($mission);
-            $manager->flush();
-
-            $this->addFlash(
-                'success',
-                "Merci pour votre candidature, sans réponse de notre part sous un délai de 2 semaines,
-                considérer votre candidature comme non retenue."
-            );
-
-        }
-
-        return $this->redirectToRoute('user.mesCandidatures');
-    }
-
-    /**
      * This controller list all mission for the current Company
      * 
      * @param CandidaturesRepository $candidatureRepository
@@ -258,6 +186,88 @@ class UserController extends AbstractController
     
         return $this->render('pages/user/mes-candidatures.html.twig', compact('candidatures'));
     }
+
+    /**
+     * This controller allow us to edit user's profile
+     *
+     * @param EntityManagerInterface $manager
+     * @param OffresRepository $offresRepository, 
+     * @param  CandidaturesRepository $candidaturesRepository, 
+     * 
+     * @return Response
+     */
+        // #[IsGranted(new Expression('is_granted("ROLE_USER") or is_granted("ROLE_ADMIN")'))]
+        // #[Route('/{slug}-{id}/postuler', name: 'postuler', methods: ['GET'], requirements: ['id' => '\d+' , 'slug' => '[a-z0-9-]+'] )]
+        // public function postuler(
+        //     OffresRepository $offresRepository, 
+        //     CandidaturesRepository $candidaturesRepository, 
+        //     int $id, 
+        //     string $slug ,
+        //     EntityManagerInterface $manager,
+        //     Request $request,
+        // ): Response {
+
+        //     $mission = $offresRepository->find($id);
+        //     $freeLance = $this->getUser() ;
+
+        //     if($this->isGranted('ROLE_SOCIETE'))
+        //     {
+        //         return $this->redirectToRoute('offre.mes_offres') ;
+        //     }
+
+        //     if( $mission->getSlug() != $slug){
+        //         return $this->redirectToRoute('offre.show', ['slug' => $mission->getSlug() , 'id' => $mission->getId()]) ;
+        //     }
+
+        //     // On vérifie si le user a déjà postulé
+        //     $candidature = $candidaturesRepository->aDejaPostule($freeLance, $mission);
+
+        //     $form = $this->createForm(MessageType::class, $candidature);
+
+        //     if( $candidature != null ){
+        //         $this->addFlash(
+        //             'warning',
+        //             'Vous avez déjà postulé à cette offre.'
+        //         );
+        //     }else{
+
+        //         $candidature = new Candidatures() ;
+
+        //         $form->handleRequest($request);
+
+        //         if ( $form->isSubmitted() && $form->isValid() ) {
+        
+        //             $candidature->setOffres($mission)
+        //                 ->setClients($freeLance)
+        //                 ->setMessage($form["message"]->getData())
+        //                 ->setConsulte(false)
+        //                 ->setSlug($mission->getSlug())
+        //                 ->setCreatedAt(new \DateTimeImmutable())
+        //             ;
+
+        //             $manager->persist($candidature);
+                    
+        //             // je récupere l'ensemble des candidatures pour l'offre à laquelle on a postulé
+        //             $nbCandidatures = $candidaturesRepository->nbCandidatures($mission) ;
+        //             $nbCandidatures = $nbCandidatures + 1;
+
+        //             // je rajoute la +1 au champs nb candidature de l'entité offre
+        //             $mission->setNbCandidatures($nbCandidatures) ;
+                    
+        //             $manager->persist($mission);
+        //             $manager->flush();
+
+        //             $this->addFlash(
+        //                 'success',
+        //                 "Merci pour votre candidature, sans réponse de notre part sous un délai de 2 semaines,
+        //                 considérer votre candidature comme non retenue."
+        //             );
+        //         }
+
+        //     }
+
+        //     return $this->redirectToRoute('user.mesCandidatures');
+        // }
 
 
 }
