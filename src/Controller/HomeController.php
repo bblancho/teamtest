@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Offres;
+use App\Form\MessageType;
 use App\Entity\Candidatures;
 use App\Security\Voter\OffresVoter;
 use App\Repository\OffresRepository;
@@ -47,12 +48,14 @@ class HomeController extends AbstractController
      * @param OffresRepository $offresRepository
      * @return Response
      */
-    #[Route('/{slug}-{id}', name: 'app_show_offre', methods: ['GET'], requirements: ['id' => '\d+' , 'slug' => '[a-z0-9-]+'] )]
+    #[Route('/{slug}-{id}', name: 'app_show_offre', methods: ['GET','POST'], requirements: ['id' => '\d+' , 'slug' => '[a-z0-9-]+'] )]
     public function show(
         OffresRepository $offresRepository, 
         CandidaturesRepository $candidaturesRepository, 
         int $id, 
-        string $slug
+        string $slug,
+        EntityManagerInterface $manager,
+        Request $request,
     ): Response {
 
         $mission = $offresRepository->find($id);
@@ -63,26 +66,72 @@ class HomeController extends AbstractController
 
         $freeLance = $this->getUser() ;
 
-        // Actuellement on ne rentre jamais dedans si on est pas conneccté
+        // On vérifie si le user a déjà postulé
+        $candidature = $candidaturesRepository->aDejaPostule($freeLance, $mission);
+
+        $aDejaPostule = true ;
+        $candidature = true;
+
         if( $this->isGranted('ROLE_CLIENT') )
         {
            // On vérifie si le user a déjà postulé
             $candidature = $candidaturesRepository->aDejaPostule($freeLance, $mission);
-            // dd($candidature) ;
+
             if( $candidature != null ){
                 $aDejaPostule = true ;
             }else{
                 $aDejaPostule = false ; 
             }
+        }
 
-        } else {
+        $form = $this->createForm(MessageType::class, $candidature);
+
+        if( $candidature != null ){
+            $this->addFlash(
+                'warning',
+                'Vous avez déjà postulé à cette offre.'
+            );
+        }else{
+
+            $candidature = new Candidatures() ;
+
+            $form->handleRequest($request);
+
+            if ( $form->isSubmitted() && $form->isValid() ) {
     
-            $aDejaPostule = true ;
-            $candidature = true;
+                $candidature->setOffres($mission)
+                    ->setClients($freeLance)
+                    ->setMessage($form["message"]->getData())
+                    ->setConsulte(false)
+                    ->setSlug($mission->getSlug())
+                    ->setCreatedAt(new \DateTimeImmutable())
+                ;
+
+                $manager->persist($candidature);
+                
+                // je récupere l'ensemble des candidatures pour l'offre à laquelle on a postulé
+                $nbCandidatures = $candidaturesRepository->nbCandidatures($mission) ;
+                $nbCandidatures = $nbCandidatures + 1;
+
+                // je rajoute la +1 au champs nb candidature de l'entité offre
+                $mission->setNbCandidatures($nbCandidatures) ;
+                
+                $manager->persist($mission);
+                $manager->flush();
+
+                $this->addFlash(
+                    'success',
+                    "Merci pour votre candidature, sans réponse de notre part sous un délai de 2 semaines,
+                    considérer votre candidature comme non retenue."
+                );
+
+                return $this->redirectToRoute('user.mesCandidatures');
+            }
+
         }
 
         return $this->render('pages/missions/show.html.twig', 
-            compact('mission', 'aDejaPostule', 'candidature')
+            compact('mission', 'aDejaPostule', 'candidature', 'form')
         );
     }
 
@@ -122,18 +171,6 @@ class HomeController extends AbstractController
         return $this->render('pages/missions/show.html.twig', [
             'mission' => $mission
         ]);
-    }
-
-    /**
-     * On va lister les missions d'une société
-     *
-     * @return Response
-     */
-    #[Route('/societe-{slug}', name: 'app_societe_offres', methods: ["GET"])]
-    public function offresSociete(): Response
-    {
-
-        return $this->render('pages/missions/show.html.twig');
     }
 
     

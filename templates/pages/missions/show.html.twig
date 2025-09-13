@@ -65,10 +65,20 @@
 
 					<div class="card shadow-sm">
 						<div class="card-body">
-							<div class="info-offre">
+							<div class="info-offre" id="form_offre">
 								<h3> Postuler à l'offre : </h3>
 							</div>
-							{{ mission.contraintes }}
+
+							{% if not is_granted('ROLE_SOCIETE') %}
+								{% if aDejaPostule == false %}
+									{{ form_start(form) }}
+										{{ form_row(form.message) }}
+										<button class="btn btn-primary"> Je postule </button>
+									{{ form_end(form) }}
+								{% else %}
+									<span class="text-xl font-semibold text-success"> Vous avez postulé à cette offre. </span>
+								{% endif %}
+							{% endif %}
 						</div>
 					</div><br/>
 
@@ -136,18 +146,10 @@
 									{{ mission.experience }}
 								</span>
 
-								{% if not is_granted('ROLE_SOCIETE') %}
-
-									{% if aDejaPostule == true %}
-										<span class="text-xl font-semibold text-success"> Vous avez postulé à cette offre. </span>
-									{% else %}
-										<a class="btn btn-primary" href="{{ path('user.postuler', { id: mission.id, slug: mission.slug}) }}">
-											Postuler
-										</a>
-									{% endif %}
-								
-								{% else %}
+								{% if is_granted('ROLE_SOCIETE') %}
 									<a href="{{ path('offres.edit', { id: mission.id }) }}" class="btn btn-primary">Modifier</a>
+								{% else %}
+									<a class="btn btn-primary" href="#form_offre">Postuler</a>
 								{% endif %}
 								
 							</div>
