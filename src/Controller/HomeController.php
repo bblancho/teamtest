@@ -48,6 +48,7 @@ class HomeController extends AbstractController
      * @param OffresRepository $offresRepository
      * @return Response
      */
+    #[IsGranted('ROLE_USER')]
     #[Route('/{slug}-{id}', name: 'app_show_offre', methods: ['GET','POST'], requirements: ['id' => '\d+' , 'slug' => '[a-z0-9-]+'] )]
     public function show(
         OffresRepository $offresRepository, 
@@ -65,9 +66,6 @@ class HomeController extends AbstractController
         }
 
         $freeLance = $this->getUser() ;
-
-        // On vérifie si le user a déjà postulé
-        $candidature = $candidaturesRepository->aDejaPostule($freeLance, $mission);
 
         $aDejaPostule = true ;
         $candidature = true;

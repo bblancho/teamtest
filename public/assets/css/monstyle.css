@@ -327,8 +327,8 @@ small.nom_client{
 }
 
 .info-offre{
-    background-color: rgb(246, 243, 239);
-    padding: 1rem;
+    /* background-color: rgb(246, 243, 239);
+    padding: 1rem; */
 }
 
 .info-offre>h3{
