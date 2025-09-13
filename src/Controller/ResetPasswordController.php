@@ -49,6 +49,7 @@ class ResetPasswordController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            
             /** @var string $email */
             $email = $form->get('email')->getData();
 
