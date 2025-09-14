@@ -102,7 +102,7 @@ class ClientType extends AbstractType
                 'tjm',
                 MoneyType::class,
                 [
-                    'required' => false,
+                    'required' => true,
                     'attr' => [
                         'class' => 'form-control',
                         'max' => 2000,

@@ -70,13 +70,19 @@
 							</div>
 
 							{% if not is_granted('ROLE_SOCIETE') %}
-								{% if aDejaPostule == false %}
-									{{ form_start(form) }}
-										{{ form_row(form.message) }}
-										<button class="btn btn-primary"> Je postule </button>
-									{{ form_end(form) }}
+								{% if app.user.cvName != false %}
+									{% if aDejaPostule == false %}
+										{{ form_start(form) }}
+											{{ form_row(form.message) }}
+											
+											<button class="btn btn-primary"> Je postule </button>
+										{{ form_end(form) }}
+									{% else %}
+										<span class="text-xl font-semibold text-success"> Vous avez postulé à cette offre. </span>
+									{% endif %}
 								{% else %}
-									<span class="text-xl font-semibold text-success"> Vous avez postulé à cette offre. </span>
+									<span class="text-xl font-semibold text-warning mb-2"> Pour postuler veuillez Rajouter un cv. </span> <br>
+									<a class="btn btn-sm btn-primary" href="{{ path('user.edit') }}">Rajouter un cv</a>
 								{% endif %}
 							{% endif %}
 						</div>
@@ -149,7 +155,12 @@
 								{% if is_granted('ROLE_SOCIETE') %}
 									<a href="{{ path('offres.edit', { id: mission.id }) }}" class="btn btn-primary">Modifier</a>
 								{% else %}
-									<a class="btn btn-primary" href="#form_offre">Postuler</a>
+									{% if app.user.cvName == false %}
+										<span class="text-xl font-semibold text-warning"> Pour postuler veuillez Rajouter un cv. </span>
+										<a class="btn btn-sm btn-primary" href="{{ path('user.edit') }}">Rajouter un cv</a>
+									{% else %}
+										<a class="btn btn-sm btn-primary" href="#form_offre">Postuler</a>
+									{% endif %}
 								{% endif %}
 								
 							</div>
