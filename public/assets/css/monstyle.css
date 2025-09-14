@@ -227,19 +227,23 @@ h1.font-bold {
     font-weight: 700;
     font-size: inherit;
     font-weight: inherit;
+    font-family: welcome-font, sans-serif;
 }
 
 h1.text-2xl{
+    font-family: welcome-font, sans-serif;
     font-size: 1.5rem;
     line-height: 2rem;
 }
 
 h2.text-xl {
+    font-family: welcome-font, sans-serif;
     font-size: 1.25rem;
     line-height: 1.75rem;
 }
 
 h2.font-semibold{
+    font-family: welcome-font, sans-serif;
     font-weight: 600;
 }
 
@@ -329,10 +333,15 @@ small.nom_client{
 .info-offre{
     /* background-color: rgb(246, 243, 239);
     padding: 1rem; */
+    font-family: welcome-font, sans-serif;
 }
 
 .info-offre>h3{
     font-family: welcome-font, sans-serif;
     font-size: 1.3rem;
     letter-spacing: -0.05625rem;
+}
+
+.card-body{
+    font-family: welcome-font, sans-serif;
 }
