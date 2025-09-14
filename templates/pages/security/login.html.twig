@@ -21,7 +21,7 @@
 					</div>
 				{% endif %}
 
-				<form action="{{ path('security.login') }}" method="post" name="login">
+				<form action="{{ path('security.login') }}" method="post" name="login" id="login">
 					<div class="form-group">
 						<label for="inputEmail" class="form-label">
 							Email :
@@ -30,10 +30,16 @@
 					</div>
 
 					<div class="form-group my-3">
-						<label for="inputPassword" class="form-label mt-4"> Mot de passe</label>
-						password : Azerty24@
-						<input type="password" class="form-control mb-2" name="password" id="inputPassword" autocomplete="current-password" placeholder="********" required>
-						
+						<label for="inputPassword" class="form-label mt-4 labelPassword"> 
+							Mot de passe password : Azerty24@
+							<input type="password" class="form-control mb-2" name="password" id="inputPassword" autocomplete="current-password" placeholder="********" required>
+							
+							<div class="password-icon">
+								<i data-feather="eye"></i>
+								<i data-feather="eye-off"></i>
+							</div>
+						</label>
+
 						<div class="text-center">
 							<button class="btn btn-sm btn-primary " type="submit">
 								Se connecter
@@ -52,8 +58,8 @@
 
 						<p>
 							<a href="{{ path('app_forgot_password_request') }}">
-								Mot de passe oublié ? |
-							</a> Pas encore membre ?
+								Mot de passe oublié ? 
+							</a> | Pas encore membre ?
 
 							<a href="{{ path('security.registration-client') }}">
 								Inscrivez-vous
@@ -68,4 +74,27 @@
 		</div>
 		
 	</main>
+{% endblock %}
+
+{% block jsfooter %}
+<script src="https://unpkg.com/feather-icons"></script>
+<script>
+	feather.replace();
+
+	const eye 		= document.querySelector(".feather-eye");
+	const eyeoff 	= document.querySelector(".feather-eye-off");
+	const passwordField = document.querySelector("input[type=password]");
+
+	eye.addEventListener("click", () => {
+		eye.style.display = "none";
+		eyeoff.style.display = "block";
+		passwordField.type = "text";
+	});
+
+	eyeoff.addEventListener("click", () => {
+		eyeoff.style.display = "none";
+		eye.style.display = "block";
+		passwordField.type = "password";
+	});
+</script>
 {% endblock %}
