@@ -346,7 +346,10 @@ class MissionController extends AbstractController
             $nbCandidatures = $nbCandidatures - 1;
 
         // je rajoute la +1 au champs nb candidature de l'entité offre
-            $mission->setNbCandidatures($nbCandidatures) ;
+            if( $nbCandidatures <= 0 ){
+                $nbCandidatures = 0 ;
+                $mission->setNbCandidatures($nbCandidatures) ;
+            }
 
         // Envoie du mail au candidat
             $client = $candidature->getClients();
@@ -408,8 +411,11 @@ class MissionController extends AbstractController
             $nbCandidatures = $nbCandidatures - 1;
 
         // je rajoute la +1 au champs nb candidature de l'entité offre
-            $mission->setNbCandidatures($nbCandidatures) ;
-
+            if( $nbCandidatures <= 0 ){
+                $nbCandidatures = 0 ;
+                $mission->setNbCandidatures($nbCandidatures) ;
+            }
+            
         $manager->flush();
 
         $this->addFlash(
