@@ -328,6 +328,7 @@ class MissionController extends AbstractController
     ): Response {
 
         $candidature = $candidaturesRepository->find($id);
+        $mission     = $candidature->getOffres();
 
         if (!$candidature) {
             throw $this->createNotFoundException(
@@ -339,6 +340,13 @@ class MissionController extends AbstractController
             ->setRetenue(true) 
             ->setConsulte(true)
         ;
+
+        // je récupere l'ensemble des candidatures pour l'offre à laquelle on a postulé
+            $nbCandidatures = $candidaturesRepository->nbCandidatures($mission) ;
+            $nbCandidatures = $nbCandidatures - 1;
+
+        // je rajoute la +1 au champs nb candidature de l'entité offre
+            $mission->setNbCandidatures($nbCandidatures) ;
 
         // Envoie du mail au candidat
             $client = $candidature->getClients();
@@ -363,8 +371,6 @@ class MissionController extends AbstractController
             'La candidature a été traitée avec succès. Vous recevrez un email de confirmation.'
         );
 
-        $mission = $candidature->getOffres();
-
         return $this->redirectToRoute('offres.candidaturesOffre', ['id' => $mission->getId(), 'slug' => $mission->getSlug() ]);
     }
 
@@ -384,6 +390,7 @@ class MissionController extends AbstractController
     ): Response {
 
         $candidature = $candidaturesRepository->find($id);
+        $mission = $candidature->getOffres();
 
         if (!$candidature) {
             throw $this->createNotFoundException(
@@ -396,9 +403,14 @@ class MissionController extends AbstractController
             ->setConsulte(true)
         ;
 
-        $manager->flush();
+        // je récupere l'ensemble des candidatures pour l'offre à laquelle on a postulé
+            $nbCandidatures = $candidaturesRepository->nbCandidatures($mission) ;
+            $nbCandidatures = $nbCandidatures - 1;
 
-        $mission = $candidature->getOffres();
+        // je rajoute la +1 au champs nb candidature de l'entité offre
+            $mission->setNbCandidatures($nbCandidatures) ;
+
+        $manager->flush();
 
         $this->addFlash(
             'success',

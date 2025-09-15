@@ -19,9 +19,9 @@
                     <h3> Information sur la candidature de : {{ candidature.clients.nom  }}</h3>
                     <p>
                         Email : {{ candidature.clients.email  }} <br/>
-                        Téléphone: {{ candidature.clients.phone  }} <br/>
-                        TJM : {{ candidature.clients.tjm  }} <br/>
-                        cv  : <a href="{{ asset('upload/cv/' ~ candidature.clients.cvName) }}" target="_blank">CV</a><br/>
+                        Téléphone : {{ candidature.clients.phone  }} <br/>
+                        TJM : {{ candidature.clients.tjm  }} <br/> 
+                        cv  : <a href="{{ asset('upload/cv/' ~ candidature.clients.cvName) }}" target="_blank">voir le cv</a><br/>
                         Message du candidat : <br/>
                         {{ candidature.message  }}
                     </p>
