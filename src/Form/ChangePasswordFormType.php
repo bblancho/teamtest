@@ -3,14 +3,12 @@
 namespace App\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\NotCompromisedPassword;
-use Symfony\Component\Validator\Constraints\PasswordStrength;
 
 class ChangePasswordFormType extends AbstractType
 {
@@ -27,21 +25,25 @@ class ChangePasswordFormType extends AbstractType
                             // 'autocomplete' => 'Nouveau mot de passe',
                         ],
                     ],
+                    'required' => true,
                     'first_options' => [
-                        'constraints' => [
-                            new NotBlank([
-                                'message' => 'Confirmez votre mot de passe',
-                            ]),
-                            new Length([
-                                'min' => 8,
-                                'minMessage' => 'Votre mot de passe doit comporter au moins  {{ limit }} caractères',
-                                'max' => 4096,
-                            ]),
-                        ],
                         // 'label' => '',
                     ],
                     'second_options' => [
                         // 'label' => 'Confirmez votre mot de passe',
+                    ],
+                    'constraints' => [
+                        new Assert\NotBlank(['message' => "Ce champ est obligatoire."]),
+                        new Assert\Length([
+                            'min' => 8,
+                            'max' => 4096,
+                            'minMessage' => 'Le mot de passe doit comporter plus de {{ limit }} caractères.',
+                            'maxMessage' => 'Le mot de passe doit comporter au maximum de {{ limit }} caractères.',
+                        ]),
+                        new Regex(
+                            "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,20}$/",
+                            "Veuillez respecter les conditions de validation du mot de passe."
+                        )
                     ],
                     'invalid_message' => 'Les champs du mot de passe doivent correspondre.',
                     'mapped' => false,

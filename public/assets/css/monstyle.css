@@ -413,11 +413,13 @@ small.nom_client{
 .field.field-password{
     position: relative;
     width: 490px;
+    margin-top: 15px;
 }
 
 .field.field-password .feather, .feather {
     cursor: pointer;
     color: #000;
+    z-index: 100;
 }
 
 .field.field-password input{
@@ -440,4 +442,14 @@ small.nom_client{
     position: absolute;
     top: 135px;
     right: 10px;
+}
+
+.field.field-password .password-show-3,.field.field-password .password-hide-3{
+    position: absolute;
+    top: 232px;
+    right: 10px;
+}
+
+.btn-form-submit{
+    width: 96%;
 }
