@@ -68,7 +68,6 @@ class HomeController extends AbstractController
         $freeLance = $this->getUser() ;
 
         $aDejaPostule = true ;
-        $candidature = true;
 
         if( $this->isGranted('ROLE_CLIENT') )
         {
@@ -80,11 +79,13 @@ class HomeController extends AbstractController
             }else{
                 $aDejaPostule = false ; 
             }
+        }else{
+            $candidature = new Candidatures();
         }
 
         $form = $this->createForm(MessageType::class, $candidature);
 
-        if( $candidature != null ){
+        if( ($candidature != null) && $this->isGranted('ROLE_CLIENT') ){
             $this->addFlash(
                 'warning',
                 'Vous avez déjà postulé à cette offre.'

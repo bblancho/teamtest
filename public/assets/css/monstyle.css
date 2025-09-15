@@ -148,6 +148,10 @@ footer .footer_1 p{
     width: 100%;
 }
 
+.count>span{
+    display: block;
+}
+
 /* Smartphones (portrait) */
 @media(max-width: 320px) {
     #navbarSupportedContent div#inscription {
@@ -172,6 +176,7 @@ footer .footer_1 p{
 .info_mission_show span{
     display: block;
     margin-bottom: 4px;
+    font-family: welcome-font, sans-serif;
 }
 
 .sticky {
@@ -187,12 +192,14 @@ footer .footer_1 p{
     text-decoration: none;
     color: #000;
     display: block;
+    font-family: welcome-font, sans-serif;
 }
 
 .lien_mission span{
     margin-bottom: 1rem;
     display: block;
-    text-transform: uppercase;
+    font-family: welcome-font, sans-serif;
+    /* text-transform: uppercase; */
 }
 
 .badge {
@@ -245,6 +252,10 @@ h2.text-xl {
 h2.font-semibold{
     font-family: welcome-font, sans-serif;
     font-weight: 600;
+}
+
+h3.mt-2{
+    font-family: welcome-font, sans-serif;
 }
 
 .entreprise{

@@ -27,7 +27,8 @@ class UserPasswordType extends AbstractType
                     new UserPassword(['message' => "Le mot de passe courant est invalide."])
                 ]
             ])
-            ->add('plainPassword', RepeatedType::class, [
+            ->add('plainPassword', 
+            RepeatedType::class, [
                 'type' => PasswordType::class,
                 'required' => true,
                 'first_options' => [
