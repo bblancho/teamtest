@@ -39,14 +39,15 @@
                                 'label_attr': {'class': 'mt-4'}
                             }) }}
                             {{ form_widget(resetForm.plainPassword.second, { 'attr': {'class': 'mb-4'} }) }}
-                            {{ form_errors(resetForm.plainPassword.second) }}
+                            
                             <div class="password-show-2">
                                 <i data-feather="eye"></i>
                             </div>
-
                             <div class="password-hide-2">
                                 <i data-feather="eye-off"></i>
                             </div>
+
+                            {{ form_errors(resetForm.plainPassword.second) }}
                         </div>
                         <button class="btn btn-primary">Confirmer</button>
                     {{ form_end(resetForm) }}
@@ -65,9 +66,10 @@
 	const eye 		= document.querySelector(".feather-eye");
 	const eyeoff 	= document.querySelector(".feather-eye-off");
 
-    const eye_2 	= document.querySelector("password-show-2 .feather-eye");
-	const eyeoff_2 	= document.querySelector(".password-hide-2 .feather-eye-off");
+    const eye_2 	= document.querySelector(".password-show-2>.feather-eye");
+	const eyeoff_2 	= document.querySelector(".password-hide-2>.feather-eye-off");
 	const passwordField = document.querySelector("input[type=password]");
+    const passwordField_2 = document.querySelector("#change_password_form_plainPassword_second");
 
 	eye.addEventListener("click", () => {
 		eye.style.display = "none";
@@ -84,13 +86,13 @@
     eye_2.addEventListener("click", () => {
 		eye_2.style.display = "none";
 		eyeoff_2.style.display = "block";
-		passwordField.type = "text";
+		passwordField_2.type = "text";
 	});
 
     eyeoff_2.addEventListener("click", () => {
 		eyeoff_2.style.display = "none";
 		eye_2.style.display = "block";
-		passwordField.type = "password";
+		passwordField_2.type = "password";
 	});
 </script>
 {% endblock %}
