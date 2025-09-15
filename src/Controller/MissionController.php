@@ -250,7 +250,7 @@ class MissionController extends AbstractController
      * @return Response
      */
     #[IsGranted('ROLE_SOCIETE')]
-    #[Route('/candidature/offre-{id}-{slug}', name: 'candidaturesOffre', methods: ['GET'], requirements: ['id' => Requirement::DIGITS, 'slug' => Requirement::ASCII_SLUG])]
+    #[Route('/candidatures/offre-{id}-{slug}', name: 'candidaturesOffre', methods: ['GET'], requirements: ['id' => Requirement::DIGITS, 'slug' => Requirement::ASCII_SLUG])]
     public function listeCandidaturesOffre(
         CandidaturesRepository $candidaturesRepository, 
         Request $request,
@@ -276,7 +276,7 @@ class MissionController extends AbstractController
      * @return Response
      */
     #[IsGranted('ROLE_SOCIETE')]
-    #[Route('/candidature/offre-{id}-{slug}/validee', name: 'candidatures_offre_validees', methods: ['GET'], requirements: ['id' => Requirement::DIGITS, 'slug' => Requirement::ASCII_SLUG])]
+    #[Route('/candidatures/offre-{id}-{slug}/validee', name: 'candidatures_offre_validees', methods: ['GET'], requirements: ['id' => Requirement::DIGITS, 'slug' => Requirement::ASCII_SLUG])]
     public function listeCandidaturesOffreValidees(
         CandidaturesRepository $candidaturesRepository, 
         Request $request,
@@ -392,14 +392,9 @@ class MissionController extends AbstractController
         return $this->redirectToRoute('offres.candidaturesOffre', ['id' => $mission->getId(), 'slug' => $mission->getSlug() ]);
     }
 
-    /**
-     * Affiche une mission
-     *
-     * @param OffresRepository $offresRepository
-     * @return Response
-     */
+    
     #[IsGranted('ROLE_SOCIETE')]
-    #[Route('/{slug}-{id}', name: 'voir.candidature', methods: ['GET'], requirements: ['id' => '\d+' , 'slug' => '[a-z0-9-]+'] )]
+    #[Route('/candidature/{slug}-{id}', name: 'user.candidature', methods: ['GET'], requirements: ['id' => '\d+' , 'slug' => '[a-z0-9-]+'] )]
     public function showCandidature(
         CandidaturesRepository $candidaturesRepository, 
         int $id, 
@@ -407,16 +402,19 @@ class MissionController extends AbstractController
     ): Response{
 
         $candidature = $candidaturesRepository->find($id);
+        $id     = $candidature->getId();
 
-        dd($candidature) ;
+        if (!$candidature) {
+            throw $this->createNotFoundException(
+                'Aucune offre trouvée pour cet id '.$id
+            );
+        }
 
         if( $candidature->getSlug() != $slug){
             return $this->redirectToRoute('app_show_offre', ['slug' => $candidature->getSlug() , 'id' => $candidature->getId()]) ;
         }
 
-        $freeLance = $this->getUser() ;
-
-        return $this->render('pages/user/mes-candidatures.html.twig', compact('candidatures'));
+        return $this->render('pages/missions/user_candidature.html.twig', compact('candidature'));
     }
 
     
