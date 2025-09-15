@@ -118,6 +118,22 @@ class MissionController extends AbstractController
                 $offre->setSlug($form["nom"]->getData());
             }
 
+            $publier = $form["isActive"]->getData() ;
+
+            if($publier == true)
+            {
+                $offre
+                    ->setIsArchive(false)
+                    ->setIsActive(true)
+                ;
+
+            }else{
+                $offre
+                    ->setIsArchive(true)
+                    ->setIsActive(false)
+                ;
+            }
+
             $manager->flush();
 
             $this->addFlash(

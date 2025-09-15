@@ -70,10 +70,25 @@ class OffreService
             return null;
         }
 
+        $publier = $form["isActive"]->getData() ;
+
+        if($publier == true)
+        {
+            $offre
+                ->setIsArchive(false)
+                ->setIsActive(true)
+            ;
+
+        }else{
+            $offre
+                ->setIsArchive(true)
+                ->setIsActive(false)
+            ;
+        }
+
         $offre
             ->setSocietes($societe)
             ->setNbCandidatures(0)
-            ->setIsArchive(false)
             ->setSlug($offre->getNom() . $offre->getRefMission())
         ;
 
