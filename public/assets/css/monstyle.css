@@ -356,9 +356,7 @@ small.nom_client{
 
 .labelPassword input {
     font-size: 1em;
-    /* color: #f9f9f9; */
     background: transparent;
-    /* padding: 1rem 1.2rem; */
     width: 400px;
     border-radius: 5px;
     border: 2px solid #7a7a7a;
@@ -375,7 +373,7 @@ small.nom_client{
     border-color: #ff4754;
 }
 
-.labelPassword .password-icon {
+.labelPassword .password-icon , .password-icon{
     display: flex;
     align-items: center;
     position: absolute;
@@ -387,7 +385,7 @@ small.nom_client{
     transition: all 0.2s;
 }
 
-.labelPassword .password-icon {
+.labelPassword .password-icon, .password-icon {
     cursor: pointer;
     color: #000;
 }
@@ -398,4 +396,37 @@ small.nom_client{
 
 .labelPassword .password-icon .feather-eye-off {
     display: none;
+}
+
+/**** Reset Password ****/
+.field.field-password{
+    position: relative;
+    width: 490px;
+}
+
+.field.field-password .feather, .feather {
+    cursor: pointer;
+    color: #000;
+}
+
+.field.field-password input{
+    width: 100%;
+    font-size: 1em;
+    background: transparent;
+    width: 490px;
+    border-radius: 5px;
+    border: 2px solid #7a7a7a;
+    transition: all 0.2s;
+}
+
+.field.field-password .password-show,.field.field-password .password-hide{
+    position: absolute;
+    top: 39px;
+    right: 10px;
+}
+
+.field.field-password .password-show-2,.field.field-password .password-hide-2{
+    position: absolute;
+    top: 135px;
+    right: 10px;
 }

@@ -90,7 +90,7 @@ class MissionType extends AbstractType
                 ],
                 'label' => 'Localisation :',
                 'label_attr' => [
-                    'class' => 'form-label  mt-4'
+                    'class' => 'form-label mt-4'
                 ],
                 'constraints' => [
                     new Assert\NotBlank(),
