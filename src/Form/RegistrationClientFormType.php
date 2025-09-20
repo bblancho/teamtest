@@ -105,31 +105,6 @@ class RegistrationClientFormType extends AbstractType
                     'class' => 'form-label  mt-4'
                 ]
             ])
-            // ->add( Pas nécessaire car on demande à l'utilisateur de confirmer son inscription 
-            //     'cvFile',
-            //     FileType::class,
-            //     [
-            //         'required'  => true,
-            //         'mapped'    => false,
-            //         'attr' => [
-            //             'class' => 'form-control',
-            //         ],
-            //         'label' =>' Déposer votre cv ',
-            //         'label_attr' => [
-            //             'class' => 'form-label'
-            //         ],
-            //         'constraints' => [
-            //             new File([
-            //                 'maxSize' => '2048k',
-            //                 'mimeTypes' => [
-            //                     'application/pdf',
-            //                     'application/x-pdf',
-            //                 ],
-            //                 'mimeTypesMessage' => 'Veuillez télécharger un fichier PDF valide.',
-            //             ])
-            //         ]
-            //     ],
-            // )
             ->add('siren', TextType::class, [
                 'required' => true,
                 'attr' => [

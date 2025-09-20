@@ -64,13 +64,12 @@
 						</div>
 					</div><br/>
 
-					<div class="card shadow-sm">
-						<div class="card-body">
-							<div class="info-offre" id="form_offre">
-								<h3> Postuler à l'offre : </h3>
-							</div>
-
-							{% if not is_granted('ROLE_SOCIETE') %}
+					{% if is_granted('ROLE_CLIENT') %}
+						<div class="card shadow-sm">
+							<div class="card-body">
+								<div class="info-offre" id="form_offre">
+									<h3> Postuler à l'offre : </h3>
+								</div>
 								{% if app.user.cvName != false %}
 									{% if aDejaPostule == false %}
 										{{ form_start(form) }}
@@ -85,9 +84,10 @@
 									<span class="text-xl font-semibold text-warning mb-2"> Pour postuler veuillez Rajouter un cv. </span> <br>
 									<a class="btn btn-sm btn-primary" href="{{ path('user.edit') }}">Rajouter un cv</a>
 								{% endif %}
-							{% endif %}
-						</div>
-					</div><br/>
+								
+							</div>
+						</div><br/>
+					{% endif %}
 
 				</div>
 
