@@ -26,6 +26,20 @@ class Skills
     #[ORM\JoinColumn(nullable: false)]
     private ?users $users = null;
 
+    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'skills')]
+    private ?self $parent = null;
+
+    /**
+     * @var Collection<int, self>
+     */
+    #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'parent')]
+    private Collection $skills;
+
+    public function __construct()
+    {
+        $this->skills = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -63,6 +77,49 @@ class Skills
     public function setUsers(?users $users): static
     {
         $this->users = $users;
+
+        return $this;
+    }
+
+    public function getParent(): ?self
+    {
+        return $this->parent;
+    }
+
+    public function setParent(?self $parent): static
+    {
+        $this->parent = $parent;
+
+        return $this;
+    }
+
+    // Grace à cette fonction on va récupèrer les catégories enfants d'un parent
+    /**
+     * @return Collection<int, self>
+     */
+    public function getSkills(): Collection
+    {
+        return $this->skills;
+    }
+
+    public function addSkill(self $skill): static
+    {
+        if (!$this->skills->contains($skill)) {
+            $this->skills->add($skill);
+            $skill->setParent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSkill(self $skill): static
+    {
+        if ($this->skills->removeElement($skill)) {
+            // set the owning side to null (unless already changed)
+            if ($skill->getParent() === $this) {
+                $skill->setParent(null);
+            }
+        }
 
         return $this;
     }
