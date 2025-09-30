@@ -130,7 +130,7 @@ class ClientType extends AbstractType
                 'cvFile',
                 FileType::class,
                 [
-                    'required'  => false,
+                    'required'  => true,
                     'mapped'    => false,
                     'attr' => [
                         'class' => 'form-control',
