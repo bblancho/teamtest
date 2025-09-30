@@ -76,9 +76,9 @@ class Offres
     /**
      * @var Collection<int, Skills>
      */
-    #[ORM\ManyToMany(targetEntity: Skills::class, inversedBy: 'offres')]
-    #[ORM\JoinColumn(nullable: true)]
-    private Collection $skills;
+    // #[ORM\ManyToMany(targetEntity: Skills::class, inversedBy: 'offres')]
+    // #[ORM\JoinColumn(nullable: true)]
+    // private Collection $skills;
 
     #[ORM\ManyToOne(targetEntity: Societes::class, inversedBy: 'offres')]
     #[ORM\JoinColumn(nullable: false)]
@@ -99,7 +99,7 @@ class Offres
      */
     public function __construct()
     {
-        $this->skills = new ArrayCollection();
+        // $this->skills = new ArrayCollection();
         $this->startDateAT = new \DateTimeImmutable();
         $this->candidatures = new ArrayCollection();
     }
@@ -234,29 +234,6 @@ class Offres
         return $this;
     }
 
-    /**
-     * @return Collection<int, Skills>
-     */
-    public function getSkills(): Collection
-    {
-        return $this->skills;
-    }
-
-    public function addSkill(Skills $skill): static
-    {
-        if (!$this->skills->contains($skill)) {
-            $this->skills->add($skill);
-        }
-
-        return $this;
-    }
-
-    public function removeSkill(Skills $skill): static
-    {
-        $this->skills->removeElement($skill);
-
-        return $this;
-    }
 
     public function getProfil(): ?string
     {
