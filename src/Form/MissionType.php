@@ -99,6 +99,7 @@ class MissionType extends AbstractType
             ])
             ->add('tarif', MoneyType::class, [
                 'required' => true,
+                'divisor'  => 100,
                 'attr' => [
                     'class' => 'form-control',
                     'max' => 2000,
@@ -111,7 +112,7 @@ class MissionType extends AbstractType
                 ],
                 'currency' => 'EUR',
                 'constraints' => [
-                    new Assert\Positive(),
+                    new Assert\Positive(message: "le prix ne peut être négatif." ),
                     new Assert\LessThan(2000)
                 ]
             ])
@@ -127,7 +128,7 @@ class MissionType extends AbstractType
                     'class' => 'form-label mt-4'
                 ],
                 'constraints' => [
-                    new Assert\Positive(),
+                    new Assert\Positive(message: "la durée ne peut pas être négative." ),
                     new Assert\LessThan(24)
                 ]
             ])
@@ -170,7 +171,7 @@ class MissionType extends AbstractType
                     'class' => 'form-label '
                 ],
                 'constraints' => [
-                    new Assert\Positive(),
+                    new Assert\Positive(message: "l'expérience ne peut pas être négative." ),
                     new Assert\LessThan(15)
                 ]
             ])
