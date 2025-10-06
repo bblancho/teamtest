@@ -20,7 +20,7 @@ final class Version20250719150027 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE offres ADD is_archive TINYINT(1) NOT NULL, CHANGE ref_mission ref_mission TINYTEXT DEFAULT NULL');
+        // $this->addSql('ALTER TABLE offres ADD is_archive TINYINT(1) NOT NULL, CHANGE ref_mission ref_mission TINYTEXT DEFAULT NULL');
     }
 
     public function down(Schema $schema): void
