@@ -88,7 +88,8 @@ class SecurityController extends AbstractController
             );
 
             $user->setPassword($hashedPassword);
-
+            
+            // Envoi de l'email d'inscription
             $this->generateSecurityRegistration($user, $entityManager, $mailer);
 
             return $this->redirectToRoute('security.login');
@@ -130,6 +131,8 @@ class SecurityController extends AbstractController
             );
 
             $user->setPassword($hashedPassword);
+
+            // Envoi de l'email d'inscription
             $this->generateSecurityRegistration($user, $entityManager, $mailer);
 
             return $this->redirectToRoute('security.login');

@@ -56,10 +56,16 @@ class Clients extends Users
     #[ORM\OneToMany(targetEntity: Candidatures::class, mappedBy: 'clients')]
     private Collection $candidatures;
 
+    /**
+     * @var Collection<int, Skills>
+     */
+    #[ORM\ManyToMany(targetEntity: Skills::class, inversedBy: 'clients')]
+    private Collection $skills;
+
     public function __construct()
     {
-        //parent::__construct();
         $this->candidatures = new ArrayCollection();
+        $this->skills = new ArrayCollection();
     }
 
     public function getTjm(): ?int
@@ -160,6 +166,30 @@ class Clients extends Users
                 $candidature->setClients(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Skills>
+     */
+    public function getSkills(): Collection
+    {
+        return $this->skills;
+    }
+
+    public function addSkill(Skills $skill): static
+    {
+        if (!$this->skills->contains($skill)) {
+            $this->skills->add($skill);
+        }
+
+        return $this;
+    }
+
+    public function removeSkill(Skills $skill): static
+    {
+        $this->skills->removeElement($skill);
 
         return $this;
     }
