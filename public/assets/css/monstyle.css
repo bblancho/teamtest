@@ -21,13 +21,18 @@ body {}
     text-align: center;
 }
 
-#search_offre{
-    width: 70%;
-}
+/*#search_offre .form-control {*/
+/*    width: 50%;*/
+/*}*/
 
-input[type=search] {
-    width: 70%;
-}
+/*#search_offre form {*/
+/*    display: inline-flex;*/
+/*    justify-content: center !important;*/
+/*}*/
+
+/*input[type=search] {*/
+/*    width: 70%;*/
+/*}*/
 
 #inscription a {
     margin: 0 5px;
