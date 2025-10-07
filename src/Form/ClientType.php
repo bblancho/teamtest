@@ -115,17 +115,6 @@ class ClientType extends AbstractType
                     ],
                 ]
             )
-            // ->add('siren', TextType::class, [
-            //     'mapped' => false,
-            //     'attr' => [
-            //         'class' => 'form-control',
-            //         'disabled' => true,
-            //     ],
-            //     'label' => 'Numéro de siren',
-            //     'label_attr' => [
-            //         'class' => 'form-label'
-            //     ]
-            // ]) 
             ->add(
                 'cvFile',
                 FileType::class,
@@ -166,6 +155,17 @@ class ClientType extends AbstractType
                     ],
                 ]
             )
+            // ->add('siren', TextType::class, [
+                //     'mapped' => false,
+                //     'attr' => [
+                //         'class' => 'form-control',
+                //         'disabled' => true,
+                //     ],
+                //     'label' => 'Numéro de siren',
+                //     'label_attr' => [
+                //         'class' => 'form-label'
+                //     ]
+            // ]) 
         ;
     }
 

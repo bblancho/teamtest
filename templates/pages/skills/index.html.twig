@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Listes des competences{% endblock %}
+
+{% block body %}
+    <main role="main">
+
+		<section class="jumbotron text-center bg-light pt-4 pb-4">
+			<div class="container">
+				<h1 class="jumbotron-heading"> Listes des competences </h1>
+			</div>
+		</section>
+
+        <div class="album bg-white">
+			<div class="container">
+                {% if not missions.items is same as([]) %}
+                    <div class="count mt-4 mb-4"> Vous avez 
+                        {{ skills.getTotalItemCount }} compétence(s)
+                    </div>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Nom</th>
+                                <th>actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for skill in skills %}
+                                <tr>
+                                    <td>{{ skill.id }}</td>
+                                    <td>{{ skill.nom }}</td>
+                                    <td>
+                                        <a href="{{ path('skills.show', {'id': skill.id}) }}">Voir</a>
+                                        <a href="{{ path('skills.edit', {'id': skill.id}) }}">Modifier</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                    <div class="navigation d-flex justify-content-center mt-4">
+                        {{ knp_pagination_render(skills) }}
+                    </div>
+                {% else %}
+                    <h4 class=" my-3"> Aucune compétence archivée !</h4>
+
+					<a href="{{ path('skills.create') }}" class="btn btn-primary mb-3">
+						Créer une compétence
+					</a>
+				{% endif %}
+            </div>
+        </div>
+
+    </main>
+{% endblock %}

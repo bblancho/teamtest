@@ -23,6 +23,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
+
 class SecurityController extends AbstractController
 {
     
@@ -181,9 +182,10 @@ class SecurityController extends AbstractController
      * @param Clients|Societes $user
      * @param EntityManagerInterface $entityManager
      * @param MailerInterface $mailer
-     * @return void
      * @throws RandomException
      * @throws TransportExceptionInterface
+     * 
+     * @return void
      */
     public function generateSecurityRegistration(
         Clients|Societes $user,
@@ -198,9 +200,11 @@ class SecurityController extends AbstractController
         $entityManager->flush();
 
         // On génère l’URL de confirmation
-        $confirmationUrl = $this->generateUrl('app_verify_email', [
-            'token' => $confirmationToken,
-        ], UrlGeneratorInterface::ABSOLUTE_URL);
+        $confirmationUrl = $this->generateUrl(
+            'app_verify_email' , 
+            ['token' => $confirmationToken,] , 
+            UrlGeneratorInterface::ABSOLUTE_URL
+        );
 
         // Envoie l’e-mail
         $email = (new TemplatedEmail())

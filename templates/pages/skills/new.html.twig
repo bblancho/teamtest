@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title "Création d'une compétence"%}
+
+{% block body %}
+	<main role="main">
+
+		<section class="jumbotron text-center bg-light pt-4 pb-4">
+			<div class="container">
+				<h1 class="jumbotron-heading"> Creation d'une competence </h1>
+			</div>
+		</section>
+
+        <div class="album bg-white mt-3">
+			<div class="container">
+                {{ include('pages/skills/_form.html.twig') }}
+            </div>
+        </div >
+
+	</main>
+{% endblock %}
+

@@ -19,7 +19,7 @@ class FormListenerFactoryService {
 			if( empty($data['slug']) ) 
 			{
 				$slugger = new AsciiSlugger() ;
-				$data['slug'] = strtolower( $slugger->slug( $data[$fields] ) ) ;
+				$data['slug'] = strtolower( trim( $slugger->slug( $data[$fields] ) ) ) ;
 				$event->setData($data) ;
 			}
 		}	;	
@@ -34,7 +34,10 @@ class FormListenerFactoryService {
 
             if( !$data->getId() ) // Lors de la création 
             {
-                $data->setStartDateAT( new \DateTimeImmutable() ) ;
+				if( method_exists($data, "setStartDateAT") ){
+					$data->setStartDateAT( new \DateTimeImmutable() ) ;
+				}
+                
             }
         } ;
 	}
