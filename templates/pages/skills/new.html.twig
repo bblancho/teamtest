@@ -5,18 +5,17 @@
 {% block body %}
 	<main role="main">
 
-		<section class="jumbotron text-center bg-light pt-4 pb-4">
-			<div class="container">
-				<h1 class="jumbotron-heading"> Creation d'une competence </h1>
-			</div>
+		<section class="jumbotron bg-light pt-4 pb-4">
+			<h1 class="jumbotron-heading text-center">
+				Creation d'une competence
+			</h1>
 		</section>
-
-        <div class="album bg-white mt-3">
-			<div class="container">
-                {{ include('pages/skills/_form.html.twig') }}
-            </div>
-        </div >
+	
+		<div class="row">
+			<div class="col-6 mx-auto my-3">
+				{{ include('pages/skills/_form.html.twig') }}
+			</div>
+		</div>
 
 	</main>
 {% endblock %}
-
