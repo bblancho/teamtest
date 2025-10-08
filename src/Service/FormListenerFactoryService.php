@@ -14,7 +14,7 @@ class FormListenerFactoryService {
 			
 			$data = $event->getData(); // On récupère les données lors de la soumission du formulaire
 
-			//dd("ee", $data['refMission']) ;
+			// dd("ee", $data['nom']) ;
 			
 			if( empty($data['slug']) ) 
 			{
@@ -22,7 +22,7 @@ class FormListenerFactoryService {
 				$data['slug'] = strtolower( trim( $slugger->slug( $data[$fields] ) ) ) ;
 				$event->setData($data) ;
 			}
-		}	;	
+		};	
 	}
 
     public function timestamp(): callable

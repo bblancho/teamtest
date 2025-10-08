@@ -3,19 +3,21 @@
 namespace App\Form;
 
 use App\Entity\Offres;
+use App\Entity\Skills;
 use App\Entity\Societes;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\AbstractType;
 use App\Service\FormListenerFactoryService;
 
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Event\PreSubmitEvent;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Event\PostSubmitEvent;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\String\Slugger\SluggerInterface;
-use Symfony\Component\Validator\Constraints as Assert;
 
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -48,6 +50,20 @@ class OffreType extends AbstractType
                     ],
                 ]
             )
+            ->add('skills', EntityType::class, [
+                'class' => Skills::class,
+                'choice_label' => 'nom',
+                'multiple' => true,
+                'expanded' => true, //case à cocher
+                'attr' => [
+                    'class' => 'form-control',
+                ],
+                'required' => false,
+                'label' => 'Skills :',
+                'label_attr' => [
+                    'class' => 'form-label mt-4'
+                ],
+            ])
             ->add('slug', HiddenType::class, [
                 'empty_data' => '',
             ])

@@ -31,6 +31,7 @@ class OffreService
         if (!$user instanceof Societes) {
             throw new \LogicException('L\'utilisateur doit être une société.');
         }
+        
         $societe = $user;
 
         // Validation
