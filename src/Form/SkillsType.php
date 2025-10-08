@@ -6,14 +6,16 @@ use App\Entity\users;
 use App\Entity\Offres;
 use App\Entity\Skills;
 use App\Entity\Clients;
+use App\Repository\SkillsRepository;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\AbstractType;
 use App\Service\FormListenerFactoryService;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 class SkillsType extends AbstractType
 {
@@ -40,14 +42,29 @@ class SkillsType extends AbstractType
                     new Assert\Length(['min' => 2, 'max' => 100])
                 ]
             ])
-
+            ->add('slug', HiddenType::class, [
+                'empty_data' => '',
+            ])
             ->add('parent', EntityType::class, [
                 'class' => Skills::class,
-                'choice_label' => 'id',
+                'choice_label' => 'nom',
+                'placeholder'  => "-- Pas de parent --",
+                'attr' => [
+                    'class' => 'form-control',
+                ],
+                'required' => false,
+                'label' => 'Parent :',
+                'label_attr' => [
+                    'class' => 'form-label mt-4'
+                ],
+                'query_builder' => function(SkillsRepository $sk){
+                    return $sk->createQueryBuilder('s')
+                        ->orderBy('s.nom', 'ASC');
+                }
             ])
 
-            // ->addEventListener( FormEvents::PRE_SUBMIT, $this->listenerFactroy->autoSlug("nom") ) 
-            // ->addEventListener( FormEvents::POST_SUBMIT, $this->listenerFactroy->timestamp() ) 
+            ->addEventListener( FormEvents::PRE_SUBMIT, $this->listenerFactroy->autoSlug("nom") ) 
+            ->addEventListener( FormEvents::POST_SUBMIT, $this->listenerFactroy->timestamp() ) 
         ;
     }
 

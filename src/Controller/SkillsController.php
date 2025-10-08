@@ -35,14 +35,15 @@ final class SkillsController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            $slug = strtolower( trim($form['nom']->getData()) );
+            $nom  = trim($form['nom']->getData()) ;
+            $slug = strtolower($nom) ;
 
             $skill
                 ->setUsers( $this->getUser() )
-                // ->setSlug($slug)
+                ->setNom($slug)
+                ->setSlug($skill->getNom())
             ;
-
+    
             $entityManager->persist($skill);
             $entityManager->flush();
 
