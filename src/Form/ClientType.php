@@ -2,16 +2,18 @@
 
 namespace App\Form;
 
+use App\Entity\Skills;
 use App\Entity\Clients;
 use Symfony\Component\Form\AbstractType;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
-use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class ClientType extends AbstractType
@@ -140,6 +142,20 @@ class ClientType extends AbstractType
                     ]
                 ],
             )
+            // ->add('skills', EntityType::class, [
+            //     'class' => Skills::class,
+            //     'choice_label' => 'nom',
+            //     'multiple' => true,
+            //     'expanded' => true, //case à cocher
+            //     'attr' => [
+            //         'class' => 'form-control',
+            //     ],
+            //     'required' => false,
+            //     'label' => 'Mes compétences :',
+            //     'label_attr' => [
+            //         'class' => 'form-label mt-4'
+            //     ],
+            // ])
             ->add(
                 'isNewsletter',
                 CheckboxType::class,
