@@ -121,7 +121,7 @@ class ClientType extends AbstractType
                 'cvFile',
                 FileType::class,
                 [
-                    'required'  => true,
+                    'required'  => false,
                     'mapped'    => false,
                     'attr' => [
                         'class' => 'form-control',
@@ -140,22 +140,25 @@ class ClientType extends AbstractType
                             'mimeTypesMessage' => 'Veuillez télécharger un fichier PDF valide.',
                         ])
                     ]
-                ],
+                ]
             )
-            // ->add('skills', EntityType::class, [
-            //     'class' => Skills::class,
-            //     'choice_label' => 'nom',
-            //     'multiple' => true,
-            //     'expanded' => true, //case à cocher
-            //     'attr' => [
-            //         'class' => 'form-control',
-            //     ],
-            //     'required' => false,
-            //     'label' => 'Skills :',
-            //     'label_attr' => [
-            //         'class' => 'form-label mt-4'
-            //     ],
-            // ])
+            ->add('skills', 
+                EntityType::class, 
+                [
+                    'class' => Skills::class,
+                    'choice_label' => 'nom',
+                    'multiple' => true,
+                    'expanded' => true, //case à cocher
+                    'attr' => [
+                        'class' => 'form-control',
+                    ],
+                    'required' => false,
+                    'label' => 'Skills :',
+                    'label_attr' => [
+                        'class' => 'form-label mt-4'
+                    ],
+                ]
+            )
             // ->add(
             //     'isNewsletter',
             //     CheckboxType::class,
