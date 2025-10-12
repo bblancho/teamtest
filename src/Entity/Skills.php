@@ -17,14 +17,11 @@ class Skills
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
+    #[Assert\NotBlank( message: "Ce champ est obligatoire.",)]
     private ?string $nom = null;
 
     #[ORM\Column(length: 60)]
     private ?string $slug = null;
-
-    #[ORM\ManyToOne(inversedBy: 'skills')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?users $users = null;
 
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'skills')]
     private ?self $parent = null;
@@ -158,5 +155,5 @@ class Skills
 
         return $this;
     }
-    
+
 }

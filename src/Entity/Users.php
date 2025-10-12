@@ -2,11 +2,8 @@
 
 namespace App\Entity;
 
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UsersRepository;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -125,22 +122,16 @@ abstract class Users implements UserInterface, PasswordAuthenticatedUserInterfac
     // N'est pas enregistré dans la BDD
     private $plainPassword;
 
-    /**
-     * @var Collection<int, Skills>
-     */
-    // #[ORM\OneToMany(targetEntity: Skills::class, mappedBy: 'users', orphanRemoval: true)]
-    // private Collection $skills;
-
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $lastLonginAt = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $confirmationToken = null;
 
-    // public function __construct()
-    // {
-    //     $this->skills = new ArrayCollection();
-    // }
+    public function __construct()
+    {
+        
+    }
 
     /**
      * @return int|null
@@ -354,36 +345,6 @@ abstract class Users implements UserInterface, PasswordAuthenticatedUserInterfac
 
         return $this;
     }
-
-    // /**
-    //  * @return Collection<int, Skills>
-    //  */
-    // public function getSkills(): Collection
-    // {
-    //     return $this->skills;
-    // }
-
-    // public function addSkill(Skills $skill): static
-    // {
-    //     if (!$this->skills->contains($skill)) {
-    //         $this->skills->add($skill);
-    //         $skill->setUsers($this);
-    //     }
-
-    //     return $this;
-    // }
-
-    // public function removeSkill(Skills $skill): static
-    // {
-    //     if ($this->skills->removeElement($skill)) {
-    //         // set the owning side to null (unless already changed)
-    //         if ($skill->getUsers() === $this) {
-    //             $skill->setUsers(null);
-    //         }
-    //     }
-
-    //     return $this;
-    // }
 
     public function getLastLonginAt(): ?\DateTimeImmutable
     {
