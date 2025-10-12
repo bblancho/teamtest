@@ -25,14 +25,13 @@ class Clients extends Users
     #[ORM\Column(nullable: true)]
     private ?bool $dispo = null;
 
+    #[ORM\Column(nullable: true)]
     #[Assert\File(
         maxSize: '2048k',
         extensions: ['pdf'],
         extensionsMessage: 'Veuillez télécharger un fichier PDF valide.',
         maxSizeMessage: "Le fichier doit faire au maximum ({{ size }} {{ suffix }}).",
     )]
-    #[ORM\Column(nullable: true)]
-    // private ?string $cvFile = null;
     private ?File $cvFile = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -57,17 +56,10 @@ class Clients extends Users
     #[ORM\OneToMany(targetEntity: Candidatures::class, mappedBy: 'clients')]
     private Collection $candidatures;
 
-    /**
-     * @var Collection<int, Skills>
-     */
-    #[ORM\ManyToMany(targetEntity: Skills::class, inversedBy: 'clients')]
-    private Collection $compe;
-
 
     public function __construct()
     {
         $this->candidatures = new ArrayCollection();
-        $this->compe = new ArrayCollection();
     }
 
     public function getTjm(): ?int
@@ -172,28 +164,5 @@ class Clients extends Users
         return $this;
     }
 
-    /**
-     * @return Collection<int, Skills>
-     */
-    public function getCompe(): Collection
-    {
-        return $this->compe;
-    }
-
-    public function addCompe(Skills $compe): static
-    {
-        if (!$this->compe->contains($compe)) {
-            $this->compe->add($compe);
-        }
-
-        return $this;
-    }
-
-    public function removeCompe(Skills $compe): static
-    {
-        $this->compe->removeElement($compe);
-
-        return $this;
-    }
     
 }
