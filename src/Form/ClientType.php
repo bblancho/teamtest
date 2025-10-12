@@ -156,32 +156,31 @@ class ClientType extends AbstractType
             //         'class' => 'form-label mt-4'
             //     ],
             // ])
-            ->add(
-                'isNewsletter',
-                CheckboxType::class,
-                [
-                    'required' => false,
-                    'empty_data' => '',
-                    'attr' => [
-                        'class' => 'form-check-input ',
-                    ],
-                    'label' => "S'inscrire à la newsletter ?",
-                    'label_attr' => [
-                        'class' => 'form-check-label'
-                    ],
+            // ->add(
+            //     'isNewsletter',
+            //     CheckboxType::class,
+            //     [
+            //         'required' => false,
+            //         'empty_data' => '',
+            //         'attr' => [
+            //             'class' => 'form-check-input ',
+            //         ],
+            //         'label' => "S'inscrire à la newsletter ?",
+            //         'label_attr' => [
+            //             'class' => 'form-check-label'
+            //         ],
+            //     ]
+            // )
+            ->add('siren', TextType::class, [
+                'disabled' => true,
+                'attr' => [
+                    'class' => 'form-control',
+                ],
+                'label' => 'Numéro de siren',
+                'label_attr' => [
+                    'class' => 'form-label'
                 ]
-            )
-            // ->add('siren', TextType::class, [
-                //     'mapped' => false,
-                //     'attr' => [
-                //         'class' => 'form-control',
-                //         'disabled' => true,
-                //     ],
-                //     'label' => 'Numéro de siren',
-                //     'label_attr' => [
-                //         'class' => 'form-label'
-                //     ]
-            // ]) 
+            ]) 
         ;
     }
 

@@ -15,7 +15,7 @@
 				{{ form_start(form) }}
 
 					<div class="row">
-						<div class="col-md-4 mx-auto">
+						<div class="col-6 mx-auto">
 							<div class="row">
 								<div class="col-md-6">
 									<div class="form-group mt-4">
@@ -40,12 +40,12 @@
 										{{ form_row(form.phone) }}
 									</div>
 
-									{# <div class="form-group mt-4">
-										{{ form_row(form.siren) }}
-									</div> #}
-
 									<div class="form-group mt-4">
 										{{ form_row(form.tjm) }}
+									</div>
+
+									<div class="form-group mt-4">
+										{{ form_row(form.siren) }}
 									</div>
 
 									<div class="form-group mt-4">
@@ -62,18 +62,10 @@
 											<p class="text-muted">Aucun cv téléchargé</p>
 										</div>
 									{% endif %}
-
-									{# <div class="form-group mt-4">
-										{{ form_row(form.skills) }}
-									</div> #}
-
-									<div class="form-group form-check mt-4">
-										{{ form_row(form.isNewsletter) }}
-									</div>
 									
 								</div>
 
-								<button class="btn btn-lg btn-primary btn-block mb-5" type="submit">
+								<button class="btn btn-lg btn-primary btn-block my-3" type="submit">
 									Modifier
 								</button>
 							</div>

@@ -70,8 +70,6 @@ class UserController extends AbstractController
                 'ville' => $form["ville"]->getData(),
                 'phone' => $form["phone"]->getData(),
                 'tjm' => $form["tjm"]->getData(),
-                'skills' => $form["skills"]->getData(),
-                'isNewsletter' => $form["isNewsletter"]->getData(),
             ];
 
             $cvFile = $form["cvFile"]->getData();

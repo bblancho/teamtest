@@ -43,8 +43,7 @@ class UserService
         $user->setVille($formData['ville']);
         $user->setPhone($formData['phone']);
         $user->setTjm($formData['tjm']);
-        $user->addSkill($formData['skills']);
-        $user->setIsNewsletter($formData['isNewsletter']);
+        // $user->addSkill($formData['skills']);
 
         if($cvFileName != null){
             $user->setCvName($cvFileName);
