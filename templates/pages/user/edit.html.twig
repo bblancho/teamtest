@@ -17,6 +17,7 @@
 					<div class="row">
 						<div class="col-6 mx-auto">
 							<div class="row">
+
 								<div class="col-md-6">
 									<div class="form-group mt-4">
 										{{ form_row(form.nom) }}
@@ -63,6 +64,10 @@
 										</div>
 									{% endif %}
 									
+								</div>
+
+								<div>
+									{{ form_row(form.skills) }}
 								</div>
 
 								<button class="btn btn-lg btn-primary btn-block my-3" type="submit">
