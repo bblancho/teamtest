@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Users;
+use App\Entity\Skills;
 use App\Entity\Clients;
 use App\Form\ClientType;
+use App\Form\SkillsType;
 use App\Form\MessageType;
 use App\Entity\Candidatures;
 use App\Service\UserService;
@@ -33,22 +35,21 @@ class UserController extends AbstractController
      * This controller allow us to edit user profile
      *
      * @param Request $request
+     * @param Clients $client
      * @param UserService $userService
      * @param FileUploadService $fileUploadService
      * 
      * @return Response
      */
     #[IsGranted('ROLE_USER')]
-    #[Route('/edition-profil', name: 'edit', methods: ['GET', 'POST'] )]
+    #[Route('/edition-profil/{id}', name: 'edit', methods: ['GET', 'POST'] )]
     public function edit(
+        Clients $user,
         Request $request,
         FileUploadService $fileUploadService,
         ParameterBagInterface $parameterBag,
         UserService $userService,
     ): Response {
-        
-        /** @var Clients $user */
-        $user = $this->getUser() ;
 
         $form = $this->createForm(ClientType::class, $user) ;
         
@@ -69,6 +70,7 @@ class UserController extends AbstractController
                 'ville' => $form["ville"]->getData(),
                 'phone' => $form["phone"]->getData(),
                 'tjm' => $form["tjm"]->getData(),
+                'skills' => $form["skills"]->getData(),
                 'isNewsletter' => $form["isNewsletter"]->getData(),
             ];
 
@@ -96,7 +98,7 @@ class UserController extends AbstractController
         }
 
         return $this->render('pages/user/edit.html.twig', [
-            'form' => $form->createView(),
+            'form' => $form,
             'user' => $user
         ]);
     }
@@ -158,6 +160,49 @@ class UserController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
+    /**
+     * This controller allow us to edit your password
+     *
+     * @param Users $user
+     * @param Request $request
+     * @param EntityManagerInterface $manager
+     * 
+     * @return Response
+     */
+    #[IsGranted('ROLE_USER')]
+    #[Route('/competences', 'add.competences', methods: ['GET', 'POST'])]
+    public function competences(
+        Request $request,
+        EntityManagerInterface $entityManager,
+    ): Response {
+
+        /** @var Clients $user */
+        $user = $this->getUser() ;
+
+        $skill = new Skills();
+
+        $form = $this->createForm(SkillsType::class, $skill);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $user->setKills($skill->getNom())
+            ;
+    
+            $entityManager->persist($skill);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Votre coimpétence a été créée avec succès !');
+
+            return $this->redirectToRoute('skills.create', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('pages/competences/ajouter-competences.html.twig', [
+            'form' => $form,
+        ]);
+    }
+
 
     /**
      * This controller list all mission for the current Company
