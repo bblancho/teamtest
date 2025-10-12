@@ -43,6 +43,10 @@
 								<a class="nav-link {{ app.current_route == 'user.mesCandidatures' ? 'active' : '' }}" href="{{ path('user.mesCandidatures') }}">Mes candidatures
 								</a>
 							</li>
+							{# <li class="nav-item">
+								<a class="nav-link {{ app.current_route == 'user.add.competences' ? 'active' : '' }}" href="{{ path('user.mesCandidatures') }}">Ajouter des competences
+								</a>
+							</li> #}
 						{% endif %}
 					{% endif %}
 
@@ -67,7 +71,7 @@
 								<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{ app.user.nom }}</a>
 								<div class="dropdown-menu">
 									{% if app.user.typeUser == "clients"  %}
-										<a class="dropdown-item {{ app.current_route == 'user.edit' ? 'active' : '' }}" href="{{ path('user.edit') }}">Modifier mes informations</a>
+										<a class="dropdown-item {{ app.current_route == 'user.edit' ? 'active' : '' }}" href="{{ path('user.edit', {id: app.user.id }) }}">Modifier mes informations</a>
 										<a class="dropdown-item {{ app.current_route == 'user.password' ? 'active' : '' }}" href="{{ path('user.password') }}">Changer mot de passe</a>
 									{% elseif app.user.typeUser == "societes"%}
 										<a class="dropdown-item {{ app.current_route == 'societe.edit' ? 'active' : '' }}" href="{{ path('societe.edit') }}">Gérer mes informations</a>

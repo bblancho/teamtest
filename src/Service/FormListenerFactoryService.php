@@ -13,8 +13,6 @@ class FormListenerFactoryService {
 		return function(PreSubmitEvent $event) use($fields){
 			
 			$data = $event->getData(); // On récupère les données lors de la soumission du formulaire
-
-			// dd("ee", $data['nom']) ;
 			
 			if( empty($data['slug']) ) 
 			{
@@ -22,6 +20,8 @@ class FormListenerFactoryService {
 				$data['slug'] = strtolower( trim( $slugger->slug( $data[$fields] ) ) ) ;
 				$event->setData($data) ;
 			}
+
+			// dd($data['slug']) ;
 		};	
 	}
 

@@ -151,7 +151,7 @@ class ClientType extends AbstractType
             //         'class' => 'form-control',
             //     ],
             //     'required' => false,
-            //     'label' => 'Mes compétences :',
+            //     'label' => 'Skills :',
             //     'label_attr' => [
             //         'class' => 'form-label mt-4'
             //     ],

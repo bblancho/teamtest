@@ -29,12 +29,17 @@
 									Mission : {{ mission.nom }}
 								</h1>
 								<hr>
-								<p>
-									<span class="badge badge-pill badge-dark">html</span>
-									<span class="badge badge-pill badge-dark">PHP</span>
-									<span class="badge badge-pill badge-dark">PostgreSQL</span>
-									<span class="badge badge-pill badge-dark">Github</span>
-								</p>
+
+								{% if not mission.skills is same as([]) %}
+									<p>
+										{% for skills in mission.skills %}
+											<span class="badge badge-pill badge-dark">{{ skills.nom }}</span>
+										{% endfor %}
+									</p>
+								{% else %}
+									<p> Aucun tags trouvés !</p>
+								{% endif %}
+								
 							</div>
 
 							<p>
@@ -47,6 +52,7 @@
 						<div class="card-body">
 							<div class="info-offre">
 								<h3> Profil recherché : </h3>
+								<hr>
 							</div>
 							<P>
 								{{ mission.profil }}
@@ -55,6 +61,7 @@
 							{% if  mission.contraintes is defined and  mission.contraintes is not null %}
 								<div class="info-offre">
 									<h3> Contraintes : </h3>
+									<hr>
 								</div>
 								<P>
 									{{ mission.contraintes }}
@@ -97,6 +104,7 @@
 							<div class="info_mission_show">
 								<div class="info-offre">
 									<h3> {{ mission.nom }}</h3>
+									<hr>
 								</div>
 
 								<span>

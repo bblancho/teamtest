@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Entity\Users;
+use App\Entity\Skills;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ClientsRepository;
 use Doctrine\Common\Collections\Collection;
@@ -60,12 +61,13 @@ class Clients extends Users
      * @var Collection<int, Skills>
      */
     #[ORM\ManyToMany(targetEntity: Skills::class, inversedBy: 'clients')]
-    private Collection $skills;
+    private Collection $compe;
+
 
     public function __construct()
     {
         $this->candidatures = new ArrayCollection();
-        $this->skills = new ArrayCollection();
+        $this->compe = new ArrayCollection();
     }
 
     public function getTjm(): ?int
@@ -173,26 +175,25 @@ class Clients extends Users
     /**
      * @return Collection<int, Skills>
      */
-    public function getSkills(): Collection
+    public function getCompe(): Collection
     {
-        return $this->skills;
+        return $this->compe;
     }
 
-    public function addSkill(Skills $skill): static
+    public function addCompe(Skills $compe): static
     {
-        if (!$this->skills->contains($skill)) {
-            $this->skills->add($skill);
+        if (!$this->compe->contains($compe)) {
+            $this->compe->add($compe);
         }
 
         return $this;
     }
 
-    public function removeSkill(Skills $skill): static
+    public function removeCompe(Skills $compe): static
     {
-        $this->skills->removeElement($skill);
+        $this->compe->removeElement($compe);
 
         return $this;
     }
-
     
 }
