@@ -3,10 +3,11 @@
 namespace App\Repository;
 
 use App\Entity\Offres;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Model\SearchModel;
 use Doctrine\Persistence\ManagerRegistry;
-use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Offres>
@@ -18,6 +19,9 @@ class OffresRepository extends ServiceEntityRepository
         parent::__construct($registry, Offres::class);
     }
     
+    /**
+     *  Get published missions  
+    */
     public function paginateOffres(int $page, ?int $userId): PaginationInterface
     {
         $builder =  
@@ -35,10 +39,15 @@ class OffresRepository extends ServiceEntityRepository
             ;
         }
 
+        $builder = $builder
+            ->getQuery()
+            ->getResult()
+        ;
+
         return  $this->paginator->paginate(
             $builder ,
             $page ,
-            10 ,
+            9 ,
             [   //securité sur le trie
                 'distinct' => false , 
                 'sortFieldAllowList' => ['o.id'] //securité sur le trie, on choisit sur quel champs on accorde le trie
@@ -46,6 +55,9 @@ class OffresRepository extends ServiceEntityRepository
         );
     }
 
+    /**
+     *  Get published missions thanks to archives
+    */
     public function paginateOffresArchives(int $page, ?int $userId): PaginationInterface
     {
         $builder =  $this->createQueryBuilder('o') ;
@@ -60,10 +72,15 @@ class OffresRepository extends ServiceEntityRepository
             ;
         }
 
+        $builder = $builder
+            ->getQuery()
+            ->getResult()
+        ;
+
         return  $this->paginator->paginate(
             $builder ,
             $page ,
-            10 ,
+            9 ,
             [   //securité sur le trie
                 'distinct' => false , 
                 'sortFieldAllowList' => ['o.id'] //securité sur le trie, on choisit sur quel champs on accorde le trie
@@ -71,30 +88,43 @@ class OffresRepository extends ServiceEntityRepository
         );
     }
 
-    //    /**
-    //     * @return Offres[] Returns an array of Offres objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('o')
-    //            ->andWhere('o.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('o.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    /**
+     * Get published missions thanks to research Data value
+    */
+    public function findBySearch(SearchModel $searchdata): PaginationInterface
+    {
+        $builder =  
+            $this->createQueryBuilder('o') 
+            ->andWhere('o.isActive = true')
+            ->andWhere('o.isArchive = false')
+            ->orderBy('o.id', 'DESC')
+        ;
 
-    //    public function findOneBySomeField($value): ?Offres
-    //    {
-    //        return $this->createQueryBuilder('o')
-    //            ->andWhere('o.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+        if( !empty($searchdata->query) )
+        {
+            $builder = $builder
+                ->orWhere('o.nom LIKE :query')
+                ->setParameter('query', "%{$searchdata->query}%" ) 
+                ->orWhere('o.description LIKE :q')
+                ->setParameter('q', "%{$searchdata->query}%" ) 
+            ;
+        }
+
+        $data = $builder
+            ->getQuery()
+            ->getResult()
+        ;
+
+        return  $this->paginator->paginate(
+            $data ,
+            $searchdata->page ,
+            9 ,
+            [   //securité sur le trie
+                'distinct' => false , 
+                'sortFieldAllowList' => ['o.id'] //securité sur le trie, on choisit sur quel champs on accorde le trie
+            ]
+        );
+    }
 
 /**
 *
@@ -123,6 +153,33 @@ public function offreNotPublish(): array
         ->getQuery() // On génère un objet Query
         ->getResult() ;
 }
+
+
+//    /**
+//     * @return Offres[] Returns an array of Offres objects
+//     */
+//    public function findByExampleField($value): array
+//    {
+//        return $this->createQueryBuilder('o')
+//            ->andWhere('o.exampleField = :val')
+//            ->setParameter('val', $value)
+//            ->orderBy('o.id', 'ASC')
+//            ->setMaxResults(10)
+//            ->getQuery()
+//            ->getResult()
+//        ;
+//    }
+
+//    public function findOneBySomeField($value): ?Offres
+//    {
+//        return $this->createQueryBuilder('o')
+//            ->andWhere('o.exampleField = :val')
+//            ->setParameter('val', $value)
+//            ->getQuery()
+//            ->getOneOrNullResult()
+//        ;
+//    }
+
 
 
 }

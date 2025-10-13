@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Offres;
+use App\Form\SearchType;
 use App\Form\MessageType;
+use App\Model\SearchModel;
 use App\Entity\Candidatures;
 use App\Security\Voter\OffresVoter;
 use App\Repository\OffresRepository;
@@ -37,9 +39,23 @@ class HomeController extends AbstractController
         $page = $request->query->getInt('page', 1) ;
         $userId =  null ;
 
+        $searchData = new SearchModel();
+
+        $form = $this->createForm(SearchType::class, $searchData);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            //dd($searchData->query) ;
+            $searchData->page = $request->query->getInt('page', 1) ;
+
+            $missions = $offresRepository->findBySearch($searchData);
+
+            return $this->render('pages/missions/index.html.twig', compact( "form", "missions") );
+        }
+
         $missions = $offresRepository->paginateOffres($page , $userId) ;
 
-        return $this->render('pages/missions/index.html.twig', compact( "missions") );
+        return $this->render('pages/missions/index.html.twig', compact( "missions", "form") );
     }
 
     /**
