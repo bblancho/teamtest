@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Form\Model\SearchModel;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -30,8 +31,16 @@ class SearchType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
+            // 'date_class' => SearchModel::class,
             "method" => "GET",
+            // "allow_extra_fields" => true,
             'csrf_protection' => false
         ]);
     }
+
+    // public function getBlockPrefix(): string
+    // {
+    //     return '';
+    // }
+    
 }
