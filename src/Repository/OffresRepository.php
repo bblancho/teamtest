@@ -103,7 +103,7 @@ class OffresRepository extends ServiceEntityRepository
         if( !empty($searchdata->query) )
         {
             $builder = $builder
-                ->orWhere('o.nom LIKE :query')
+                ->andWhere('o.nom LIKE :query')
                 ->setParameter('query', "%{$searchdata->query}%" ) 
                 ->orWhere('o.description LIKE :q')
                 ->setParameter('q', "%{$searchdata->query}%" ) 
@@ -121,7 +121,7 @@ class OffresRepository extends ServiceEntityRepository
             9 ,
             [   //securité sur le trie
                 'distinct' => false , 
-                'sortFieldAllowList' => ['o.id'] //securité sur le trie, on choisit sur quel champs on accorde le trie
+                // 'sortFieldAllowList' => ['o.id'] //securité sur le trie, on choisit sur quel champs on accorde le trie
             ]
         );
     }

@@ -50,6 +50,8 @@ class HomeController extends AbstractController
 
             $missions = $offresRepository->findBySearch($searchData);
 
+            // dd($missions);
+
             return $this->render('pages/missions/index.html.twig', compact( "form", "missions") );
         }
 
