@@ -10,6 +10,7 @@ use App\Form\SkillsType;
 use App\Form\MessageType;
 use App\Entity\Candidatures;
 use App\Service\UserService;
+use App\Form\CompetencesType;
 use App\Form\UserPasswordType;
 use App\Service\FileUploadService;
 use App\Repository\OffresRepository;
@@ -169,7 +170,7 @@ class UserController extends AbstractController
      * @return Response
      */
     #[IsGranted('ROLE_USER')]
-    #[Route('/competences', 'add.competences', methods: ['GET', 'POST'])]
+    #[Route('/competences', 'competences', methods: ['GET', 'POST'])]
     public function competences(
         Request $request,
         EntityManagerInterface $entityManager,
@@ -178,25 +179,20 @@ class UserController extends AbstractController
         /** @var Clients $user */
         $user = $this->getUser() ;
 
-        $skill = new Skills();
-
-        $form = $this->createForm(SkillsType::class, $skill);
+        $form = $this->createForm(CompetencesType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            $user->setKills($skill->getNom())
-            ;
     
-            $entityManager->persist($skill);
+            $entityManager->persist($user);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Votre coimpétence a été créée avec succès !');
+            $this->addFlash('success', 'Votre compétence a été ajoutée avec succès !');
 
-            return $this->redirectToRoute('skills.create', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('user.mesCandidatures', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('pages/competences/ajouter-competences.html.twig', [
+        return $this->render('pages/user/competences.html.twig', [
             'form' => $form,
         ]);
     }

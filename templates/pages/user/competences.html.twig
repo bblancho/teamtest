@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Listes des competences{% endblock %}
+
+{% block body %}
+    <main role="main">
+
+		<section class="jumbotron text-center bg-light pt-4 pb-4">
+			<div class="container">
+				<h1 class="jumbotron-heading"> Listes des competences </h1>
+			</div>
+		</section>
+
+		<div class="album bg-white">
+			<div class="container">	
+				{{ form_start(form) }}
+                    {{ form_row(form.skills) }}
+
+                    <button class="btn btn-primary mt-2 w-100 mb-3"> Ajouter </button>
+
+                {{ form_rest(form) }}
+                {{ form_end(form) }}
+			</div>
+		</div>
+        
+	</main>
+{% endblock %}
