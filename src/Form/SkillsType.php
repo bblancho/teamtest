@@ -16,6 +16,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class SkillsType extends AbstractType
 {
@@ -42,6 +43,22 @@ class SkillsType extends AbstractType
                     new Assert\Length(['min' => 2, 'max' => 100])
                 ]
             ])
+            ->add(
+                'content',
+                TextareaType::class,
+                [
+                    'attr' => [
+                        'class' => 'form-control',
+                        'min' => 5,
+                        'rows'=> 6
+                    ],
+                    'required' => false,
+                    'label' => 'Description :',
+                    'label_attr' => [
+                        'class' => 'form-label'
+                    ],
+                ]
+            )
             ->add('slug', HiddenType::class, [
                 'empty_data' => '',
             ])

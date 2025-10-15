@@ -3,17 +3,45 @@
 namespace App\Repository;
 
 use App\Entity\Skills;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Skills>
  */
 class SkillsRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+
+    public function __construct(ManagerRegistry $registry, private PaginatorInterface $paginator)
     {
         parent::__construct($registry, Skills::class);
+    }
+
+    /**
+     *  Get published missions  
+    */
+    public function paginateOffres(int $page,): PaginationInterface
+    {
+        $builder =  
+            $this->createQueryBuilder('s') 
+        ;
+
+        $builder = $builder
+            ->getQuery()
+            ->getResult()
+        ;
+
+        return  $this->paginator->paginate(
+            $builder ,
+            $page ,
+            9 ,
+            [   //securité sur le trie
+                'distinct' => false , 
+                'sortFieldAllowList' => ['o.id'] //securité sur le trie, on choisit sur quel champs on accorde le trie
+            ]
+        );
     }
 
     //    /**

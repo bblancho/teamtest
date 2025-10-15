@@ -3,11 +3,21 @@
 {% block title %}Edit Skills{% endblock %}
 
 {% block body %}
-    <h1>Edit Skills</h1>
+    <main role="main">
 
-    {{ include('pages/skills/_form.html.twig', {'button_label': 'Modifier'}) }}
+		<section class="jumbotron text-center bg-light pt-4 pb-4">
+			<div class="container">
+				<h1 class="jumbotron-heading"> Modifier la compétence {{ skill.nom }} </h1>
+			</div>
+		</section>
 
-    <a href="{{ path('skills.index') }}">Liste</a>
+        <div class="album bg-white">
+            <div class="row">
+                <div class="col-6 mx-auto my-3">
+                    {{ include('pages/skills/_form.html.twig', {'button_label': 'Modifier'}) }}
+                </div>
+            </div>
+        </div>
 
-    {{ include('pages/skills/_delete_form.html.twig') }}
+    </main>
 {% endblock %}
