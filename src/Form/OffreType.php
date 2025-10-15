@@ -50,20 +50,6 @@ class OffreType extends AbstractType
                     ],
                 ]
             )
-            ->add('skills', EntityType::class, [
-                'class' => Skills::class,
-                'choice_label' => 'nom',
-                'multiple' => true,
-                'expanded' => true, //case à cocher
-                'attr' => [
-                    'class' => 'form-control',
-                ],
-                'required' => false,
-                'label' => 'Skills :',
-                'label_attr' => [
-                    'class' => 'form-label mt-4'
-                ],
-            ])
             ->add('slug', HiddenType::class, [
                 'empty_data' => '',
             ])
@@ -209,6 +195,21 @@ class OffreType extends AbstractType
                     ],
                 ]
             )
+
+            // ->add('skills', EntityType::class, [
+            //     'class' => Skills::class,
+            //     'choice_label' => 'nom',
+            //     'multiple' => true,
+            //     'expanded' => true, //case à cocher
+            //     'attr' => [
+            //         'class' => 'form-control',
+            //     ],
+            //     'required' => false,
+            //     'label' => 'Skills :',
+            //     'label_attr' => [
+            //         'class' => 'form-label mt-4'
+            //     ],
+            // ])
 
             ->addEventListener( FormEvents::PRE_SUBMIT, $this->listenerFactroy->autoSlug("nom") ) 
             ->addEventListener( FormEvents::POST_SUBMIT, $this->listenerFactroy->timestamp() ) 

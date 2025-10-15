@@ -27,6 +27,7 @@
                                 <th>actions</th>
                             </tr>
                         </thead>
+                        
                         <tbody>
                             {% for skill in skills %}
                                 <tr>
@@ -34,8 +35,9 @@
                                     <td>{{ skill.nom }}</td>
                                     <td>{{ skill.content }}</td>
                                     <td>
-                                        <a class="btn btn-success my-3" href="{{ path('skills.show', {'id': skill.id}) }}">Voir</a>
-                                        <a class="btn btn-primary my-3" href="{{ path('skills.edit', {'id': skill.id}) }}">Modifier</a>
+                                        <a class="btn btn-sm btn-success my-3" href="{{ path('skills.show', {'id': skill.id}) }}"> Voir </a>
+                                        <a class="btn btn-sm btn-primary my-3" href="{{ path('skills.edit', {'id': skill.id}) }}"> Modifier </a>
+                                        {{ include('pages/skills/_delete_form.html.twig', {'button_label': 'supprimer'}) }}
                                     </td>
                                 </tr>
                             {% endfor %}
