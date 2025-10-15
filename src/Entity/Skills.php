@@ -2,10 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\SkillsRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\SkillsRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: SkillsRepository::class)]
@@ -19,6 +20,9 @@ class Skills
     #[ORM\Column(length: 50)]
     #[Assert\NotBlank( message: "Ce champ est obligatoire.",)]
     private ?string $nom = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $content = null;
 
     #[ORM\Column(length: 60)]
     private ?string $slug = null;
@@ -186,6 +190,18 @@ class Skills
         if ($this->clients->removeElement($client)) {
             $client->removeSkill($this);
         }
+
+        return $this;
+    }
+
+    public function getContent(): ?string
+    {
+        return $this->content;
+    }
+
+    public function setContent(?string $content): static
+    {
+        $this->content = $content;
 
         return $this;
     }

@@ -33,14 +33,8 @@ class SearchType extends AbstractType
         $resolver->setDefaults([
             'date_class' => SearchModel::class,
             "method" => "GET",
-            // "allow_extra_fields" => true,
             'csrf_protection' => false
         ]);
     }
-
-    // public function getBlockPrefix(): string
-    // {
-    //     return '';
-    // }
 
 }

@@ -18,10 +18,17 @@ final class SkillsController extends AbstractController
 {
     #[Route(path:"/", name: 'index', methods: ['GET'])]
     #[IsGranted(OffresVoter::OFFRE_CREATE)]
-    public function index(SkillsRepository $skillsRepository): Response
-    {
-        return $this->render('skills/index.html.twig', [
-            'skills' => $skillsRepository->findAll(),
+    public function index(
+        SkillsRepository $skillsRepository,
+        Request $request,
+    ): Response
+    {   
+        $page = $request->query->getInt('page', 1) ;
+
+        $skills = $skillsRepository->paginateOffres($page) ;
+
+        return $this->render('pages/skills/index.html.twig', [
+            'skills' => $skills,
         ]);
     }
 
@@ -40,6 +47,7 @@ final class SkillsController extends AbstractController
 
             $skill
                 ->setUsers( $this->getUser() )
+                ->setContent( trim($form['content']->getData()) )
                 ->setNom($slug)
                 ->setSlug($skill->getNom())
             ;

@@ -13,8 +13,8 @@
 
         <div class="album bg-white">
 			<div class="container">
-                {% if not missions.items is same as([]) %}
-                    <div class="count mt-4 mb-4"> Vous avez 
+                {% if skills is defined and skills is not null %}
+                    <div class="count mt-4 mb-4">
                         {{ skills.getTotalItemCount }} compétence(s)
                     </div>
 
@@ -23,6 +23,7 @@
                             <tr>
                                 <th>Id</th>
                                 <th>Nom</th>
+                                <th>Description</th>
                                 <th>actions</th>
                             </tr>
                         </thead>
@@ -31,9 +32,10 @@
                                 <tr>
                                     <td>{{ skill.id }}</td>
                                     <td>{{ skill.nom }}</td>
+                                    <td>{{ skill.content }}</td>
                                     <td>
-                                        <a href="{{ path('skills.show', {'id': skill.id}) }}">Voir</a>
-                                        <a href="{{ path('skills.edit', {'id': skill.id}) }}">Modifier</a>
+                                        <a class="btn btn-success my-3" href="{{ path('skills.show', {'id': skill.id}) }}">Voir</a>
+                                        <a class="btn btn-primary my-3" href="{{ path('skills.edit', {'id': skill.id}) }}">Modifier</a>
                                     </td>
                                 </tr>
                             {% endfor %}
