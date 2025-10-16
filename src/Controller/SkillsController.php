@@ -34,7 +34,10 @@ final class SkillsController extends AbstractController
 
     #[Route(path: '/creation', name: 'create', methods: ['GET', 'POST'])]
     #[IsGranted(OffresVoter::OFFRE_CREATE)]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(
+        Request $request, 
+        EntityManagerInterface $entityManager
+    ): Response
     {
         $skill = new Skills();
 
@@ -83,7 +86,7 @@ final class SkillsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_skills_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('skills.index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('pages/skills/edit.html.twig', [

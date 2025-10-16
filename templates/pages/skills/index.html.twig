@@ -18,13 +18,13 @@
                         {{ skills.getTotalItemCount }} compétence(s)
                     </div>
 
-                    <table class="table">
+                    <table class="table table-striped table-bordered">
                         <thead>
                             <tr>
-                                <th>Id</th>
-                                <th>Nom</th>
-                                <th>Description</th>
-                                <th>actions</th>
+                                <th scope="row">Id</th>
+                                <th scope="col">Nom</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">actions</th>
                             </tr>
                         </thead>
                         
@@ -33,7 +33,7 @@
                                 <tr>
                                     <td>{{ skill.id }}</td>
                                     <td>{{ skill.nom }}</td>
-                                    <td>{{ skill.content }}</td>
+                                    <td> {{ skill.content | u.truncate(50, ' ...') }}</td>
                                     <td>
                                         <a class="btn btn-sm btn-success my-3" href="{{ path('skills.show', {'id': skill.id}) }}"> Voir </a>
                                         <a class="btn btn-sm btn-primary my-3" href="{{ path('skills.edit', {'id': skill.id}) }}"> Modifier </a>
