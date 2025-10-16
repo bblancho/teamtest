@@ -13,10 +13,7 @@
 		<div class="album bg-white">
 			<div class="container">
 				{% if not missions.items is same as([]) %}
-					{# <a href="{{ path('offres.create') }}" class="btn btn-primary">
-						Créer une mission
-					</a> #}
-
+					
 					<div class="count mt-4 mb-4"> Vous avez publié
 						{{ missions.getTotalItemCount }} mission(s)
 					</div>
@@ -39,22 +36,17 @@
 						<tbody>
 							{% for mission in missions %}
 								<tr>
-									<th scope="row">{{ mission.id }}</th>
+									<td scope="row">{{ mission.id }}</td>
 									<td> <a href="{{ path('app_show_offre', {id: mission.id, slug: mission.slug}) }}" > {{mission.nom}} </a> </td>
-									<td>{{ mission.startDateAT|date('d/m/Y') }}</td>
-									<td>{{ mission.lieuMission }}</td>
-									<td>
-										<span> {{ mission.tarif }} € </span>
-									</td>	
-									<td><a  href="{{ path('offres.candidaturesOffre', {id: mission.id, slug: mission.slug}) }}" > {{ mission.nbCandidatures }} Cv </a> </td>
-									<td><a  href="{{ path('offres.candidatures_offre_validees', {id: mission.id, slug: mission.slug}) }}" > Voir  </a> </td>
+									<td> {{ mission.startDateAT|date('d/m/Y') }} </td>
+									<td> {{ mission.lieuMission }}</td>
+									<td> <span> {{ mission.tarif }} € </span> </td>	
+									<td> <a href="{{ path('offres.candidaturesOffre', {id: mission.id, slug: mission.slug}) }}" > {{ mission.nbCandidatures }} Cv </a> </td>
+									<td> <a href="{{ path('offres.candidatures_offre_validees', {id: mission.id, slug: mission.slug}) }}" > Voir  </a> </td>
 									
 									<td>{{ mission.isActive ? "<span class='badge bg-success'> OUI </span>" : "<span class='badge bg-secondary'> NON </span>" }}  </td>
 
 									{% if is_granted("offre_edit", mission)  %}
-										{# <td>
-											<a  href="{{ path('offres.activer_offre', {id: mission.id}) }}" class="btn btn-success btn-sm"> Publier </a>
-										</td> #}
 										<td>
 											<a href="{{ path('offres.edit', { id: mission.id }) }}" class="btn btn-info btn-sm">Modifier</a>
 										</td>
