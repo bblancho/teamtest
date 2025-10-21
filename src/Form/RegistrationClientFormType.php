@@ -110,7 +110,7 @@ class RegistrationClientFormType extends AbstractType
                 'attr' => [
                     'class' => 'form-control',
                 ],
-                'label' => 'Numéro de siren',
+                'label' => 'Numéro de siren / siret, 9 ou 14 caractères.',
                 'label_attr' => [
                     'class' => 'form-label  mt-4'
                 ]

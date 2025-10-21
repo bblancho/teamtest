@@ -142,7 +142,8 @@ class ClientType extends AbstractType
                     ]
                 ]
             )
-            ->add('skills', 
+            ->add(
+                'skills', 
                 EntityType::class, 
                 [
                     'class' => Skills::class,

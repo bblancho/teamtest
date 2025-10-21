@@ -68,7 +68,7 @@ class Societes extends Users
     #[ORM\Column(length: 50, nullable: true)]
     private ?string $phoneContact = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
     #[Assert\NotBlank(
         message: "Le champ siret est obligatoire.",
     )]

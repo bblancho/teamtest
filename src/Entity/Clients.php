@@ -42,12 +42,18 @@ class Clients extends Users
     
     #[ORM\Column(length: 255, unique: true)]
     #[Assert\Length( 
-        exactly: 9,
-        exactMessage: "Le numéro de siren doit faire {{ limit }} caractères."
+        min: 9,
+        max: 14,
+        minMessage: "Le numéro de siren/siert doit faire {{ limit }} ou 14 caractères.",
+        maxMessage: "Le numéro de siren/siert doit faire {{ limit }} ou 9 caractères."
     )]
     #[Assert\NotBlank(
-        message: "Le champ siren est obligatoire.",
+        message: "Le champ siren/siret est obligatoire.",
     )] 
+    #[Assert\Regex(
+        pattern: '/\d/',
+        message: 'Le numéro de siret doit contenir que des chiffres.',
+    )]
     private string $siren ;
 
     /**
