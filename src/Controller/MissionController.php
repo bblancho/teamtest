@@ -372,7 +372,7 @@ class MissionController extends AbstractController
 
         $this->addFlash(
             'success',
-            'La candidature a été traitée avec succès. Vous recevrez un email de confirmation.'
+            'Le mail de validation  pour la candidature a bien été envoyé.'
         );
 
         return $this->redirectToRoute('offres.candidaturesOffre', ['id' => $mission->getId(), 'slug' => $mission->getSlug() ]);
