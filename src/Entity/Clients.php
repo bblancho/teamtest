@@ -49,7 +49,7 @@ class Clients extends Users
     //     message: 'Le numéro de siret doit contenir que des chiffres.',
     // )]
     #[Assert\Type(
-        type: 'int',
+        type: 'numeric',
         message: 'Le numéro de siret doit contenir que des chiffres.',
     )]
     #[Assert\Length( 
