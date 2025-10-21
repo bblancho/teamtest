@@ -48,10 +48,10 @@ class Clients extends Users
     //     pattern: '/\d/',
     //     message: 'Le numéro de siret doit contenir que des chiffres.',
     // )]
-    // #[Assert\Type(
-    //     type: 'int',
-    //     message: 'Le numéro de siret doit contenir que des chiffres.',
-    // )]
+    #[Assert\Type(
+        type: 'int',
+        message: 'Le numéro de siret doit contenir que des chiffres.',
+    )]
     #[Assert\Length( 
         min: 9,
         max: 14,
