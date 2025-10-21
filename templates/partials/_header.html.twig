@@ -31,11 +31,11 @@
 								</a> 
 							</li>
 							<li class="nav-item">
-								<a class="nav-link {{ app.current_route == 'skills.index' ? 'active' : '' }}" href="{{ path('skills.index') }}">Les skills
+								<a class="nav-link {{ app.current_route == 'skills.index' ? 'active' : '' }}" href="{{ path('skills.index') }}">Les profils
 								</a> 
 							</li>  
 							<li class="nav-item">
-								<a class="nav-link {{ app.current_route == 'skills.create' ? 'active' : '' }}" href="{{ path('skills.create') }}">Creer un skill
+								<a class="nav-link {{ app.current_route == 'skills.create' ? 'active' : '' }}" href="{{ path('skills.create') }}">Creer un profil
 								</a> 
 							</li>  
 						{% elseif app.user.typeUser == "clients"%}
