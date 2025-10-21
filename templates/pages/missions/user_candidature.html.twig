@@ -20,10 +20,24 @@
                     <p>
                         Email : {{ candidature.clients.email  }} <br/>
                         Téléphone : {{ candidature.clients.phone  }} <br/>
-                        TJM : {{ candidature.clients.tjm  }} <br/> 
+                        TJM : {{ candidature.clients.tjm  }} € <br/> 
                         cv  : <a href="{{ asset('upload/cv/' ~ candidature.clients.cvName) }}" target="_blank">voir le cv</a><br/>
+                        Profil(s):
+                            {% if not candidature.clients.skills is same as([]) %}
+                                {% for skills in candidature.clients.skills %}
+                                    <span class="badge badge-pill bg-secondary">{{ skills.nom }}</span>
+                                {% endfor %}
+                            {% else %}
+                                <p> Aucun profil trouvé !</p>
+                            {% endif %}
+                        <br/><br/>
                         Message du candidat : <br/>
                         {{ candidature.message  }}
+                    </p>
+
+                    <p>
+                        <a  href="{{ path('offres.valider.candidature', {id: candidature.id}) }}" class="btn btn-success btn-sm"> Retenir  la candidature</a>
+                        <a  href="{{ path('offres.refuser.candidature', {id: candidature.id}) }}" class="btn btn-danger btn-sm"> Refuser la candidature </a>
                     </p>
                 </div>
 

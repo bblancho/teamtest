@@ -26,6 +26,7 @@
 							<th scope="col">TJM</th>
 							<th scope="col">CV</th>
 							<th scope="col">Statut</th>
+							<th scope="col">Profils</th>
 							<th scope="col" colspan="3">Actions</th>
 						</tr>
 					</thead>
@@ -46,6 +47,17 @@
 								{% endif %}
 								<td scope="row">
 									{{ candidature.isRetenue == 1 ? "<span class='badge bg-success'> Retenue </span>" : candidature.isRetenue is null ? "<span class='badge bg-secondary'> Non traitée </span>"  : "<span class='badge bg-danger'> Refusée </span>" }}
+								</td>
+								<td>
+									{% if not candidature.clients.skills is same as([]) %}
+										<p>
+											{% for skills in candidature.clients.skills %}
+												<span class="badge badge-pill bg-primary">{{ skills.nom }}</span>
+											{% endfor %}
+										</p>
+									{% else %}
+										<p> Aucun profil trouvé !</p>
+									{% endif %}
 								</td>
 								<td>
 									<a  href="{{ path('offres.valider.candidature', {id: candidature.id}) }}" class="btn btn-success btn-sm"> Retenir </a>

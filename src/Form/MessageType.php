@@ -17,7 +17,7 @@ class MessageType extends AbstractType
                 'required' => false,
                 'attr' => [
                     'class' => 'form-control',
-                    'placeholder' => 'Votre message ... ',
+                    'placeholder' => 'Parlez nous de vous... ',
                     'min' => 5,
                     'rows'=> 6
                 ],
