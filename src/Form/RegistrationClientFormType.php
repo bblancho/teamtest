@@ -113,6 +113,10 @@ class RegistrationClientFormType extends AbstractType
                 'label' => 'Numéro de siren / siret, 9 ou 14 caractères.',
                 'label_attr' => [
                     'class' => 'form-label  mt-4'
+                ],
+                'constraints' => [
+                    new Assert\NotBlank(['message' => "Ce champ est obligatoire."]),
+                    new Assert\Length(min:9, max:14)
                 ]
             ])
             ->add('password', RepeatedType::class, [

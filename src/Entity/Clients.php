@@ -41,18 +41,22 @@ class Clients extends Users
     private ?\DateTimeImmutable $dateDispoAt = null;
     
     #[ORM\Column(length: 255, unique: true)]
+    #[Assert\NotBlank(
+        message: "Le champ siren/siret est obligatoire.",
+    )] 
+    // #[Assert\Regex(
+    //     pattern: '/\d/',
+    //     message: 'Le numéro de siret doit contenir que des chiffres.',
+    // )]
+    // #[Assert\Type(
+    //     type: 'int',
+    //     message: 'Le numéro de siret doit contenir que des chiffres.',
+    // )]
     #[Assert\Length( 
         min: 9,
         max: 14,
         minMessage: "Le numéro de siren/siert doit faire {{ limit }} ou 14 caractères.",
         maxMessage: "Le numéro de siren/siert doit faire {{ limit }} ou 9 caractères."
-    )]
-    #[Assert\NotBlank(
-        message: "Le champ siren/siret est obligatoire.",
-    )] 
-    #[Assert\Regex(
-        pattern: '/\d/',
-        message: 'Le numéro de siret doit contenir que des chiffres.',
     )]
     private string $siren ;
 
