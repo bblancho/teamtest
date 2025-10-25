@@ -24,24 +24,35 @@
 						<tr>
 							<th scope="col">Nom</th>
 							<th scope="col">TJM</th>
+							<th scope="col">Profil(s)</th>
 							<th scope="col">CV</th>
 						</tr>
 					</thead>
+
 					<tbody>
 						{% for candidature in candidatures %}
 							<tr>
-								<th scope="row">{{ candidature.clients.nom  }} </a></th>
+								<td scope="row">{{ candidature.clients.nom  }} </a></td>
 								<td scope="row">{{ candidature.clients.tjm }} € </td>
-								{% if candidature.clients.cvName is defined and candidature.clients.cvName is not null  %}
-									<td scope="row">
+								<td>
+									<p>
+										{% if not candidature.clients.skills is same as([]) %}
+											{% for skills in candidature.clients.skills %}
+												<span class="badge badge-pill bg-primary">{{ skills.nom }}</span>
+											{% endfor %}
+										{% else %}
+											Aucun profil trouvé !
+										{% endif %}
+									</p>
+								</td>
+								<td scope="row">
+									{% if candidature.clients.cvName is defined and candidature.clients.cvName is not null  %}
 										<a href="{{ asset('upload/cv/' ~ candidature.clients.cvName) }}" target="_blank">CV</a> /
-										<a href="{{ path('offres.user.candidature', {id: candidature.id, slug: candidature.slug }) }}" >Afficher la candidature</a> 
-									</td>
-								{% else %}
-									<td scope="row">
+										<a href="{{ path('offres.user.candidature', {id: candidature.id, slug: candidature.slug }) }}" >Afficher la candidature</a>
+									{% else %}
 										<span class="text-muted">CV non disponible</span>
-									</td>
-								{% endif %}
+									{% endif %}
+								</td>
 							</tr>
 						{% endfor %}
 					</tbody>
@@ -52,7 +63,7 @@
 				</div>
 
 			{% else %}
-				<h4>Aucune candidature trouvée !</h4>
+				<h4> Aucune candidature trouvée !</h4>
 			{% endif %}
 		</div>
 	</main>
