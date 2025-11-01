@@ -5,6 +5,8 @@
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
     cv.upload_directory: '%kernel.project_dir%/public/upload/cv'
+    ACTIVETRAIL_API_KEY: '%env(ACTIVETRAIL_API_KEY)%'
+    ACTIVETRAIL_LIST_ID: '%env(ACTIVETRAIL_LIST_ID)%'
 
 services:
     # default configuration for services in *this* file
