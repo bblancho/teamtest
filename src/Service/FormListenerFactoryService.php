@@ -8,22 +8,28 @@ use Symfony\Component\String\Slugger\AsciiSlugger;
 
 class FormListenerFactoryService {
 
-    public function autoSlug(string $fields): callable
-	{
-		return function(PreSubmitEvent $event) use($fields){
-			
-			$data = $event->getData(); // On récupère les données lors de la soumission du formulaire
-			
-			if( empty($data['slug']) ) 
-			{
-				$slugger = new AsciiSlugger() ;
-				$data['slug'] = strtolower( trim( $slugger->slug( $data[$fields] ) ) ) ;
-				$event->setData($data) ;
-			}
+    /**
+     * @param string $field
+     * @return callable
+     */
+    public function autoSlug(string $field): callable
+    {
+        return static function (PreSubmitEvent $event) use ($field) {
+            $data = $event->getData();  // Récupère les données soumises avant validation
 
-			// dd($data['slug']) ;
-		};	
-	}
+            if (!is_array($data)) {
+                return;
+            }
+
+            // Si le slug n'est pas défini et que le champ 'nom' est renseigné
+            if (empty($data['slug']) && !empty($data[$field])) {
+                // Générer le slug en utilisant le slugger d'AsciiSlugger
+                $slugger = new AsciiSlugger();
+                $data['slug'] = strtolower(trim($slugger->slug($data[$field])));
+                $event->setData($data);  // Met à jour les données du formulaire
+            }
+        };
+    }
 
     public function timestamp(): callable
 	{
