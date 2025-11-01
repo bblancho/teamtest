@@ -27,7 +27,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class OffreType extends AbstractType
 {
-    public function __construct( private FormListenerFactoryService $listenerFactroy){
+    public function __construct( private FormListenerFactoryService $listenerFactroy)
+    {
 	
     }
 
@@ -50,9 +51,13 @@ class OffreType extends AbstractType
                     ],
                 ]
             )
-            ->add('slug', HiddenType::class, [
-                'empty_data' => '',
-            ])
+            ->add(
+                'slug',
+                HiddenType::class,
+                [
+                    'empty_data' => '',
+                ]
+            )
             ->add(
                 'description',
                 TextareaType::class,
@@ -211,11 +216,15 @@ class OffreType extends AbstractType
             //     ],
             // ])
 
-            ->addEventListener( FormEvents::PRE_SUBMIT, $this->listenerFactroy->autoSlug("nom") ) 
+            ->addEventListener(FormEvents::PRE_SUBMIT, $this->listenerFactroy->autoSlug('nom'))
             ->addEventListener( FormEvents::POST_SUBMIT, $this->listenerFactroy->timestamp() ) 
         ;
     }
 
+    /**
+     * @param OptionsResolver $resolver
+     * @return void
+     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
