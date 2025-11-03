@@ -4,22 +4,23 @@ namespace App\Controller;
 
 use App\Entity\Offres;
 use App\Form\OffreType;
-use App\Repository\CandidaturesRepository;
-use App\Repository\OffresRepository;
-use App\Security\Voter\OffresVoter;
 use App\Service\OffreService;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Bundle\SecurityBundle\Security;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
-use Symfony\Component\Mailer\MailerInterface;
+use App\Security\Voter\OffresVoter;
 use Symfony\Component\Mime\Address;
+use App\Repository\OffresRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\CandidaturesRepository;
+use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use App\Service\ActiveTrailNotificationService;
 use Symfony\Component\Routing\Requirement\Requirement;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 
 #[Route("/offres", 'offres.')]
 class MissionController extends AbstractController
@@ -66,7 +67,8 @@ class MissionController extends AbstractController
     #[IsGranted(OffresVoter::OFFRE_CREATE)]
     public function create(
         Request $request, 
-        OffreService $offreService
+        OffreService $offreService,
+        ActiveTrailNotificationService $activeTrail
     ): Response{
         
         $offre = new Offres();
@@ -75,13 +77,15 @@ class MissionController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $result = $offreService->createOffre($form, $this->getUser());
+            // $result = $offreService->createOffre($form, $this->getUser());
 
-            if ($result !== null) {
+            // if ($result !== null) {
                 $this->addFlash('success', 'Votre mission a été créée avec succès !');
 
+                $activeTrail->sendNotification("test","test");
+
                 return $this->redirectToRoute('offres.mes_offres');
-            }
+            // }
         }
 
         return $this->render(

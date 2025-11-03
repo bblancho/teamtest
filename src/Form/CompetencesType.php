@@ -28,7 +28,7 @@ class CompetencesType extends AbstractType
                         'class' => 'form-control',
                     ],
                     'required' => false,
-                    'label' => 'Mes compétences :',
+                    'label' => ' Sélectionnez : ',
                     'label_attr' => [
                         'class' => 'form-label mt-4'
                     ],
