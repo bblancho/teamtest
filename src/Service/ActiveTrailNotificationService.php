@@ -61,30 +61,31 @@ class ActiveTrailNotificationService
 
             $response = $this->client->request(
                 'GET',
-                'https://api.activetrail.com/v2/groups/436114',
+                'https://webapi.mymarketing.co.il/api/groups/436114',
                 [
                     'headers' => [
                         'Accept' => 'application/json',
                         'Content-type' => 'application/json',
                         'Authorization' => "Basic $this->apiKey"
                     ],
+                    // 'auth_basic' => ['token', $this->apiKey],
                     // 'body' => $jsonContent,
                 ]
             );
 
-            // $authHeader = $response->headers->get('Authorization');
-            // dd($authHeader) ;
-
-            // $contentType = $response->getHeaders();
-
-            // dd("toto", $contentType) ;
 
             $statusCode = $response->getStatusCode() ;
             $content    = $response->toArray() ;
 
+            dd($statusCode);
+
             $this->logger->info('Notification envoyée avec succès à ActiveTrail', ['response' => $content]);
 
         } catch (\Exception $e) {
+
+            $httpLogs = $response->getInfo('debug');
+
+            dd($httpLogs) ;
             $this->logger->error('Erreur lors de l\'envoi de la notification ActiveTrail', ['error' => $e->getMessage()]);
         }
     }
