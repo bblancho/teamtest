@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Offres;
+use App\Event\OfferPublishedEvent;
 use App\Form\OffreType;
 use App\Service\OffreService;
 use App\Security\Voter\OffresVoter;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Mime\Address;
 use App\Repository\OffresRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -68,7 +70,8 @@ class MissionController extends AbstractController
     public function create(
         Request $request, 
         OffreService $offreService,
-        ActiveTrailNotificationService $activeTrail
+        ActiveTrailNotificationService $activeTrail,
+        EventDispatcherInterface $dispatcher
     ): Response{
         
         $offre = new Offres();
@@ -82,7 +85,11 @@ class MissionController extends AbstractController
             // if ($result !== null) {
                 $this->addFlash('success', 'Votre mission a été créée avec succès !');
 
-                $activeTrail->sendNotification("test","test");
+                $activeTrail->sendCampaignEmail(1784611,"test","test");
+
+            // dispatch event
+            $event = new OfferPublishedEvent($form->getData());
+            $dispatcher->dispatch($event, OfferPublishedEvent::class);
 
                 return $this->redirectToRoute('offres.mes_offres');
             // }

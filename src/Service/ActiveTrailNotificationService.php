@@ -3,9 +3,8 @@
 namespace App\Service;
 
 use Psr\Log\LoggerInterface;
-use Yehudafh\ActiveTrail\ActiveTrail;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class ActiveTrailNotificationService
 {
@@ -21,23 +20,8 @@ class ActiveTrailNotificationService
         // Récupération des paramètres de configuration depuis le ParameterBag
         $this->apiKey = $parameterBag->get('ACTIVETRAIL_API_KEY') ;
         $this->listId = $parameterBag->get('ACTIVETRAIL_LIST_ID') ;
-        $this->logger = $logger ;
-        $this->client = $client ;
-
-        // Initialisation du client ActiveTrail avec la clé API
-        $this->activeTrailClient = new ActiveTrail(
-            [
-                'api_key' => $this->apiKey,
-                'soft_group' => '',  // À Remplacer par la valeur correcte ou par un paramètre
-                'fields' => [],
-            ]
-        );
-    
-        //Test de la valeur de la clé API et de l'ID de la liste
-       // dd($this->apiKey, $this->listId); // Assure-toi que les valeurs sont bonnes
-
-        // Si tu veux tester le client
-        // dd($this->activeTrailClient) ;
+        $this->logger = $logger;
+        $this->client = $client;
     }
 
     public function sendNotification(string $missionTitle, string $missionDescription)
@@ -73,11 +57,8 @@ class ActiveTrailNotificationService
                 ]
             );
 
-
             $statusCode = $response->getStatusCode() ;
             $content    = $response->toArray() ;
-
-            dd($statusCode);
 
             $this->logger->info('Notification envoyée avec succès à ActiveTrail', ['response' => $content]);
 
@@ -88,6 +69,40 @@ class ActiveTrailNotificationService
             dd($httpLogs) ;
             $this->logger->error('Erreur lors de l\'envoi de la notification ActiveTrail', ['error' => $e->getMessage()]);
         }
+    }
+
+    public function sendCampaignEmail($campaignId): array
+    {
+        //$url = "https://webapi.mymarketing.co.il/api/campaigns/{$campaignId}/send";
+        $url ="https://webapi.mymarketing.co.il/api/campaigns";
+
+        $response = $this->client->request(
+            'GET', $url,
+            [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    // 'Authorization' => 'Basic ' . base64_encode($this->apiKey . ':'),
+                    'Authorization' => "Basic $this->apiKey",
+                ],
+                //'json' => [
+                //    'subject' => $subject,
+                 //   'body' => $body,
+                //],
+            ]
+        );
+
+        foreach ($response->toArray() as $values) {
+           foreach ($values as $value) {
+               if($value['id'] == $campaignId) {
+                   dd($value);
+               }
+           }
+           exit();
+        }
+
+        dd($response->toArray());
+
+        return $response->toArray(false);
     }
 
 }

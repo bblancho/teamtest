@@ -1,0 +1,49 @@
+<?php
+
+namespace App\EventSubscriber;
+
+
+use App\Entity\Offres;
+use App\Event\OfferPublishedEvent;
+use App\Service\ActiveTrailNotificationService;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+
+class OfferSubscriber implements EventSubscriberInterface
+{
+    private ActiveTrailNotificationService $activeTrail;
+
+    public function __construct(ActiveTrailNotificationService $activeTrail)
+    {
+        $this->activeTrail = $activeTrail;
+    }
+
+    /**
+     * @return string[]
+     */
+    public static function getSubscribedEvents(): array
+    {
+        return [
+            OfferPublishedEvent::class => 'onOfferPublished',
+        ];
+    }
+
+    public function onOfferPublished(OfferPublishedEvent $event)
+    {
+        /** @var Offres $offer */
+        $offer = $event->getOffer();
+
+        $subject = "Nouvelle offre : " . $offer->getNom();
+        $body = sprintf(
+            "Découvrez la nouvelle offre : %s\n\nLien : %s",
+            $offer->getNom(),
+            'https://127.0.0.1:8000/offres/creation/' . $offer->getId()
+        );
+
+        // Envoi via ActiveTrail
+        $this->activeTrail->sendCampaignEmail(
+            1784611, // ID de la campagne ActiveTrail
+            $subject,
+            $body
+        );
+    }
+}
