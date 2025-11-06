@@ -12,9 +12,10 @@ class ActiveTrailNotificationService
     private $activeTrailClient;
     private $apiKey;
     private $listId;
+    private $client;
+
     /** @var LoggerInterface */
     private $logger;
-    private $client;
 
     public function __construct(ParameterBagInterface $parameterBag, LoggerInterface $logger, HttpClientInterface $client )
     {
@@ -33,11 +34,6 @@ class ActiveTrailNotificationService
             ]
         );
     
-        //Test de la valeur de la clé API et de l'ID de la liste
-       // dd($this->apiKey, $this->listId); // Assure-toi que les valeurs sont bonnes
-
-        // Si tu veux tester le client
-        // dd($this->activeTrailClient) ;
     }
 
     public function sendNotification(string $missionTitle, string $missionDescription)
@@ -45,23 +41,15 @@ class ActiveTrailNotificationService
         // Prépare le contenu de l'email (tu peux adapter ça avec des placeholders ou un modèle d'email)
         $subject    = "Nouvelle mission : " . $missionTitle;
         $body       = "Une nouvelle mission est disponible : " . $missionDescription;
-        $url        = 'https://api.activetrail.com/v2/campaigns/1784611';
+        $url        = 'https://webapi.mymarketing.co.il/api'; // /campaigns/1784611
         $method     = 'GET';
         
         // Appel API pour envoyer l'email (Exemple : créer une campagne et l'envoyer à la liste)
         try {
-            // $response = $this->client->request($method, $url, [
-            //     'json' => [
-            //         'api_key' => $this->apiKey,
-            //         'list_id' => $this->listId,
-            //         // 'subject' => $subject,
-            //         // 'body' => $body,
-            //     ]
-            // ]);
 
             $response = $this->client->request(
-                'GET',
-                'https://webapi.mymarketing.co.il/api/groups/436114',
+                $method,
+                $url."/groups/436114",
                 [
                     'headers' => [
                         'Accept' => 'application/json',
@@ -73,11 +61,7 @@ class ActiveTrailNotificationService
                 ]
             );
 
-
-            $statusCode = $response->getStatusCode() ;
             $content    = $response->toArray() ;
-
-            dd($statusCode);
 
             $this->logger->info('Notification envoyée avec succès à ActiveTrail', ['response' => $content]);
 
@@ -85,7 +69,6 @@ class ActiveTrailNotificationService
 
             $httpLogs = $response->getInfo('debug');
 
-            dd($httpLogs) ;
             $this->logger->error('Erreur lors de l\'envoi de la notification ActiveTrail', ['error' => $e->getMessage()]);
         }
     }
