@@ -3,9 +3,8 @@
 namespace App\Service;
 
 use Psr\Log\LoggerInterface;
-use Yehudafh\ActiveTrail\ActiveTrail;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class ActiveTrailNotificationService
 {
@@ -20,8 +19,8 @@ class ActiveTrailNotificationService
     public function __construct(ParameterBagInterface $parameterBag, LoggerInterface $logger, HttpClientInterface $client )
     {
         // Récupération des paramètres de configuration depuis le ParameterBag
-        $this->apiKey = $parameterBag->get('ACTIVETRAIL_API_KEY') ;
-        $this->listId = $parameterBag->get('ACTIVETRAIL_LIST_ID') ;
+        $this->apiKey = $parameterBag->get('ACTIVETRAIL_API_KEY');
+        $this->listId = $parameterBag->get('ACTIVETRAIL_LIST_ID');
         $this->logger = $logger ;
         $this->client = $client ;
 
@@ -33,7 +32,7 @@ class ActiveTrailNotificationService
                 'fields' => [],
             ]
         );
-    
+
     }
 
     public function sendNotification(string $missionTitle, string $missionDescription)
@@ -128,6 +127,40 @@ class ActiveTrailNotificationService
 
             $this->logger->error('Erreur lors de l\'envoi de la notification ActiveTrail', ['error' => $e->getMessage()]);
         }
+    }
+
+    public function sendCampaignEmail($campaignId): array
+    {
+        //$url = "https://webapi.mymarketing.co.il/api/campaigns/{$campaignId}/send";
+        $url ="https://webapi.mymarketing.co.il/api/campaigns";
+
+        $response = $this->client->request(
+            'GET', $url,
+            [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    // 'Authorization' => 'Basic ' . base64_encode($this->apiKey . ':'),
+                    'Authorization' => "Basic $this->apiKey",
+                ],
+                //'json' => [
+                //    'subject' => $subject,
+                 //   'body' => $body,
+                //],
+            ]
+        );
+
+        foreach ($response->toArray() as $values) {
+           foreach ($values as $value) {
+               if($value['id'] == $campaignId) {
+                   dd($value);
+               }
+           }
+           exit();
+        }
+
+        dd($response->toArray());
+
+        return $response->toArray(false);
     }
 
 }
