@@ -53,11 +53,9 @@ class ActiveTrailNotificationService
                 [
                     'headers' => [
                         'Accept' => 'application/json',
-                        'Content-type' => 'application/json',
+                        'Content-type'  => 'application/json',
                         'Authorization' => "Basic $this->apiKey"
                     ],
-                    // 'auth_basic' => ['token', $this->apiKey],
-                    // 'body' => $jsonContent,
                 ]
             );
 
