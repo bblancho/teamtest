@@ -43,6 +43,8 @@ class ActiveTrailNotificationService
         $body       = "Une nouvelle mission est disponible : " . $missionDescription;
         $url        = 'https://webapi.mymarketing.co.il/api'; // /campaigns/1784611
         $method     = 'POST';
+        $groupe     = 436114;
+        $contact_ID = 209253083;
         
         // créer une mailinglist 
             // http://webapi.mymarketing.co.il/api/mailinglist - data {"Name": "{{Name}}"}
@@ -50,40 +52,25 @@ class ActiveTrailNotificationService
         // Appel API pour envoyer l'email (Exemple : créer une campagne et l'envoyer à la liste)
         try {
 
-            $payload = array(
-                "RequestHeader" => array(
-                    "SpecVersion" => "1.7",
-                    "CustomerId" => "307998",
-                    "RequestId" => "0a71fa0241d68c49387f8aee8f982a7b",
-                    "RetryIndicator" => 0
-                ),
-                "TerminalId" => "17735964",
-                "Payment" => array(
-                    "Amount" => array(
-                        "Value" => "100",
-                        "CurrencyCode" => "EUR"
-                    ),
-                    "OrderId" => "123test",
-                    "Description" => "Test_Order_123test"
-                ),
-                "ReturnUrls" => array(
-                    "Success" => "localhost:8000",
-                    "Fail" =>  "localhost:8000"
-                )
-            );
+            $newUser = [
+                'status' => 'None',
+                'email' => 'thomas.l@gmail.com',
+                'first_name' => 'Thomas',
+                'last_name' => 'Lemar',
+                'is_do_not_mail' => false,
+                'is_deleted' => false
+            ];
 
             $response = $this->client->request(
                 $method,
-                $url."/mailinglist",
+                "$url/groups/$groupe/members",
                 [
                     'headers' => [
                         'Accept' => 'application/json',
                         'Content-type'  => 'application/json',
                         'Authorization' => "Basic $this->apiKey"
                     ],
-                ],
-                [
-                    'json' => ['name' => 'Test création compagne mailling',],
+                    "json" => $newUser
                 ]
             );
 
