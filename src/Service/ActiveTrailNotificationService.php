@@ -43,6 +43,7 @@ class ActiveTrailNotificationService
         $body       = "Une nouvelle mission est disponible : " . $missionDescription;
         $url        = 'https://webapi.mymarketing.co.il/api'; // /campaigns/1784611
         $method     = 'POST';
+        $user_profil_id = 30264;
         $groupe     = 436114;
         $contact_ID = 209253083;
         
@@ -54,23 +55,56 @@ class ActiveTrailNotificationService
 
             $newUser = [
                 'status' => 'None',
-                'email' => 'thomas.l@gmail.com',
-                'first_name' => 'Thomas',
-                'last_name' => 'Lemar',
+                'email' => 'zoro.maythio@gmail.com',
+                'first_name' => 'Zoro',
+                'last_name' => 'popo',
                 'is_do_not_mail' => false,
                 'is_deleted' => false
             ];
 
+            $list_users = 
+                [
+                    "blanchard.banyingela@laposte.net",
+                    "hamshakour93@gmail.com",
+                    "dkeddi94@gmail.com",
+                    "proche@team2i.fr"
+                ] 
+            ;
+
+            $campaign = [
+                'campaign' => [
+                    'details' => [
+                        'name' => 'Test compaign 6',
+                        'subject' => 'Test compaign 6',
+                        'user_profile_id' => $user_profil_id,
+                        'google_analytics_name' => 'UTM_Campaign',
+                        'preheader' => 'sample string 4'
+                    ],
+                    'design' => [
+                        'content' => 'sample string 1',
+                        'language_type' => 'UTF-8',
+                        'header_footer_language_type' => 'UTF-8',
+                        'is_add_print_email' => true
+                    ],
+                    'template' => [
+                        'id' => ""
+                    ]
+                ],
+                'campaign_contacts' => [
+                    'contacts_emails' => $list_users
+                ]
+            ];
+
             $response = $this->client->request(
                 $method,
-                "$url/groups/$groupe/members",
+                "$url/campaigns/contacts",
                 [
                     'headers' => [
                         'Accept' => 'application/json',
                         'Content-type'  => 'application/json',
                         'Authorization' => "Basic $this->apiKey"
                     ],
-                    "json" => $newUser
+                    "json" => $campaign
                 ]
             );
 
