@@ -46,21 +46,32 @@ class ActiveTrailNotificationService
         $user_profil_id = 30264;
         $groupe     = 436114;
         $contact_ID = 209253083;
-        
-        // créer une mailinglist 
-            // http://webapi.mymarketing.co.il/api/mailinglist - data {"Name": "{{Name}}"}
 
         // Appel API pour envoyer l'email (Exemple : créer une campagne et l'envoyer à la liste)
         try {
+            
+            // On récupère la liste des users du groupe qui va recevoir la campagne emailing
+            $response = $this->client->request(
+                "GET",
+                "$url/groups/$groupe/members",
+                [
+                    'headers' => [
+                        'Accept' => 'application/json',
+                        'Content-type'  => 'application/json',
+                        'Authorization' => "Basic $this->apiKey"
+                    ]
+                ]
+            );
 
-            $newUser = [
-                'status' => 'None',
-                'email' => 'zoro.maythio@gmail.com',
-                'first_name' => 'Zoro',
-                'last_name' => 'popo',
-                'is_do_not_mail' => false,
-                'is_deleted' => false
-            ];
+            $content  = $response->toArray() ;
+            $data = $content['contacts'];
+            $list_users = [] ;
+
+            foreach ($data as $user) {
+                $list_users[] = $user['email']  ;
+            }
+
+            dd($list_users) ;
 
             $list_users = 
                 [
@@ -74,14 +85,14 @@ class ActiveTrailNotificationService
             $campaign = [
                 'campaign' => [
                     'details' => [
-                        'name' => 'Test compaign 6',
-                        'subject' => 'Test compaign 6',
+                        'name' => 'Test compaign 9',
+                        'subject' => $subject,
                         'user_profile_id' => $user_profil_id,
                         'google_analytics_name' => 'UTM_Campaign',
                         'preheader' => 'sample string 4'
                     ],
                     'design' => [
-                        'content' => 'sample string 1',
+                        'content' => $body,
                         'language_type' => 'UTF-8',
                         'header_footer_language_type' => 'UTF-8',
                         'is_add_print_email' => true
@@ -95,6 +106,7 @@ class ActiveTrailNotificationService
                 ]
             ];
 
+            // On envoie la campagne aux utilisateurs
             $response = $this->client->request(
                 $method,
                 "$url/campaigns/contacts",
@@ -108,9 +120,7 @@ class ActiveTrailNotificationService
                 ]
             );
 
-            $content  = $response->toArray() ;
-
-            $this->logger->info('Notification envoyée avec succès à ActiveTrail', ['response' => $content]);
+            $this->logger->info('Notification envoyée avec succès à ActiveTrail', ['response' => $response]);
 
         } catch (\Exception $e) {
 
