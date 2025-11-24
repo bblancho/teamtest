@@ -2,23 +2,18 @@
 
 namespace App\Controller;
 
-use App\Entity\Offres;
-use App\Form\SearchType;
-use App\Form\MessageType;
-use App\Model\SearchModel;
 use App\Entity\Candidatures;
-use App\Security\Voter\OffresVoter;
+use App\Form\MessageType;
+use App\Form\SearchType;
+use App\Model\SearchModel;
+use App\Repository\CandidaturesRepository;
 use App\Repository\OffresRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Repository\CandidaturesRepository;
-use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HomeController extends AbstractController
 {

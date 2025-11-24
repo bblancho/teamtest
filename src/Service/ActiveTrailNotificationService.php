@@ -2,9 +2,16 @@
 
 namespace App\Service;
 
+use Exception;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Yehudafh\ActiveTrail\ActiveTrail;
 
 class ActiveTrailNotificationService
 {
@@ -35,6 +42,16 @@ class ActiveTrailNotificationService
 
     }
 
+    /**
+     * @param string $missionTitle
+     * @param string $missionDescription
+     * @return void
+     * @throws ClientExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws TransportExceptionInterface
+     */
     public function sendNotification(string $missionTitle, string $missionDescription)
     {
         // Prépare le contenu de l'email (tu peux adapter ça avec des placeholders ou un modèle d'email)
@@ -69,17 +86,6 @@ class ActiveTrailNotificationService
             foreach ($data as $user) {
                 $list_users[] = $user['email']  ;
             }
-
-            dd($list_users) ;
-
-            $list_users = 
-                [
-                    "blanchard.banyingela@laposte.net",
-                    "hamshakour93@gmail.com",
-                    "dkeddi94@gmail.com",
-                    "proche@team2i.fr"
-                ] 
-            ;
 
             $campaign = [
                 'campaign' => [
@@ -121,46 +127,12 @@ class ActiveTrailNotificationService
 
             $this->logger->info('Notification envoyée avec succès à ActiveTrail', ['response' => $response]);
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
 
             $httpLogs = $response->getInfo('debug');
 
             $this->logger->error('Erreur lors de l\'envoi de la notification ActiveTrail', ['error' => $e->getMessage()]);
         }
-    }
-
-    public function sendCampaignEmail($campaignId): array
-    {
-        //$url = "https://webapi.mymarketing.co.il/api/campaigns/{$campaignId}/send";
-        $url ="https://webapi.mymarketing.co.il/api/campaigns";
-
-        $response = $this->client->request(
-            'GET', $url,
-            [
-                'headers' => [
-                    'Content-Type' => 'application/json',
-                    // 'Authorization' => 'Basic ' . base64_encode($this->apiKey . ':'),
-                    'Authorization' => "Basic $this->apiKey",
-                ],
-                //'json' => [
-                //    'subject' => $subject,
-                 //   'body' => $body,
-                //],
-            ]
-        );
-
-        foreach ($response->toArray() as $values) {
-           foreach ($values as $value) {
-               if($value['id'] == $campaignId) {
-                   dd($value);
-               }
-           }
-           exit();
-        }
-
-        dd($response->toArray());
-
-        return $response->toArray(false);
     }
 
 }

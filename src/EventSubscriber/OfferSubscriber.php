@@ -7,6 +7,11 @@ use App\Entity\Offres;
 use App\Event\OfferPublishedEvent;
 use App\Service\ActiveTrailNotificationService;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 class OfferSubscriber implements EventSubscriberInterface
 {
@@ -27,6 +32,15 @@ class OfferSubscriber implements EventSubscriberInterface
         ];
     }
 
+    /**
+     * @param OfferPublishedEvent $event
+     * @return void
+     * @throws ClientExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws TransportExceptionInterface
+     */
     public function onOfferPublished(OfferPublishedEvent $event)
     {
         /** @var Offres $offer */
@@ -35,13 +49,12 @@ class OfferSubscriber implements EventSubscriberInterface
         $subject = "Nouvelle offre : " . $offer->getNom();
         $body = sprintf(
             "Découvrez la nouvelle offre : %s\n\nLien : %s",
-            $offer->getNom(),
+            $offer->getDescription(),
             'https://127.0.0.1:8000/offres/creation/' . $offer->getId()
         );
 
         // Envoi via ActiveTrail
-        $this->activeTrail->sendCampaignEmail(
-            1784611, // ID de la campagne ActiveTrail
+        $this->activeTrail->sendNotification(
             $subject,
             $body
         );
