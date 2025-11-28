@@ -87,7 +87,7 @@ class MissionController extends AbstractController
 
 //                dd($form->getData());
                 $activeTrail->sendNotification(
-                    $form->get('nom')->getData() . 'Test Mamadou',
+                    $form->get('nom')->getData() . 'Test Blanchard',
                     $form->get('description')->getData()
                 );
 

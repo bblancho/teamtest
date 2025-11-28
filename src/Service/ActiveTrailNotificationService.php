@@ -90,7 +90,7 @@ class ActiveTrailNotificationService
             $campaign = [
                 'campaign' => [
                     'details' => [
-                        'name' => 'Test compaign 9',
+                        'name' => 'Test compaign 11',
                         'subject' => $subject,
                         'user_profile_id' => $user_profil_id,
                         'google_analytics_name' => 'UTM_Campaign',
