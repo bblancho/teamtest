@@ -80,17 +80,26 @@ class ActiveTrailNotificationService
             );
 
             $content  = $response->toArray() ;
-            $data = $content['contacts'];
+            $data = $content['contacts'] ;
             $list_users = [] ;
 
             foreach ($data as $user) {
                 $list_users[] = $user['email']  ;
             }
 
+            // $list_users = 
+            //     [
+            //         "blanchard.banyingela@laposte.net",
+            //         "hamshakour93@gmail.com",
+            //         "dkeddi94@gmail.com",
+            //         "proche@team2i.fr"
+            //     ] 
+            // ;
+
             $campaign = [
                 'campaign' => [
                     'details' => [
-                        'name' => 'Test compaign 11',
+                        'name' => 'Test compaign décembre - 99',
                         'subject' => $subject,
                         'user_profile_id' => $user_profil_id,
                         'google_analytics_name' => 'UTM_Campaign',
@@ -111,6 +120,7 @@ class ActiveTrailNotificationService
                 ]
             ];
 
+
             // On envoie la campagne aux utilisateurs
             $response = $this->client->request(
                 $method,
@@ -125,7 +135,9 @@ class ActiveTrailNotificationService
                 ]
             );
 
-            $this->logger->info('Notification envoyée avec succès à ActiveTrail', ['response' => $response]);
+            $content  = $response->toArray() ;
+
+            $this->logger->info('Notification envoyée avec succès à ActiveTrail', ['response' => $content]);
 
         } catch (Exception $e) {
 
