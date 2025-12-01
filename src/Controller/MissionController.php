@@ -85,15 +85,15 @@ class MissionController extends AbstractController
             // if ($result !== null) {
                 $this->addFlash('success', 'Votre mission a été créée avec succès !');
 
-//                dd($form->getData());
+           //  dd($form->getData());
                 $activeTrail->sendNotification(
                     $form->get('nom')->getData() ,
                     $form->get('description')->getData()
                 );
 
-//            // dispatch event
-//            $event = new OfferPublishedEvent($form->getData());
-//            $dispatcher->dispatch($event, OfferPublishedEvent::class);
+            // dispatch event
+            // $event = new OfferPublishedEvent($form->getData());
+            // $dispatcher->dispatch($event, OfferPublishedEvent::class);
 
                 return $this->redirectToRoute('offres.mes_offres');
             // }
