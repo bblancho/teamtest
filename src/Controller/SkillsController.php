@@ -58,7 +58,7 @@ final class SkillsController extends AbstractController
             $entityManager->persist($skill);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Votre coimpétence a été créée avec succès !');
+            $this->addFlash('success', 'Votre compétence a été créée avec succès !');
 
             return $this->redirectToRoute('skills.create', [], Response::HTTP_SEE_OTHER);
         }
