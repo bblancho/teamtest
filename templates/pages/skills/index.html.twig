@@ -15,7 +15,7 @@
 			<div class="container">
                 {% if skills is defined and skills is not null %}
                     <div class="count mt-4 mb-4">
-                        {{ skills.getTotalItemCount }} compétence(s)
+                        {{ skills.getTotalItemCount }} profil(s)
                     </div>
 
                     <table class="table table-striped table-bordered">
@@ -48,10 +48,10 @@
                         {{ knp_pagination_render(skills) }}
                     </div>
                 {% else %}
-                    <h4 class=" my-3"> Aucune compétence archivée !</h4>
+                    <h4 class=" my-3"> Aucun profil archivé !</h4>
 
 					<a href="{{ path('skills.create') }}" class="btn btn-primary mb-3">
-						Créer une compétence
+						Créer un profil
 					</a>
 				{% endif %}
             </div>

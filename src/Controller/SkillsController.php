@@ -96,12 +96,18 @@ final class SkillsController extends AbstractController
     }
 
     #[Route(path: '/{id}', name: 'delete', methods: ['POST'])]
-    public function delete(Request $request, Skills $skill, EntityManagerInterface $entityManager): Response
+    public function delete(
+        Skills $skill, 
+        EntityManagerInterface $entityManager
+    ): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$skill->getId(), $request->getPayload()->getString('_token'))) {
-            $entityManager->remove($skill);
-            $entityManager->flush();
-        }
+        $entityManager->remove($skill);
+        $entityManager->flush();
+
+        $this->addFlash(
+            'success',
+            'Votre profil a été supprimé avec succès !'
+        );
 
         return $this->redirectToRoute('skills.index', [], Response::HTTP_SEE_OTHER);
     }
