@@ -27,13 +27,14 @@ class Skills
     #[ORM\Column(length: 60)]
     private ?string $slug = null;
 
-    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'skills', onDelete: "SET NULL", nullable: true)]
+    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'skills' )]
+    #[ORM\JoinColumn(nullable:true)]
     private ?self $parent = null;
 
     /**
      * @var Collection<int, self>
      */
-    #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'parent')]
+    #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'parent', orphanRemoval: true)]
     private Collection $skills;
 
     /**
