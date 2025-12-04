@@ -19,15 +19,15 @@
 					{% if app.user %}
 						{% if app.user.typeUser == "societes"  %}
 							<li class="nav-item">
-								<a class="nav-link {{ app.current_route == 'offres.mes_offres' ? 'active' : '' }}" href="{{ path('offres.mes_offres') }}">Mes offres
+								<a class="nav-link {{ app.current_route == 'offres.mes_offres' ? 'active' : '' }}" href="{{ path('offres.mes_offres') }}">Mes missions
 								</a> 
 							</li> 
 							<li class="nav-item">
-								<a class="nav-link {{ app.current_route == 'offres.create' ? 'active' : '' }}" href="{{ path('offres.create') }}">Creer une offre
+								<a class="nav-link {{ app.current_route == 'offres.create' ? 'active' : '' }}" href="{{ path('offres.create') }}">Creer une mission
 								</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link {{ app.current_route == 'offres.mes_offres_archives' ? 'active' : '' }}" href="{{ path('offres.mes_offres_archives') }}">offres depubliees
+								<a class="nav-link {{ app.current_route == 'offres.mes_offres_archives' ? 'active' : '' }}" href="{{ path('offres.mes_offres_archives') }}">missions depubliees
 								</a> 
 							</li>
 							<li class="nav-item">

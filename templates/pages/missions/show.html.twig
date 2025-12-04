@@ -11,7 +11,7 @@
 			<div class="container">
 				<nav aria-label="Breadcrumb" role="navigation"  class="breadcrumb scrolling-touch">
 					<a href="{{ path('app_index') }}" class="breadcrumb__item active" > Accueil </a> 
-					<a href="{{ path('app_index') }}" class="breadcrumb__item" > Offres  </a> 
+					<a href="{{ path('app_index') }}" class="breadcrumb__item" > Missions  </a> 
 					<span aria-current="page"> {{ mission.nom }} </span>
 				</nav>
 			</div>
@@ -75,7 +75,7 @@
 						<div class="card shadow-sm">
 							<div class="card-body">
 								<div class="info-offre" id="form_offre">
-									<h3> Postuler à l'offre : </h3>
+									<h3> Postuler à la mission : </h3>
 								</div>
 								{% if app.user.cvName != false %}
 									{% if aDejaPostule == false %}
@@ -85,7 +85,7 @@
 											<button class="btn btn-primary"> Je postule </button>
 										{{ form_end(form) }}
 									{% else %}
-										<span class="text-xl font-semibold text-success"> Vous avez postulé à cette offre. </span>
+										<span class="text-xl font-semibold text-success"> Vous avez postulé à cette mission. </span>
 									{% endif %}
 								{% else %}
 									<span class="text-xl font-semibold text-warning mb-2"> Pour postuler veuillez Rajouter un cv. </span> <br>
