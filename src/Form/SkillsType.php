@@ -34,7 +34,7 @@ class SkillsType extends AbstractType
                     'maxLength' => '100',
                 ],
                 'required' => true,
-                'label' => 'Nom de la compétence :',
+                'label' => 'Nom du profil :',
                 'label_attr' => [
                     'class' => 'form-label mt-4'
                 ],
