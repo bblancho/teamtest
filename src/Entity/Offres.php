@@ -17,7 +17,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: OffresRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-#[UniqueEntity('slug', message: "Cette valeur est déjà utilisée.")]
+// #[UniqueEntity('slug', message: "Cette valeur est déjà utilisée.")]
 #[UniqueEntity('refMission', message: "Cette valeur est déjà utilisée.")]
 class Offres
 {
