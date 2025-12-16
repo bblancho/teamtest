@@ -105,7 +105,8 @@ class Offres
 
     #[ORM\PrePersist()]
     public function prePresist(){
-        $this->slug = (new Slugify())->slugify(strtolower($this->nom)) ;
+        $nom = $this->nom.uniqid();
+        $this->slug = (new Slugify())->slugify(strtolower($nom)) ;
     }
 
     public function getId(): ?int
