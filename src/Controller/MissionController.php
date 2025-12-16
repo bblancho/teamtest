@@ -87,10 +87,12 @@ class MissionController extends AbstractController
             {
                 $this->addFlash('success', 'Votre mission a été créée avec succès !');
 
-                $activeTrail->sendNotification(
-                    $form->get('nom')->getData() ,
-                    $form->get('description')->getData()
-                );
+                // $activeTrail->sendNotification(
+                //     $form->get('nom')->getData() ,
+                //     $form->get('description')->getData()
+                // );
+
+                $activeTrail->sendNotificationbis($form->getData());
 
                 // dispatch event
                 $event = new OfferPublishedEvent($form->getData());

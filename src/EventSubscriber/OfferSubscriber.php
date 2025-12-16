@@ -54,9 +54,11 @@ class OfferSubscriber implements EventSubscriberInterface
         );
 
         // Envoi via ActiveTrail
-        $this->activeTrail->sendNotification(
-            $subject,
-            $body
-        );
+        // $this->activeTrail->sendNotificationbis(
+        //     $subject,
+        //     $body
+        // );
+
+        $this->activeTrail->sendNotificationbis($offer);
     }
 }
