@@ -91,7 +91,7 @@ class OffreService
         $offre
             ->setSocietes($societe)
             ->setNbCandidatures(0)
-            ->setSlug($offre->getNom() . $offre->getRefMission())
+            ->setSlug($offre->getNom())
         ;
 
         $this->entityManager->persist($offre);
